@@ -303,11 +303,16 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
         window.open(`${wa}?text=${enc}`, '_blank', 'noopener');
         say('Открываем WhatsApp с готовым текстом заявки. Остаётся нажать «Отправить».', 'ok');
       } else if (channel === 'viber') {
-        window.location.href = `viber://chat?number=${encodeURIComponent(tel)}&draft=${enc}`;
+        // Viber cuts a draft at 100 characters: send one compact line, or no draft and the copied full text
+        const short = `Запись на СТО: ${make}${model ? ' ' + model : ''} — ${task}`;
+        const fits = short.length <= 100;
+        window.location.href = `viber://chat?number=${encodeURIComponent(tel)}` + (fits ? `&draft=${encodeURIComponent(short)}` : '');
         say(
-          copied
-            ? 'Открываем Viber. Текст заявки скопирован — если поле пустое, вставьте его в чат.'
-            : 'Открываем Viber. Если приложение не открылось, напишите на ' + tel + '.',
+          fits
+            ? 'Открываем Viber с готовой заявкой — остаётся нажать «Отправить».'
+            : copied
+              ? 'Открываем Viber. Заявка длинная, поэтому мы её скопировали — вставьте в чат (Ctrl+V или долгое нажатие) и отправьте.'
+              : 'Открываем Viber. Напишите марку, модель и задачу — ответим в рабочее время.',
           'ok'
         );
       } else {
@@ -739,8 +744,16 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
       window.open(`${WA}?text=${enc}`, '_blank', 'noopener');
       toast('Открываем WhatsApp с расчётом — остаётся нажать «Отправить»');
     } else if (ch === 'viber') {
-      window.location.href = `viber://chat?number=${encodeURIComponent(SERVICE_TEL)}&draft=${enc}`;
-      toast(copied ? 'Открываем Viber. Расчёт скопирован — если поле пустое, вставьте его' : 'Открываем Viber');
+      // Viber cuts a draft at 100 characters, so the estimate goes through the clipboard
+      const pm = priceMap();
+      const n = [...picked].filter(([k]) => pm.has(k)).length;
+      const short = `Расчёт с сайта: ${MAKE_NAMES[make]}, работ ${n}, от ${fmt.format(total())} руб. Список ниже:`;
+      window.location.href = `viber://chat?number=${encodeURIComponent(SERVICE_TEL)}&draft=${encodeURIComponent(short.slice(0, 100))}`;
+      toast(
+        copied
+          ? 'Открываем Viber. Полный расчёт скопирован — вставьте его в чат (Ctrl+V или долгое нажатие) и отправьте'
+          : 'Открываем Viber. Скопируйте расчёт кнопкой «Скопировать расчёт» и вставьте в чат'
+      );
     } else {
       window.open(TG, '_blank', 'noopener');
       toast(copied ? 'Расчёт скопирован — вставьте его в открывшийся чат Telegram' : 'Открываем Telegram');
@@ -836,3 +849,21 @@ if (root) {
   if (tabs.some((t) => t.dataset.tab === fromHash)) select(fromHash);
 }
 })();
+
+// YouTube: the player loads only when asked for (no third-party load before the click)
+document.querySelectorAll("[data-yt]").forEach((link) => {
+  link.addEventListener("click", (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    if (link.classList.contains("is-playing")) return;
+    const f = document.createElement("iframe");
+    f.src = `https://www.youtube-nocookie.com/embed/${link.dataset.yt}?autoplay=1&rel=0`;
+    f.title = link.dataset.ytTitle || "Видео";
+    f.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    f.allowFullscreen = true;
+    link.classList.add("is-playing");
+    link.removeAttribute("href");
+    link.append(f);
+    f.focus();
+  });
+});
