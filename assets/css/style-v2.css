@@ -3862,3 +3862,185 @@ p {
     padding: 0 8px;
   }
 }
+
+/* ── Price list: add to order + pinned subtotal ─────────────────────────────── */
+.pl__add {
+  width: 1%;
+  padding: 8px 0 8px 16px !important;
+}
+
+.pl__add button {
+  min-width: 112px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--steel-300);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+
+.pl__add button:hover {
+  box-shadow: inset 0 0 0 1px var(--blue-900);
+}
+
+.pl__add button[aria-pressed='true'] {
+  background: var(--blue-900);
+  color: var(--white);
+  box-shadow: none;
+}
+
+tr.is-picked th {
+  font-weight: 600;
+}
+
+.order-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 45;
+  padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
+  background: rgb(21 23 26 / 0.96);
+  color: var(--white);
+  box-shadow: 0 -1px 0 rgb(255 255 255 / 0.1);
+}
+
+.order-bar__in {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.order-bar__sum {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  line-height: 1.2;
+}
+
+.order-bar__sum small {
+  font-size: 0.8125rem;
+  color: var(--blue-200);
+}
+
+.order-bar__sum b {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.order-bar.is-empty .order-bar__sum b {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.order-bar__clear {
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--blue-200);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.order-bar__clear[hidden] {
+  display: none;
+}
+
+.order-bar__go {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: var(--radius);
+  background: var(--red);
+  color: var(--white);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.order-bar__go:hover {
+  background: var(--red-700);
+}
+
+.order-bar.is-empty .order-bar__go {
+  background: rgb(255 255 255 / 0.12);
+}
+
+body.has-order-bar {
+  padding-bottom: 76px;
+}
+
+@media (max-width: 760px) {
+  .order-bar {
+    bottom: calc(68px + env(safe-area-inset-bottom));
+    padding-bottom: 10px;
+  }
+  .order-bar__go {
+    padding: 0 14px;
+  }
+  .order-bar__clear {
+    display: none;
+  }
+  body.has-order-bar {
+    padding-bottom: calc(140px + env(safe-area-inset-bottom));
+  }
+  .pl__add button {
+    min-width: 0;
+  }
+  .pl__add button span {
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .ob-w {
+    display: none;
+  }
+}
+
+/* price rows on phones: name above, price and order button below */
+@media (max-width: 640px) {
+  .pl tbody tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 12px;
+    padding: 12px 0;
+  }
+  .pl tbody th[scope='row'] {
+    grid-column: 1 / -1;
+    padding: 0 0 6px;
+    overflow-wrap: anywhere;
+  }
+  .pl tbody td {
+    padding: 0;
+    text-align: left;
+  }
+  .pl tbody .pl__add {
+    width: auto;
+    padding: 0 !important;
+  }
+}
+
+/* with the order bar on screen, the dock's second button steps back: one red action at a time */
+.has-order-bar .dock__book {
+  background: rgb(255 255 255 / 0.12);
+}

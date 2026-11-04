@@ -891,3 +891,131 @@ document.querySelectorAll("[data-swipe]").forEach((root) => {
   window.addEventListener("resize", update);
   update();
 });
+
+// Price list → order: every price line can go into the order; a pinned subtotal follows the scroll.
+// The order is the calculator's own record, so «Оформить» opens the same estimate on the home page.
+(() => {
+  const root = document.querySelector("[data-pricelist]");
+  if (!root) return;
+  const STORE = "vagmotors-precheck-v2";
+  const WORD = { vw: "Фольксваген", audi: "Ауди", skoda: "Шкода" };
+  const NAMES = { vw: "Volkswagen", audi: "Audi", skoda: "Škoda" };
+  const fmt = new Intl.NumberFormat("ru-RU");
+  const clean = (n, id) => n.replace(new RegExp(`\\s*${WORD[id]}\\s*`, "g"), " ").replace(/\s+/g, " ").trim();
+  const panels = [...root.querySelectorAll("[data-panel]")];
+  const prices = {};
+  panels.forEach((p) => {
+    const id = p.dataset.panel;
+    prices[id] = new Map();
+    p.querySelectorAll("[data-row]").forEach((tr) => {
+      const name = clean(tr.querySelector("th").textContent.trim(), id);
+      const m = tr.querySelector("td").textContent.replace(/\s/g, "").match(/[\d.,]+/);
+      const price = m ? Number(m[0].replace(",", ".")) : 0;
+      if (!price) return;
+      prices[id].set(name, price);
+      tr.dataset.key = name;
+      const td = document.createElement("td");
+      td.className = "pl__add";
+      td.innerHTML = `<button type="button" aria-pressed="false"><span>В заказ</span></button>`;
+      td.querySelector("button").setAttribute("aria-label", `В заказ: ${name}`);
+      tr.append(td);
+    });
+    p.querySelectorAll("thead tr").forEach((tr) => {
+      const th = document.createElement("th");
+      th.scope = "col";
+      th.textContent = "Заказ";
+      tr.append(th);
+    });
+  });
+
+  let make = (root.querySelector('[data-tab][aria-selected="true"]') || {}).dataset?.tab || "vw";
+  let picked = new Map();
+  try {
+    const s = JSON.parse(localStorage.getItem(STORE) || "null");
+    if (s && prices[s.make] && s.picked?.length) {
+      make = s.make;
+      picked = new Map(s.picked);
+      root.querySelector(`[data-tab="${make}"]`)?.click();
+    }
+  } catch (_) {}
+
+  const bar = document.createElement("div");
+  bar.className = "order-bar";
+  bar.setAttribute("role", "region");
+  bar.setAttribute("aria-label", "Подытог заказа");
+  bar.innerHTML = `<div class="order-bar__in">
+    <p class="order-bar__sum" aria-live="polite"><small data-ob-meta>Ваш заказ</small><b class="num" data-ob-total>Добавьте работы из прайса</b></p>
+    <button type="button" class="order-bar__clear" data-ob-clear hidden>Очистить</button>
+    <a class="order-bar__go" href="index.html#calc" data-ob-go>Оформить<span class="ob-w"> заказ</span> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a>
+  </div>`;
+  document.body.append(bar);
+  document.body.classList.add("has-order-bar");
+
+  const words = (n) => (n % 10 === 1 && n % 100 !== 11 ? "работа" : [2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100) ? "работы" : "работ");
+  const render = () => {
+    const pm = prices[make];
+    let sum = 0;
+    picked.forEach((q, n) => (sum += (pm.get(n) || 0) * q));
+    root.querySelectorAll("[data-row]").forEach((tr) => {
+      const b = tr.querySelector(".pl__add button");
+      if (!b) return;
+      const on = tr.closest("[data-panel]").dataset.panel === make && picked.has(tr.dataset.key);
+      b.setAttribute("aria-pressed", String(on));
+      b.firstElementChild.textContent = on ? "В заказе" : "В заказ";
+      tr.classList.toggle("is-picked", on);
+    });
+    const n = picked.size;
+    bar.querySelector("[data-ob-meta]").textContent = n ? `Ваш заказ · ${NAMES[make]} · ${n} ${words(n)}` : "Ваш заказ";
+    bar.querySelector("[data-ob-total]").textContent = n ? `от ${fmt.format(sum)} руб.` : "Добавьте работы из прайса";
+    bar.querySelector("[data-ob-clear]").hidden = !n;
+    bar.classList.toggle("is-empty", !n);
+    try {
+      localStorage.setItem(STORE, JSON.stringify({ make, picked: [...picked] }));
+    } catch (_) {}
+  };
+
+  root.addEventListener("click", (e) => {
+    const b = e.target.closest(".pl__add button");
+    if (b) {
+      const tr = b.closest("[data-row]");
+      const id = tr.closest("[data-panel]").dataset.panel;
+      if (id !== make) {
+        make = id;
+        picked = new Map();
+      }
+      const k = tr.dataset.key;
+      if (picked.has(k)) picked.delete(k);
+      else picked.set(k, 1);
+      render();
+      return;
+    }
+    const tab = e.target.closest("[data-tab]");
+    if (tab && tab.dataset.tab !== make && picked.size) {
+      // carry the order to the newly chosen make by work name
+      const pm = prices[tab.dataset.tab];
+      const next = new Map([...picked].filter(([k]) => pm.has(k)));
+      make = tab.dataset.tab;
+      picked = next;
+      render();
+    }
+  });
+  bar.querySelector("[data-ob-clear]").addEventListener("click", () => {
+    picked.clear();
+    render();
+  });
+  bar.querySelector("[data-ob-go]").addEventListener("click", (e) => {
+    if (!picked.size) {
+      e.preventDefault();
+      root.querySelector("[data-search]")?.focus();
+    }
+  });
+  render();
+})();
+
+// Minsk local time in a tile
+document.querySelectorAll("[data-minsk-clock]").forEach((el) => {
+  const tick = () => (el.textContent = new Intl.DateTimeFormat("ru-RU", { timeZone: "Europe/Minsk", hour: "2-digit", minute: "2-digit" }).format(new Date()));
+  tick();
+  setInterval(tick, 30_000);
+});
+document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = String(new Date().getFullYear())));
