@@ -1579,31 +1579,21 @@
       </section>
       <section class="workshop on-blue" id="workshop" aria-labelledby="workshop-title">
         <span class="lightline seam" aria-hidden="true" data-reveal="line"></span>
-        <div class="rail" data-rail>
-          <div class="rail__sticky">
-            <div class="rail__track" data-rail-track>
-              <div class="rail__intro">
-                <h2 class="h-section" id="workshop-title">Наш цех</h2>
-                <p class="lede muted">
+        <div class="rail" data-swipe>
+          <div class="wrap rail__head">
+            <h2 class="h-section" id="workshop-title" data-reveal>Наш цех</h2>
+            <p class="lede muted">
                   Чистая мастерская, подъёмники, дилерская диагностика. За ремонтом можно наблюдать — мы постоянно
                   держим вас в курсе и согласовываем каждое действие.
                 </p>
-                <span class="rail__hint muted" aria-hidden="true"
-                  >Листайте
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M4 12h16m-6-6 6 6-6 6"></path></svg
-                ></span>
-              </div>
+            <div class="rail__nav">
+              <button type="button" class="rail__btn" data-swipe-prev aria-label="Предыдущие фото"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12H4m6-6-6 6 6 6"/></svg></button>
+              <button type="button" class="rail__btn" data-swipe-next aria-label="Следующие фото"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button>
+            </div>
+          </div>
+          
+          <div class="rail__sticky">
+            <div class="rail__track" data-swipe-track tabindex="0" role="region" aria-label="Фото цеха: листайте пальцем, мышью или стрелками">
               <figure class="rail__item">
                 <div class="rail__frame">
                   <img
@@ -1775,7 +1765,7 @@
                 <figcaption>Запчасти и жидкости на складе</figcaption>
               </figure>
             </div>
-            <div class="rail__progress" aria-hidden="true"><span></span></div>
+            <div class="wrap"><div class="rail__progress" aria-hidden="true"><span></span></div></div>
           </div>
         </div>
       </section>

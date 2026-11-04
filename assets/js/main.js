@@ -867,3 +867,56 @@ document.querySelectorAll("[data-yt]").forEach((link) => {
     f.focus();
   });
 });
+
+// Swipe strips: a finger swipes natively; a mouse drags; arrows and a progress bar follow the position
+document.querySelectorAll("[data-swipe]").forEach((root) => {
+  const track = root.querySelector("[data-swipe-track]");
+  if (!track) return;
+  const prev = root.querySelector("[data-swipe-prev]");
+  const next = root.querySelector("[data-swipe-next]");
+  const bar = root.querySelector(".rail__progress, [data-swipe-bar]");
+  const smooth = matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+  const update = () => {
+    const max = track.scrollWidth - track.clientWidth;
+    const p = max > 0 ? track.scrollLeft / max : 0;
+    if (bar) {
+      bar.style.setProperty("--sp", p.toFixed(4));
+      bar.style.setProperty("--sv", Math.min(1, track.clientWidth / track.scrollWidth).toFixed(4));
+    }
+    if (prev) prev.disabled = track.scrollLeft < 4;
+    if (next) next.disabled = track.scrollLeft > max - 4;
+  };
+  const page = (dir) => track.scrollBy({ left: dir * track.clientWidth * 0.8, behavior: smooth });
+  prev?.addEventListener("click", () => page(-1));
+  next?.addEventListener("click", () => page(1));
+  track.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); page(1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); page(-1); }
+  });
+  let down = false, moved = false, x0 = 0, l0 = 0;
+  track.addEventListener("pointerdown", (e) => {
+    if (e.pointerType !== "mouse" || e.button !== 0) return;
+    down = true; moved = false; x0 = e.clientX; l0 = track.scrollLeft;
+  });
+  window.addEventListener("pointermove", (e) => {
+    if (!down) return;
+    const dx = e.clientX - x0;
+    if (!moved && Math.abs(dx) > 5) { moved = true; track.classList.add("is-drag"); }
+    if (moved) track.scrollLeft = l0 - dx;
+  });
+  window.addEventListener("pointerup", () => {
+    if (!down) return;
+    down = false;
+    if (moved) {
+      // land on the nearest photo once the hand lets go
+      const snap = () => track.classList.remove("is-drag");
+      requestAnimationFrame(snap);
+    }
+  });
+  track.addEventListener("click", (e) => {
+    if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
+  }, true);
+  track.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+});
