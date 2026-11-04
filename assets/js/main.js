@@ -62,6 +62,33 @@ const io = new IntersectionObserver(
   { rootMargin: "0px 0px -10% 0px", threshold: 0.12 }
 );
 document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+// A jump past a section (menu link, fast scroll) never makes it intersect; reveal everything already above the fold line.
+let revealTick = false;
+const revealPassed = () => {
+  revealTick = false;
+  const line = window.innerHeight * 0.9;
+  document.querySelectorAll("[data-reveal]:not(.is-in)").forEach((el) => {
+    if (el.getBoundingClientRect().top < line) {
+      el.classList.add("is-in");
+      io.unobserve(el);
+    }
+  });
+  // figures jumped past show their true value instead of a frozen zero
+  document.querySelectorAll("[data-count]:not([data-done]), [data-gauge]:not([data-done])").forEach((el) => {
+    if (el.getBoundingClientRect().bottom < 0) {
+      el.dataset.done = "1";
+      if (el.dataset.count) el.textContent = new Intl.NumberFormat("ru-RU").format(Number(el.dataset.count));
+      else el.style.setProperty("--g", el.dataset.gauge);
+    }
+  });
+};
+window.addEventListener("scroll", () => {
+  if (!revealTick) {
+    revealTick = true;
+    requestAnimationFrame(revealPassed);
+  }
+}, { passive: true });
+window.addEventListener("hashchange", revealPassed);
 const springs = /* @__PURE__ */ new Set();
 let raf = 0;
 const step = () => {
@@ -91,9 +118,11 @@ const springIO = new IntersectionObserver(
       if (!e.isIntersecting) continue;
       const el = e.target;
       springIO.unobserve(el);
+      el.dataset.done = "1";
       const to = Number(el.dataset.count ?? el.dataset.gauge ?? 1);
       if (el.dataset.count) {
-        const render = (x) => el.textContent = fmt.format(Math.max(0, Math.round(x * to)));
+        // a figure never reads past its true value, however the spring overshoots
+        const render = (x) => el.textContent = fmt.format(Math.max(0, Math.round(Math.min(1, x) * to)));
         if (reduce) render(1);
         else animateTo({ x: 0, v: 0, target: 1, el, render });
       } else {
@@ -211,7 +240,7 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
       q.classList.toggle("is-on", k === i);
       q.setAttribute("aria-hidden", String(k !== i));
     });
-    if (counter) counter.textContent = `${String(i + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}`;
+    if (counter) counter.textContent = `${i + 1} из ${items.length}`;
   };
   root.querySelector("[data-quote-prev]")?.addEventListener("click", () => show(i - 1));
   root.querySelector("[data-quote-next]")?.addEventListener("click", () => show(i + 1));
