@@ -1208,7 +1208,6 @@ p {
 .dock__sum {
   font-weight: 500;
   font-size: 0.875rem;
-  opacity: 0.85;
 }
 
 .dock__call {
@@ -3022,7 +3021,7 @@ p {
 }
 
 .check__send input[type='text']::placeholder {
-  color: var(--steel-500);
+  color: var(--steel-600);
 }
 
 .check__send input[type='text']:focus {
@@ -3364,7 +3363,7 @@ p {
 }
 
 .pl__search input::placeholder {
-  color: var(--steel-500);
+  color: var(--steel-600);
 }
 
 .pl__search input:focus {
