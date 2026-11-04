@@ -1632,7 +1632,6 @@ p {
   padding: 26px 0;
   text-decoration: none;
   color: inherit;
-  transition: padding 0.5s var(--ease-out);
 }
 
 .index__name {
@@ -1672,10 +1671,6 @@ p {
     transform 0.4s var(--ease-out);
 }
 
-.index__row a:hover {
-  padding-left: 12px;
-}
-
 .index__row a:hover .index__name {
   color: var(--blue-700);
 }
@@ -1683,44 +1678,6 @@ p {
 .index__row a:hover .index__go {
   opacity: 1;
   transform: none;
-}
-
-.index__peek {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 220px;
-  height: 290px;
-  margin: -145px 0 0 -110px;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0;
-  scale: 0.85;
-  transition:
-    opacity 0.35s var(--ease-out),
-    scale 0.5s var(--ease-out);
-  box-shadow: 0 30px 60px -20px rgb(10 27 56 / 0.45);
-  overflow: hidden;
-  border-radius: var(--radius);
-}
-
-.index__peek.is-on {
-  opacity: 1;
-  scale: 1;
-}
-
-.index__peek img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.3s var(--ease-out);
-}
-
-.index__peek img.is-on {
-  opacity: 1;
 }
 
 /* ── DSG ──────────────────────────────────────────── */

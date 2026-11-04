@@ -201,35 +201,6 @@ if (!reduce) {
   });
   onFrame();
 }
-const index = document.querySelector("[data-index]");
-const peek = index?.querySelector("[data-peek]");
-if (index && peek && matchMedia("(hover: hover) and (pointer: fine)").matches && !reduce) {
-  let tx = 0, ty = 0, x = 0, y = 0, running = false;
-  const loop = () => {
-    x += (tx - x) * 0.14;
-    y += (ty - y) * 0.14;
-    peek.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
-    if (Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3) requestAnimationFrame(loop);
-    else running = false;
-  };
-  index.addEventListener("pointermove", (e) => {
-    const r = index.getBoundingClientRect();
-    tx = e.clientX - r.left;
-    ty = e.clientY - r.top;
-    if (!running) {
-      running = true;
-      requestAnimationFrame(loop);
-    }
-  });
-  index.querySelectorAll("[data-peek-src]").forEach((row) => {
-    row.addEventListener("pointerenter", () => {
-      const id = row.dataset.peekSrc;
-      peek.querySelectorAll("[data-peek-img]").forEach((img) => img.classList.toggle("is-on", img.dataset.peekImg === id));
-      peek.classList.add("is-on");
-    });
-  });
-  index.addEventListener("pointerleave", () => peek.classList.remove("is-on"));
-}
 document.querySelectorAll("[data-quotes]").forEach((root) => {
   const items = Array.from(root.querySelectorAll("[data-quote]"));
   const counter = root.querySelector("[data-quote-n]");
