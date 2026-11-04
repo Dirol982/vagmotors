@@ -8,8 +8,6 @@ const onScroll = () => {
   const y = window.scrollY;
   header?.classList.toggle("is-scrolled", y > 24);
   const menuOpen = header?.querySelector("[data-menu-toggle]")?.getAttribute("aria-expanded") === "true";
-  if (header && !menuOpen) header.classList.toggle("is-hidden", y > 240 && y > lastY + 4);
-  if (y < lastY - 4) header?.classList.remove("is-hidden");
   dock?.classList.toggle("is-shown", y > window.innerHeight * 0.9);
   lastY = y;
 };
@@ -319,282 +317,445 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
   })();
 })();
 
-// Order calculator and pre-check
+// Order calculator and pre-check (modelled on the rs-auto calculator)
 (() => {
-const SERVICE_TEL = "+375296200421";
-const TG = "https://t.me/%2B375296200421";
-const WA = "https://wa.me/375296200421";
-const STORE = "vagmotors-precheck";
-const root = document.querySelector("[data-calc]");
-if (root) init(root);
-function init(root2) {
-  const data = JSON.parse(root2.querySelector("[data-calc-data]").textContent || "[]");
-  const list = root2.querySelector("[data-calc-list]");
-  const catsEl = root2.querySelector("[data-calc-cats]");
-  const search = root2.querySelector("[data-calc-search]");
-  const check = root2.querySelector("[data-check]");
-  const itemsEl = check.querySelector("[data-check-items]");
-  const emptyEl = check.querySelector("[data-check-empty]");
-  const totalEl = check.querySelector("[data-check-total]");
-  const makeEl = check.querySelector("[data-check-make]");
-  const status = check.querySelector("[data-check-status]");
-  const form = check.querySelector("[data-check-form]");
-  const submit = form.querySelector("button[type=submit]");
-  const backdrop = root2.querySelector("[data-check-backdrop]");
-  const fmt = new Intl.NumberFormat("ru-RU");
-  let makeId = data[0]?.id ?? "vw";
-  let cat = data[0]?.cats[0]?.name ?? "";
-  let lines = [];
+  const root = document.querySelector('[data-calc]');
+  if (!root) return;
+
+  const SERVICE_TEL = '+375296200421';
+  const TG = 'https://t.me/%2B375296200421';
+  const WA = 'https://wa.me/375296200421';
+  const STORE = 'vagmotors-precheck-v2';
+  const MAKE_NAMES = { vw: 'Volkswagen', audi: 'Audi', skoda: 'Škoda' };
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LIMIT = matchMedia('(max-width: 720px)').matches ? 4 : 8;
+  const fmt = new Intl.NumberFormat('ru-RU');
+
+  // One tap adds the usual works for a complaint (only works present in the selected make's price list)
+  const SYM = [
+    ['Пора на ТО', [['ТО', 1], ['Замена масла в двигателе', 1], ['Замена воздушного фильтра', 1], ['Замена салонного фильтра', 1]], 'Техническое обслуживание'],
+    ['Рывки DSG', [['Диагностика и ремонт ДСГ', 1], ['Замена масла в ДСГ', 1]], 'Ремонт КПП'],
+    ['Горит Check Engine', [['Компьютерная диагностика', 1], ['Диагностика двигателя', 1]], 'Диагностика'],
+    ['Стучит подвеска', [['Диагностика подвески', 1], ['Замена стоек и втулок стабилизатора', 1]], 'Ремонт подвески'],
+    ['Скрипят тормоза', [['Диагностика тормозов', 1], ['Замена тормозных колодок', 1]], 'Ремонт тормозов'],
+    ['Уходит антифриз', [['Поиск утечки антифриза', 1], ['Диагностика системы охлаждения', 1]], 'Ремонт системы охлаждения'],
+    ['Не холодит кондиционер', [['Диагностика и ремонт кондиционера', 1], ['Заправка кондиционера', 1]], 'Ремонт отопителя и кондиционера'],
+    ['Покупаю машину', [['Диагностика перед покупкой', 1]], 'Диагностика'],
+  ];
+
+  const data = JSON.parse(root.querySelector('[data-calc-data]').textContent || '[]');
+  const $ = (s, el = root) => el.querySelector(s);
+  const itemsEl = $('[data-calc-items]');
+  const catsEl = $('[data-calc-cats]');
+  const symEl = $('[data-calc-sym]');
+  const footEl = $('[data-calc-foot]');
+  const foundEl = $('[data-calc-found]');
+  const search = $('[data-calc-search]');
+  const check = $('[data-check]');
+  const linesEl = $('[data-check-lines]');
+  const sumEl = $('[data-check-sum]');
+  const metaEl = $('[data-check-meta]');
+  const clearBtn = $('[data-check-clear]');
+  const bookEl = $('[data-check-book]');
+  const submitBtn = $('[data-check-submit]');
+  const backdrop = $('[data-check-backdrop]');
+  const toastEl = $('[data-toast]');
+  const dockSum = document.querySelector('[data-dock-sum]');
+  const dockEmpty = document.querySelector('[data-dock-empty]');
+  const dockFull = document.querySelector('[data-dock-full]');
+
+  let make = 'vw';
+  let cat = '';
+  let query = '';
+  let expanded = false;
+  let picked = new Map(); // name → qty
+  let shown = 0;
+
   try {
-    const saved = JSON.parse(localStorage.getItem(STORE) || "null");
-    if (saved && data.some((m) => m.id === saved.makeId)) {
-      makeId = saved.makeId;
-      lines = Array.isArray(saved.lines) ? saved.lines : [];
+    const saved = JSON.parse(localStorage.getItem(STORE) || 'null');
+    if (saved && MAKE_NAMES[saved.make]) {
+      make = saved.make;
+      picked = new Map(saved.picked || []);
     }
-  } catch (_) {
-  }
-  const make = () => data.find((m) => m.id === makeId);
-  const save = () => {
-    try {
-      localStorage.setItem(STORE, JSON.stringify({ makeId, lines }));
-    } catch (_) {
-    }
-  };
-  const say = (text, kind = "") => {
-    status.textContent = text;
-    status.dataset.kind = kind;
-  };
-  const total = () => lines.reduce((s, l) => s + l.price, 0);
-  const el = (tag, cls, text) => {
-    const e = document.createElement(tag);
-    if (cls) e.className = cls;
-    if (text !== void 0) e.textContent = text;
-    return e;
-  };
-  const priceNode = (p) => {
-    const s = el("span", "calc__price num");
-    s.append(el("small", "", "\u043E\u0442 "), document.createTextNode(fmt.format(p)), el("small", "", "\xA0\u0440\u0443\u0431."));
+  } catch (_) {}
+
+  const book = () => data.find((m) => m.id === make);
+  const priceMap = () => new Map(book().cats.flatMap((c) => c.items.map((i) => [i.name, i.price])));
+  const total = () => {
+    const pm = priceMap();
+    let s = 0;
+    picked.forEach((q, n) => (s += (pm.get(n) || 0) * q));
     return s;
   };
-  const icon = (d2) => {
-    const ns = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(ns, "svg");
-    svg.setAttribute("viewBox", "0 0 24 24");
-    svg.setAttribute("width", "18");
-    svg.setAttribute("height", "18");
-    svg.setAttribute("fill", "none");
-    svg.setAttribute("stroke", "currentColor");
-    svg.setAttribute("stroke-width", "1.5");
-    svg.setAttribute("stroke-linecap", "round");
-    svg.setAttribute("aria-hidden", "true");
-    const path = document.createElementNS(ns, "path");
-    path.setAttribute("d", d2);
-    svg.append(path);
-    return svg;
+  const save = () => {
+    try {
+      localStorage.setItem(STORE, JSON.stringify({ make, picked: [...picked] }));
+    } catch (_) {}
   };
-  const PLUS = "M12 5v14M5 12h14";
-  const TICK = "m5 12.5 4.5 4.5L19 7.5";
-  const CROSS = "M6 6l12 12M18 6 6 18";
+  const esc = (t) => t.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const norm = (t) => t.toLowerCase().replace(/ё/g, 'е');
+  const toast = (m) => {
+    toastEl.textContent = m;
+    toastEl.classList.add('is-on');
+    clearTimeout(toastEl._h);
+    toastEl._h = setTimeout(() => toastEl.classList.remove('is-on'), 2600);
+  };
+
+  const allCount = () => new Set(data.flatMap((m) => m.cats.flatMap((c) => c.items.map((i) => i.name)))).size;
+  const countEl = $('[data-calc-count]');
+  if (countEl) countEl.textContent = String(allCount());
+
+  /* ── complaints ── */
+  const renderSym = () => {
+    const pm = priceMap();
+    symEl.innerHTML = SYM.map(([label, works], i) => {
+      const ok = works.some(([n]) => pm.has(n));
+      const done = ok && works.filter(([n]) => pm.has(n)).every(([n]) => picked.has(n));
+      return ok ? `<button type="button" data-i="${i}" class="${done ? 'is-done' : ''}">+ ${esc(label)}</button>` : '';
+    }).join('');
+  };
+
+  /* ── categories ── */
   const renderCats = () => {
-    catsEl.replaceChildren();
-    for (const c of make().cats) {
-      const b = el("button", "", c.name);
-      b.type = "button";
-      b.setAttribute("role", "tab");
-      b.setAttribute("aria-selected", String(c.name === cat && !search.value.trim()));
-      b.addEventListener("click", () => {
-        cat = c.name;
-        search.value = "";
-        renderCats();
-        renderList();
-      });
-      catsEl.append(b);
-    }
+    catsEl.innerHTML = book()
+      .cats.map((c) => {
+        const n = c.items.filter((it) => picked.has(it.name)).length;
+        const sel = c.name === cat && !query;
+        return `<button type="button" role="tab" aria-selected="${sel}" data-c="${esc(c.name)}">${esc(c.name)}${
+          n ? `<i class="is-picked">${n}</i>` : `<i>${c.items.length}</i>`
+        }</button>`;
+      })
+      .join('');
   };
-  const has = (name) => lines.some((l) => l.name === name);
-  const renderList = () => {
-    const q = search.value.trim().toLowerCase();
-    list.replaceChildren();
-    const groups = q ? make().cats : make().cats.filter((c) => c.name === cat);
-    const seen = /* @__PURE__ */ new Set();
-    let count = 0;
-    for (const g of groups) {
-      const items = g.items.filter((it) => (!q || it.name.toLowerCase().includes(q)) && !(q && seen.has(it.name)));
-      if (!items.length) continue;
-      if (q) list.append(el("li", "calc__group", g.name));
-      for (const it of items) {
-        seen.add(it.name);
-        count++;
-        const li = el("li");
-        li.append(el("span", "calc__name", it.name), priceNode(it.price));
-        const b = el("button", "calc__add");
-        b.type = "button";
-        const on = has(it.name);
-        b.setAttribute("aria-pressed", String(on));
-        b.setAttribute("aria-label", `${on ? "\u0423\u0431\u0440\u0430\u0442\u044C \u0438\u0437 \u043F\u0440\u0435\u0434\u0447\u0435\u043A\u0430" : "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0432 \u043F\u0440\u0435\u0434\u0447\u0435\u043A"}: ${it.name}`);
-        b.append(icon(on ? TICK : PLUS), document.createTextNode(on ? "\u0412 \u043F\u0440\u0435\u0434\u0447\u0435\u043A\u0435" : "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C"));
-        b.addEventListener("click", () => toggle(it));
-        li.append(b);
-        list.append(li);
-      }
+
+  /* ── works ── */
+  const renderItems = () => {
+    const q = norm(query.trim());
+    let list;
+    let label;
+    if (q) {
+      const stems = q.split(/\s+/).filter(Boolean).map((w) => (w.length > 5 ? w.slice(0, -2) : w));
+      const seen = new Set();
+      list = book()
+        .cats.flatMap((c) => c.items)
+        .filter((it) => !seen.has(it.name) && seen.add(it.name) && stems.every((w) => norm(it.name).includes(w)));
+      foundEl.textContent = list.length ? `Найдено: ${list.length}` : '';
+      label = 'результатов';
+    } else {
+      list = (book().cats.find((c) => c.name === cat) || book().cats[0]).items;
+      foundEl.textContent = '';
+      label = 'работ в разделе';
     }
-    if (!count) {
-      const li = el("li", "calc__none", `\u041F\u043E \u0437\u0430\u043F\u0440\u043E\u0441\u0443 \xAB${search.value.trim()}\xBB \u043D\u0438\u0447\u0435\u0433\u043E \u043D\u0435 \u043D\u0430\u0448\u043B\u0438. \u041D\u0430\u043F\u0438\u0448\u0438\u0442\u0435 \u043D\u0430\u043C \u2014 \u043F\u043E\u0434\u0441\u043A\u0430\u0436\u0435\u043C \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C.`);
-      list.append(li);
-    }
+    const show = expanded ? list : list.slice(0, LIMIT);
+    itemsEl.innerHTML = show.length
+      ? show
+          .map(
+            (it) =>
+              `<button type="button" class="calc__item" data-n="${esc(it.name)}" aria-pressed="${picked.has(it.name)}"><span class="calc__box" aria-hidden="true"></span><span class="calc__nm">${esc(
+                it.name
+              )}</span><span class="calc__pr num"><small>от</small>${fmt.format(it.price)} руб.</span></button>`
+          )
+          .join('')
+      : `<p class="calc__none">По запросу «${esc(query.trim())}» ничего не нашли. Попробуйте другое слово — «колодки», «ГРМ», «сцепление» — или выберите раздел выше.</p>`;
+    const rest = list.length - show.length;
+    footEl.innerHTML =
+      (rest > 0
+        ? `<button type="button" data-more>Ещё ${rest} ${label} ↓</button>`
+        : expanded && list.length > LIMIT
+          ? '<button type="button" data-more>Свернуть ↑</button>'
+          : '<span></span>') + `<span>Не видите нужную работу? <a data-to-search>Найдите поиском</a> или спросите мастера</span>`;
   };
+
+  /* ── receipt ── */
+  const animateSum = (from, to) => {
+    const paint = (v) => {
+      sumEl.textContent = fmt.format(v);
+      if (dockSum) dockSum.textContent = fmt.format(v);
+    };
+    if (reduce) return paint(to);
+    const t0 = performance.now();
+    const step = (t) => {
+      const k = Math.min(1, (t - t0) / 500);
+      paint(Math.round(from + (to - from) * (1 - Math.pow(1 - k, 3))));
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
   const renderCheck = () => {
-    makeEl.textContent = make().name;
-    itemsEl.replaceChildren();
-    for (const l of lines) {
-      const li = el("li");
-      li.append(el("span", "", l.name));
-      const p = el("span", "check__p num", `${fmt.format(l.price)}\xA0\u0440\u0443\u0431.`);
-      const rm = el("button", "check__rm");
-      rm.type = "button";
-      rm.setAttribute("aria-label", `\u0423\u0434\u0430\u043B\u0438\u0442\u044C: ${l.name}`);
-      rm.append(icon(CROSS));
-      rm.addEventListener("click", () => remove(l.name, li));
-      li.append(p, rm);
-      itemsEl.append(li);
+    const pm = priceMap();
+    const lines = [...picked].filter(([n]) => pm.has(n));
+    linesEl.innerHTML = lines.length
+      ? lines
+          .map(
+            ([n, q]) =>
+              `<li data-n="${esc(n)}"><span>${esc(n)}</span><span class="check__qty"><button type="button" data-q="-1" aria-label="Меньше: ${esc(
+                n
+              )}">−</button><b>${q}</b><button type="button" data-q="1" aria-label="Больше: ${esc(n)}">+</button></span><span class="check__p">${fmt.format(
+                pm.get(n) * q
+              )}</span><button type="button" class="check__rm" aria-label="Удалить: ${esc(
+                n
+              )}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></li>`
+          )
+          .join('')
+      : '<li class="check__empty">Отметьте работы слева или нажмите на то, что беспокоит.</li>';
+    const sum = total();
+    animateSum(shown, sum);
+    shown = sum;
+    clearBtn.hidden = !lines.length;
+    metaEl.textContent = `VAGMOTORS · ${MAKE_NAMES[make]} · работ: ${lines.length}`;
+    if (dockEmpty && dockFull) {
+      dockEmpty.hidden = lines.length > 0;
+      dockFull.hidden = lines.length === 0;
     }
-    emptyEl.hidden = lines.length > 0;
-    totalEl.textContent = fmt.format(total());
-    check.querySelector("[data-check-sum]").hidden = lines.length === 0;
-    check.querySelector("[data-check-dash]").hidden = lines.length > 0;
-    submit.disabled = lines.length === 0;
-    document.dispatchEvent(new CustomEvent("precheck:change", { detail: { count: lines.length, total: total() } }));
   };
-  const toggle = (it) => {
-    if (has(it.name)) lines = lines.filter((l) => l.name !== it.name);
-    else lines = [...lines, { name: it.name, price: it.price }];
-    say("");
+
+  const refresh = () => {
     save();
-    renderList();
-    renderCheck();
-  };
-  const remove = (name, li) => {
-    li.classList.add("is-out");
-    setTimeout(() => {
-      lines = lines.filter((l) => l.name !== name);
-      save();
-      renderList();
-      renderCheck();
-      itemsEl.querySelector(".check__rm")?.focus() ?? form.querySelector("input")?.focus();
-    }, matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 260);
-  };
-  root2.querySelectorAll('input[name="calc-make"]').forEach((r) => {
-    if (r.value === makeId) r.checked = true;
-    r.addEventListener("change", () => {
-      makeId = r.value;
-      const priceOf = new Map(make().cats.flatMap((c) => c.items.map((i) => [i.name, i.price])));
-      const dropped = lines.filter((l) => !priceOf.has(l.name)).map((l) => l.name);
-      lines = lines.filter((l) => priceOf.has(l.name)).map((l) => ({ name: l.name, price: priceOf.get(l.name) }));
-      if (!make().cats.some((c) => c.name === cat)) cat = make().cats[0]?.name ?? "";
-      save();
-      renderCats();
-      renderList();
-      renderCheck();
-      say(dropped.length ? `\u041F\u0435\u0440\u0435\u0441\u0447\u0438\u0442\u0430\u043B\u0438 \u0434\u043B\u044F ${make().name}. \u041D\u0435\u0442 \u0432 \u043F\u0440\u0430\u0439\u0441\u0435 \u043C\u0430\u0440\u043A\u0438: ${dropped.join(", ")}.` : lines.length ? `\u041F\u0435\u0440\u0435\u0441\u0447\u0438\u0442\u0430\u043B\u0438 \u0446\u0435\u043D\u044B \u0434\u043B\u044F ${make().name}.` : "", dropped.length ? "error" : "ok");
-    });
-  });
-  search.addEventListener("input", () => {
+    renderSym();
     renderCats();
-    renderList();
-  });
-  check.querySelector("[data-check-clear]").addEventListener("click", () => {
-    lines = [];
-    save();
-    renderList();
+    renderItems();
     renderCheck();
-    say("\u041F\u0440\u0435\u0434\u0447\u0435\u043A \u043E\u0447\u0438\u0449\u0435\u043D.");
+  };
+
+  /* ── events ── */
+  catsEl.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-c]');
+    if (!b) return;
+    cat = b.dataset.c;
+    query = '';
+    search.value = '';
+    expanded = false;
+    renderCats();
+    renderItems();
   });
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    if (!lines.length) {
-      say("\u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0445\u043E\u0442\u044F \u0431\u044B \u043E\u0434\u043D\u0443 \u0440\u0430\u0431\u043E\u0442\u0443 \u0438\u0437 \u0441\u043F\u0438\u0441\u043A\u0430.", "error");
+
+  search.addEventListener('input', () => {
+    query = search.value;
+    expanded = false;
+    renderCats();
+    renderItems();
+  });
+
+  itemsEl.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-n]');
+    if (!b) return;
+    const n = b.dataset.n;
+    if (picked.has(n)) picked.delete(n);
+    else picked.set(n, 1);
+    refresh();
+  });
+
+  footEl.addEventListener('click', (e) => {
+    if (e.target.closest('[data-more]')) {
+      expanded = !expanded;
+      renderItems();
+    }
+    if (e.target.closest('[data-to-search]')) {
+      search.focus();
+      search.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
+    }
+  });
+
+  symEl.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-i]');
+    if (!b) return;
+    const [, works, c] = SYM[Number(b.dataset.i)];
+    const pm = priceMap();
+    const added = works.filter(([n]) => pm.has(n));
+    added.forEach(([n, q]) => picked.set(n, Math.max(q, picked.get(n) || 0)));
+    if (book().cats.some((x) => x.name === c)) cat = c;
+    query = '';
+    search.value = '';
+    expanded = true;
+    refresh();
+    added.forEach(([n]) => itemsEl.querySelector(`[data-n="${CSS.escape(n)}"]`)?.classList.add('is-flash'));
+    toast(`Добавили в расчёт: ${added.map(([n]) => n.toLowerCase()).join(', ')}`);
+  });
+
+  linesEl.addEventListener('click', (e) => {
+    const li = e.target.closest('li[data-n]');
+    if (!li) return;
+    const n = li.dataset.n;
+    if (e.target.closest('.check__rm')) {
+      li.classList.add('is-out');
+      setTimeout(() => {
+        picked.delete(n);
+        refresh();
+        toast(`Убрали: ${n.toLowerCase()}`);
+      }, reduce ? 0 : 220);
       return;
     }
-    const fd = new FormData(form);
-    const model = String(fd.get("model") || "").trim();
-    const ch = String(fd.get("ch") || "telegram");
-    const text = [
-      "\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435! \u041F\u0440\u0435\u0434\u0447\u0435\u043A \u0441 \u0441\u0430\u0439\u0442\u0430 VAGMOTORS.",
-      `\u041C\u0430\u0440\u043A\u0430: ${make().name}${model ? `, ${model}` : ""}`,
-      ...lines.map((l, i) => `${i + 1}. ${l.name} \u2014 \u043E\u0442 ${fmt.format(l.price)} \u0440\u0443\u0431.`),
-      `\u0418\u0442\u043E\u0433\u043E \u0440\u0430\u0431\u043E\u0442\u044B: \u043E\u0442 ${fmt.format(total())} \u0440\u0443\u0431.`,
-      "\u041F\u043E\u0434\u0441\u043A\u0430\u0436\u0438\u0442\u0435 \u0442\u043E\u0447\u043D\u0443\u044E \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C \u0438 \u0431\u043B\u0438\u0436\u0430\u0439\u0448\u0435\u0435 \u0432\u0440\u0435\u043C\u044F \u0437\u0430\u043F\u0438\u0441\u0438."
-    ].join("\n");
-    const enc = encodeURIComponent(text);
-    let copied = false;
-    try {
-      await navigator.clipboard.writeText(text);
-      copied = true;
-    } catch (_) {
-    }
-    if (ch === "whatsapp") {
-      window.open(`${WA}?text=${enc}`, "_blank", "noopener");
-      say("\u041E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u043C WhatsApp \u0441 \u043F\u0440\u0435\u0434\u0447\u0435\u043A\u043E\u043C \u2014 \u043E\u0441\u0442\u0430\u0451\u0442\u0441\u044F \u043D\u0430\u0436\u0430\u0442\u044C \xAB\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C\xBB.", "ok");
-    } else if (ch === "viber") {
-      window.location.href = `viber://chat?number=${encodeURIComponent(SERVICE_TEL)}&draft=${enc}`;
-      say(copied ? "\u041E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u043C Viber. \u041F\u0440\u0435\u0434\u0447\u0435\u043A \u0441\u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D \u2014 \u0435\u0441\u043B\u0438 \u043F\u043E\u043B\u0435 \u043F\u0443\u0441\u0442\u043E\u0435, \u0432\u0441\u0442\u0430\u0432\u044C\u0442\u0435 \u0435\u0433\u043E." : "\u041E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u043C Viber.", "ok");
-    } else {
-      window.open(TG, "_blank", "noopener");
-      say(copied ? "\u041F\u0440\u0435\u0434\u0447\u0435\u043A \u0441\u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D. \u0412\u0441\u0442\u0430\u0432\u044C\u0442\u0435 \u0435\u0433\u043E \u0432 \u043E\u0442\u043A\u0440\u044B\u0432\u0448\u0438\u0439\u0441\u044F \u0447\u0430\u0442 Telegram." : "\u041E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u043C Telegram \u2014 \u043F\u0435\u0440\u0435\u0447\u0438\u0441\u043B\u0438\u0442\u0435 \u0440\u0430\u0431\u043E\u0442\u044B \u0432 \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0438.", "ok");
+    const b = e.target.closest('[data-q]');
+    if (b) {
+      const q = picked.get(n) + Number(b.dataset.q);
+      if (q < 1) picked.delete(n);
+      else picked.set(n, Math.min(q, 20));
+      refresh();
     }
   });
+
+  clearBtn.addEventListener('click', () => {
+    picked.clear();
+    bookEl.hidden = true;
+    submitBtn.textContent = 'Записаться с этим расчётом';
+    refresh();
+    toast('Расчёт очищен');
+  });
+
+  root.querySelectorAll('input[name="calc-make"]').forEach((r) => {
+    r.checked = r.value === make;
+    r.addEventListener('change', () => {
+      make = r.value;
+      const pm = priceMap();
+      const dropped = [...picked.keys()].filter((n) => !pm.has(n));
+      dropped.forEach((n) => picked.delete(n));
+      if (!book().cats.some((c) => c.name === cat)) cat = book().cats[0].name;
+      refresh();
+      toast(
+        dropped.length
+          ? `Цены пересчитаны для ${MAKE_NAMES[make]}. Нет в прайсе марки: ${dropped.join(', ').toLowerCase()}`
+          : picked.size
+            ? `Цены пересчитаны для ${MAKE_NAMES[make]}`
+            : `Прайс ${MAKE_NAMES[make]}`
+      );
+    });
+  });
+
+  /* ── visit day and time (open daily 9–21, Minsk time) ── */
+  const daysEl = $('[data-check-days]');
+  const slotsEl = $('[data-check-slots]');
+  const WD = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
+  const minsk = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Minsk' }));
+  const startToday = minsk.getHours() < 19;
+  const days = [];
+  for (let i = startToday ? 0 : 1; days.length < 7; i++) {
+    const d = new Date(minsk);
+    d.setDate(minsk.getDate() + i);
+    const title = i === 0 ? 'Сегодня' : i === 1 ? 'Завтра' : WD[d.getDay()];
+    days.push({ title, sub: d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' }).replace('.', '') });
+  }
+  daysEl.innerHTML = days.map((d, i) => `<button type="button" aria-pressed="${i === 0}">${d.title}<small>${d.sub}</small></button>`).join('');
+  slotsEl.innerHTML = ['Утро 9–12', 'День 12–16', 'Вечер 16–21']
+    .map((s, i) => `<button type="button" aria-pressed="${i === 0}">${s}</button>`)
+    .join('');
+  [daysEl, slotsEl].forEach((g) =>
+    g.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      [...g.children].forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    })
+  );
+
+  const receiptText = () => {
+    const pm = priceMap();
+    const lines = [...picked].filter(([n]) => pm.has(n));
+    const model = String(new FormData(check).get('model') || '').trim();
+    const day = daysEl.querySelector('[aria-pressed="true"]');
+    const slot = slotsEl.querySelector('[aria-pressed="true"]');
+    return [
+      'Здравствуйте! Расчёт с сайта VAGMOTORS.',
+      `Марка: ${MAKE_NAMES[make]}${model ? `, ${model}` : ''}`,
+      ...lines.map(([n, q], i) => `${i + 1}. ${n}${q > 1 ? ` × ${q}` : ''} — от ${fmt.format(pm.get(n) * q)} руб.`),
+      `Итого работы: от ${fmt.format(total())} руб.`,
+      !bookEl.hidden && day && slot ? `Удобно: ${day.firstChild.textContent} ${day.querySelector('small').textContent}, ${slot.textContent}` : '',
+      'Подскажите точную стоимость и подтвердите время записи.',
+    ]
+      .filter(Boolean)
+      .join('\n');
+  };
+
+  const copy = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (_) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.append(ta);
+      ta.select();
+      let ok = false;
+      try {
+        ok = document.execCommand('copy');
+      } catch (_) {}
+      ta.remove();
+      return ok;
+    }
+  };
+
+  $('[data-check-copy]').addEventListener('click', async () => {
+    if (!picked.size) return toast('Сначала добавьте работы в расчёт');
+    toast((await copy(receiptText())) ? 'Расчёт скопирован — вставьте его в мессенджер' : 'Не получилось скопировать автоматически');
+  });
+
+  check.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!picked.size) {
+      toast('Сначала добавьте работы в расчёт');
+      return;
+    }
+    if (bookEl.hidden) {
+      bookEl.hidden = false;
+      submitBtn.textContent = 'Отправить расчёт мастеру';
+      check.querySelector('#check-model').focus();
+      return;
+    }
+    const text = receiptText();
+    const ch = String(new FormData(check).get('ch') || 'telegram');
+    const copied = await copy(text);
+    const enc = encodeURIComponent(text);
+    if (ch === 'whatsapp') {
+      window.open(`${WA}?text=${enc}`, '_blank', 'noopener');
+      toast('Открываем WhatsApp с расчётом — остаётся нажать «Отправить»');
+    } else if (ch === 'viber') {
+      window.location.href = `viber://chat?number=${encodeURIComponent(SERVICE_TEL)}&draft=${enc}`;
+      toast(copied ? 'Открываем Viber. Расчёт скопирован — если поле пустое, вставьте его' : 'Открываем Viber');
+    } else {
+      window.open(TG, '_blank', 'noopener');
+      toast(copied ? 'Расчёт скопирован — вставьте его в открывшийся чат Telegram' : 'Открываем Telegram');
+    }
+  });
+
+  /* ── mobile bottom sheet ── */
+  const sheetMq = matchMedia('(max-width: 1000px)');
   let lastFocus = null;
-  const sheetMq = matchMedia("(max-width: 1000px)");
   const open = () => {
     if (!sheetMq.matches) {
-      check.scrollIntoView({ behavior: "smooth", block: "center" });
+      check.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
       return;
     }
     lastFocus = document.activeElement;
-    check.classList.add("is-open");
-    check.setAttribute("role", "dialog");
-    check.setAttribute("aria-modal", "true");
+    check.classList.add('is-open');
+    check.setAttribute('role', 'dialog');
+    check.setAttribute('aria-modal', 'true');
     backdrop.hidden = false;
-    document.body.style.overflow = "hidden";
-    setTimeout(() => check.querySelector("[data-check-close]")?.focus(), 50);
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => $('[data-check-close]').focus(), 50);
   };
   const close = () => {
-    if (!check.classList.contains("is-open")) return;
-    check.classList.remove("is-open");
-    check.removeAttribute("role");
-    check.removeAttribute("aria-modal");
+    if (!check.classList.contains('is-open')) return;
+    check.classList.remove('is-open');
+    check.removeAttribute('role');
+    check.removeAttribute('aria-modal');
     backdrop.hidden = true;
-    document.body.style.overflow = "";
-    lastFocus?.focus();
+    document.body.style.overflow = '';
+    lastFocus?.focus?.();
   };
-  document.addEventListener("click", (e) => {
-    if (e.target.closest("[data-check-open]")) {
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('[data-check-open]')) {
       e.preventDefault();
       open();
     }
   });
-  check.querySelector("[data-check-close]").addEventListener("click", close);
-  backdrop.addEventListener("click", close);
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") close();
-  });
-  sheetMq.addEventListener("change", () => close());
-  const d = /* @__PURE__ */ new Date();
-  check.querySelector("[data-check-date]").textContent = d.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit", year: "numeric" });
-  renderCats();
-  renderList();
-  renderCheck();
-}
-})();
+  $('[data-check-close]').addEventListener('click', close);
+  backdrop.addEventListener('click', close);
+  document.addEventListener('keydown', (e) => e.key === 'Escape' && close());
+  sheetMq.addEventListener('change', close);
 
-// Mobile dock: pre-check summary
-(() => {
-const sum = document.querySelector("[data-dock-sum]");
-const fmt = new Intl.NumberFormat("ru-RU");
-document.addEventListener("precheck:change", (e) => {
-  const { count, total } = e.detail;
-  if (sum) sum.textContent = count ? `${count} \xB7 \u043E\u0442 ${fmt.format(total)} \u0440\u0443\u0431.` : "\u043F\u0443\u0441\u0442\u043E";
-});
+  cat = book().cats[0].name;
+  refresh();
 })();
 
 // Price page: make tabs and search

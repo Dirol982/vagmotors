@@ -1360,190 +1360,82 @@
           <div class="calc__head">
             <h2 class="h-section" id="calc-title" data-reveal>Калькулятор заказа</h2>
             <p class="lede muted" data-reveal style="--d: 1">
-              Соберите работы — предчек посчитает минимальную стоимость. Отправьте его нам в мессенджер, и мастер
-              назовёт точную цену для вашей машины.
+              Нажмите на то, что беспокоит, — подставим типовые работы. Или отметьте их сами: <span data-calc-count>246</span>
+              работ с ценами из нашего прайса. Точную стоимость мастер согласует с вами до начала ремонта.
             </p>
           </div>
+
           <div class="calc__grid">
-            <div class="calc__pick">
-              <div class="calc__tools">
+            <div class="calc__panel">
+              <div class="calc__top">
                 <div class="cseg" role="radiogroup" aria-label="Марка">
-                  <label class="cseg__item">
-                    <input type="radio" name="calc-make" value="vw" checked /> <span>Volkswagen</span> </label
-                  ><label class="cseg__item">
-                    <input type="radio" name="calc-make" value="audi" /> <span>Audi</span> </label
-                  ><label class="cseg__item">
-                    <input type="radio" name="calc-make" value="skoda" /> <span>Škoda</span>
-                  </label>
+                  <label class="cseg__item"><input type="radio" name="calc-make" value="vw" checked /><span>Volkswagen</span></label>
+                  <label class="cseg__item"><input type="radio" name="calc-make" value="audi" /><span>Audi</span></label>
+                  <label class="cseg__item"><input type="radio" name="calc-make" value="skoda" /><span>Škoda</span></label>
                 </div>
-                <label class="calc__search">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <circle cx="11" cy="11" r="6.5"></circle>
-                    <path d="m20 20-4.4-4.4"></path>
-                  </svg>
-                  <span class="sr-only">Поиск работы</span>
-                  <input
-                    type="search"
-                    placeholder="Найти работу: колодки, ГРМ, DSG…"
-                    autocomplete="off"
-                    data-calc-search
-                  />
-                </label>
+                <small class="calc__hint">Porsche, SEAT, Bentley — выберите ближайшую марку, точную цену назовём</small>
               </div>
+
+              <label class="calc__search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m20 20-4.4-4.4" /></svg>
+                <span class="sr-only">Поиск работы</span>
+                <input type="search" placeholder="Найти работу: колодки, ГРМ, сцепление ДСГ…" autocomplete="off" data-calc-search />
+                <span class="calc__found num" data-calc-found aria-live="polite"></span>
+              </label>
+
+              <div class="calc__sym">
+                <span class="calc__sym-l">Что беспокоит?</span>
+                <div class="calc__sym-row" data-calc-sym></div>
+              </div>
+
               <div class="calc__cats" role="tablist" aria-label="Раздел прайса" data-calc-cats></div>
-              <ul class="calc__list" role="list" data-calc-list aria-live="polite"></ul>
-              <p class="calc__note muted">
-                Porsche, SEAT и Bentley считаем индивидуально — выберите ближайшую марку или напишите нам, назовём цену.
-              </p>
-              <noscript
-                ><p>
-                  Калькулятор работает с включённым JavaScript. Полный прайс — <a href="price/">на странице цен</a>.
-                </p></noscript
-              >
+              <div class="calc__items" data-calc-items></div>
+              <div class="calc__foot" data-calc-foot></div>
             </div>
+
             <div class="calc__backdrop" data-check-backdrop hidden></div>
-            <aside class="check" id="precheck" aria-labelledby="check-title" data-check>
-              <div class="check__paper">
-                <div class="check__top">
-                  <h3 id="check-title">Предчек</h3>
-                  <button type="button" class="check__close" data-check-close aria-label="Свернуть предчек">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      aria-hidden="true"
-                    >
-                      <path d="M5 5l14 14M19 5 5 19"></path>
-                    </svg>
-                  </button>
-                </div>
-                <p class="check__meta num"><span data-check-make>Volkswagen</span> · <span data-check-date></span></p>
-                <ol class="check__items" role="list" data-check-items></ol>
-                <p class="check__empty" data-check-empty>Добавьте работы из списка — сумма появится здесь.</p>
-                <div class="check__total">
-                  <span>Итого работы</span>
-                  <strong class="num" data-check-sum hidden
-                    ><small>от</small> <span data-check-total>0</span>&nbsp;<small>руб.</small></strong
-                  >
-                  <strong class="num" data-check-dash aria-label="пока пусто">—</strong>
-                </div>
-                <p class="check__fine">
-                  Минимальная стоимость работ без запчастей. Итоговую цену назовём по модели, двигателю и VIN.
-                </p>
-                <form class="check__send" data-check-form novalidate>
-                  <label class="sr-only" for="check-model">Модель, год, двигатель</label>
-                  <input
-                    id="check-model"
-                    name="model"
-                    type="text"
-                    placeholder="Модель, год, двигатель"
-                    autocomplete="off"
-                  />
-                  <div class="check__ch" role="radiogroup" aria-label="Куда отправить">
-                    <label
-                      ><input type="radio" name="ch" value="telegram" checked /><span
-                        ><svg
-                          width="18"
-                          height="18"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          aria-hidden="true"
-                        >
-                          <path d="M21 4 3 11.2l5.6 2L17.5 7l-6.8 7.6.2 5.4 3-3.6 4.3 3.1L21 4Z"></path>
-                        </svg>
-                        Telegram</span
-                      ></label
-                    >
-                    <label
-                      ><input type="radio" name="ch" value="viber" /><span
-                        ><svg
-                          width="18"
-                          height="18"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M12 2.8c-5 0-8.4 1.4-8.4 7.6 0 3.6 1 5.6 3.3 6.7v3.6l3-2.9c.7.1 1.4.1 2.1.1 5 0 8.4-1.4 8.4-7.5S17 2.8 12 2.8Z"
-                          ></path>
-                          <path
-                            d="M9.4 7.6c.4 0 .9.9 1.1 1.4.2.4-.6 1-.6 1.2.5 1.3 1.5 2.3 2.8 2.8.2 0 .8-.8 1.2-.6.5.2 1.4.7 1.4 1.1 0 .6-.6 1.3-1.3 1.3-2.8-.3-5.6-3.1-5.9-5.9 0-.7.7-1.3 1.3-1.3Z"
-                          ></path>
-                        </svg>
-                        Viber</span
-                      ></label
-                    >
-                    <label
-                      ><input type="radio" name="ch" value="whatsapp" /><span
-                        ><svg
-                          width="18"
-                          height="18"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          aria-hidden="true"
-                        >
-                          <path d="M4 20.2 5.2 16A8.6 8.6 0 1 1 8 18.8l-4 1.4Z"></path>
-                          <path
-                            d="M9.2 8c.3 0 .7.8.9 1.2.2.4-.5.9-.5 1.1.4 1.1 1.3 2 2.4 2.4.2 0 .7-.7 1-.5.4.2 1.2.6 1.2.9 0 .5-.5 1.1-1.1 1.1-2.4-.2-4.7-2.5-5-4.9 0-.6.6-1.3 1.1-1.3Z"
-                          ></path>
-                        </svg>
-                        WhatsApp</span
-                      ></label
-                    >
-                  </div>
-                  <button class="btn check__submit" type="submit">
-                    Отправить предчек
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      aria-hidden="true"
-                    >
-                      <path d="M4 12h16m-6-6 6 6-6 6"></path>
-                    </svg>
-                  </button>
-                  <div class="check__row">
-                    <button type="button" class="check__clear" data-check-clear>Очистить</button>
-                    <a class="num" href="tel:+375296200421">+375 29 620-04-21</a>
-                  </div>
-                  <p class="check__status" data-check-status role="status" aria-live="polite"></p>
-                </form>
+
+            <form class="check" id="precheck" aria-labelledby="check-title" data-check novalidate>
+              <div class="check__top">
+                <h3 id="check-title">Предварительный расчёт</h3>
+                <button type="button" class="check__clear" data-check-clear hidden>Очистить</button>
+                <button type="button" class="check__close" data-check-close aria-label="Свернуть расчёт">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" /></svg>
+                </button>
               </div>
-            </aside>
+              <p class="check__meta" data-check-meta>VAGMOTORS · Volkswagen · работ: 0</p>
+
+              <ul class="check__lines" role="list" data-check-lines></ul>
+
+              <div class="check__total">
+                <span>Итого</span>
+                <strong class="num"><small>от</small> <span data-check-sum>0</span> <small>руб.</small></strong>
+              </div>
+              <p class="check__fine">Ориентировочная стоимость работ без запчастей. Точную цену назовём по модели, двигателю и VIN — согласуем до начала ремонта.</p>
+
+              <div class="check__book" data-check-book hidden>
+                <label class="check__label" for="check-model">Модель, год, двигатель</label>
+                <input id="check-model" class="check__input" name="model" type="text" placeholder="Например, Golf 7 2016, 1.4 TSI" autocomplete="off" />
+                <span class="check__label">Когда удобно</span>
+                <div class="check__days" data-check-days></div>
+                <div class="check__slots" data-check-slots></div>
+                <span class="check__label">Куда отправить</span>
+                <div class="check__ch" role="radiogroup" aria-label="Куда отправить">
+                  <label><input type="radio" name="ch" value="telegram" checked /><span>Telegram</span></label>
+                  <label><input type="radio" name="ch" value="viber" /><span>Viber</span></label>
+                  <label><input type="radio" name="ch" value="whatsapp" /><span>WhatsApp</span></label>
+                </div>
+              </div>
+
+              <button class="btn check__submit" type="submit" data-check-submit>Записаться с этим расчётом</button>
+              <div class="check__row">
+                <button type="button" class="check__copy" data-check-copy>Скопировать расчёт</button>
+                <a class="num" href="tel:+375296200421">+375 29 620-04-21</a>
+              </div>
+            </form>
           </div>
         </div>
+        <div class="toast" data-toast role="status" aria-live="polite"></div>
       </section>
       <section class="dsg section on-blue-deep" id="dsg" aria-labelledby="dsg-title">
         <span class="lightline seam" aria-hidden="true" data-reveal="line"></span>
@@ -1552,7 +1444,7 @@
         </div>
         <div class="wrap dsg__grid">
           <div class="dsg__lead">
-            <h2 class="h-section" id="dsg-title" data-reveal>Ремонт DSG<br />без «дешёвых решений»</h2>
+            <h2 class="h-section" id="dsg-title" data-reveal>Ремонт DSG<br />и S tronic</h2>
             <p class="lede muted" data-reveal style="--d: 1">
               Коробка DSG требует не только оборудования, но и знания нюансов каждой серии. Мы делаем технологически
               правильный ремонт, который возвращает трансмиссии заводской ресурс.
@@ -2480,27 +2372,14 @@
       </div>
     </footer>
     <nav class="dock on-blue" aria-label="Быстрая связь">
-      <a href="tel:+375296200421" class="dock__call"
-        ><svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <path
-            d="M5.2 3.5h3l1.6 4.2-2 1.4a11 11 0 0 0 7.1 7.1l1.4-2 4.2 1.6v3a1.7 1.7 0 0 1-1.8 1.7C10.6 20 4 13.4 3.5 5.3a1.7 1.7 0 0 1 1.7-1.8Z"
-          ></path>
-        </svg>
-        Позвонить</a
-      >
-      <button type="button" class="dock__book" data-check-open aria-controls="precheck">
-        <span data-dock-label>Предчек</span> <span class="dock__sum num" data-dock-sum>пусто</span>
+      <button type="button" class="dock__sum" data-check-open aria-controls="precheck">
+        <small>Ваш расчёт</small>
+        <b class="num"><span data-dock-empty>пока пусто</span><span data-dock-full hidden>от <span data-dock-sum>0</span> руб.</span></b>
       </button>
+      <a href="tel:+375296200421" class="dock__call" aria-label="Позвонить: +375 29 620-04-21">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.2 3.5h3l1.6 4.2-2 1.4a11 11 0 0 0 7.1 7.1l1.4-2 4.2 1.6v3a1.7 1.7 0 0 1-1.8 1.7C10.6 20 4 13.4 3.5 5.3a1.7 1.7 0 0 1 1.7-1.8Z" /></svg>
+      </a>
+      <button type="button" class="dock__book" data-check-open aria-controls="precheck">Предчек</button>
     </nav>
     <script src="assets/js/main.js" defer></script>
   </body>
