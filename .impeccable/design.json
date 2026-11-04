@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-04T16:05:00Z",
+  "title": "Design System: VAGMOTORS — Showroom",
+  "extensions": {
+    "colorMeta": {
+      "group-blue": { "role": "primary", "displayName": "Group Blue", "canonical": "#0a1b38", "tonalRamp": ["#050f22", "#0a1b38", "#0e2347", "#132d59", "#1d4380", "#3d6fb8", "#9db8e0", "#c9d8ef"] },
+      "wordmark-red": { "role": "secondary", "displayName": "Wordmark Red", "canonical": "#d33b40", "tonalRamp": ["#d33b40", "#b42c31", "#9b2328"] },
+      "floor": { "role": "neutral", "displayName": "Showroom Floor", "canonical": "#f2f4f7", "tonalRamp": ["#ffffff", "#f2f4f7", "#e8ecf1", "#d3d9e1", "#b9c2ce", "#677487", "#4e5a6b", "#0d1626"] },
+      "light": { "role": "tertiary", "displayName": "Ceiling Light", "canonical": "#eef5ff", "tonalRamp": ["#eef5ff", "rgb(157 190 255)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headline and make lineup." },
+      "section": { "displayName": "Section", "purpose": "Section headings." },
+      "row-title": { "displayName": "Row title", "purpose": "Service index rows, spec titles, contact address." }
+    },
+    "shadows": [
+      { "name": "float", "value": "0 30px 60px -20px rgb(0 0 0 / 0.5)", "purpose": "Configurator and receipt floating over blue." },
+      { "name": "light-glow", "value": "0 0 6px 0 rgb(157 190 255 / 0.9), 0 0 28px 2px rgb(157 190 255 / 0.35)", "purpose": "Light-line material only." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Reveals and state transitions." },
+      { "name": "ease-in-out", "value": "cubic-bezier(0.65, 0, 0.35, 1)", "purpose": "Image clip reveals." },
+      { "name": "spring", "value": "stiffness 120, damping 17", "purpose": "Counters and warranty gauges arrive with mass." }
+    ],
+    "breakpoints": [
+      { "name": "phone", "value": "640px" },
+      { "name": "dock", "value": "760px" },
+      { "name": "stack", "value": "900px" },
+      { "name": "sheet", "value": "1000px" },
+      { "name": "nav", "value": "1080px" }
+    ]
+  },
+  "components": [
+    { "name": "Primary Button", "kind": "button", "refersTo": "button-primary", "description": "The one red action per context.", "html": "<button class=\"ds-btn\">Записаться →</button>", "css": ".ds-btn{background:#d33b40;color:#fff;min-height:56px;padding:0 28px;border:0;border-radius:2px;font:600 1rem 'Golos Text',sans-serif}.ds-btn:hover{background:#b42c31}" },
+    { "name": "Make Segments", "kind": "chip", "refersTo": "segment-selected", "description": "Configurator-style single choice on blue.", "html": "<div class=\"ds-seg\"><span class=\"on\">Volkswagen</span><span>Audi</span><span>Škoda</span></div>", "css": ".ds-seg{display:flex;gap:1px;padding:1px;background:rgb(255 255 255/.14);border-radius:2px}.ds-seg span{min-height:48px;padding:0 20px;display:flex;align-items:center;background:#050f22;color:#fff;font:600 .9375rem 'Golos Text',sans-serif}.ds-seg .on{background:#fff;color:#0a1b38}" },
+    { "name": "Light-line", "kind": "custom", "description": "Signature luminous seam.", "html": "<div style=\"background:#0a1b38;padding:40px\"><span class=\"ds-ll\"></span></div>", "css": ".ds-ll{display:block;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#eef5ff 12%,#fff 50%,#eef5ff 88%,transparent);box-shadow:0 0 6px rgb(157 190 255/.9),0 0 28px 2px rgb(157 190 255/.35)}" },
+    { "name": "Pre-check", "kind": "custom", "refersTo": "receipt", "description": "Receipt with removable lines and a total.", "html": "<div class=\"ds-rc\"><b>Предчек</b><p>Диагностика подвески <span>20 руб. ×</span></p><p class=\"t\">Итого <span>от 20 руб.</span></p></div>", "css": ".ds-rc{background:#fff;color:#0d1626;padding:28px;border-radius:2px;font:400 .9375rem 'Golos Text',sans-serif}.ds-rc p{display:flex;justify-content:space-between;border-bottom:1px dashed #d3d9e1;padding:10px 0;margin:0}.ds-rc .t{border-top:2px solid #0d1626;border-bottom:0;font-weight:600}" }
+  ],
+  "narrative": {
+    "northStar": "The Group's showroom floor",
+    "overview": "Deep group-blue walls, a cool white floor and LED-ceiling light-lines. Real workshop photos are the proof; type, hairlines and spacing carry the precision.",
+    "keyCharacteristics": ["Region-scale colour", "Type-only billing", "Configurator segments", "Tabular figures", "Light-line seams"],
+    "rules": [
+      { "name": "The Wordmark Rule", "body": "Red only in the wordmark and the primary action.", "section": "colors" },
+      { "name": "The Light-Line Rule", "body": "Luminous light marks seams, the hero ceiling and focus on blue; never a card shadow.", "section": "elevation" }
+    ],
+    "dos": ["Bill importance by type size", "Use real workshop photos", "Tabular prices with 'от'"],
+    "donts": ["No red selection states", "No eyebrows or icon-tile grids", "No dealer claims or invented figures"]
+  }
+}

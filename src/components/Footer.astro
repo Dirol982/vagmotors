@@ -1,0 +1,174 @@
+---
+import { Image } from 'astro:assets';
+import logoLight from '../assets/logo-light.png';
+import Icon from './Icon.astro';
+import { site, nav, makes } from '../data/site';
+interface Props {
+  home?: boolean;
+}
+const { home = true } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const href = (h: string) => (h.startsWith('#') ? (home ? h : `${base}${h}`) : `${base}${h}`);
+const year = new Date().getFullYear();
+---
+
+<footer class="footer on-blue-deep">
+  <span class="lightline footer__line" aria-hidden="true"></span>
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <Image src={logoLight} alt="VAGMOTORS" width={160} height={65} />
+      <p class="muted">Специализированный сервис Volkswagen, Audi, Škoda, SEAT, Porsche и Bentley в центре Минска.</p>
+      <ul class="footer__social" aria-label="Соцсети">
+        <li><a href={site.social.instagram} target="_blank" rel="noopener"><Icon name="instagram" label="Instagram" /></a></li>
+        <li><a href={site.social.vk} target="_blank" rel="noopener"><Icon name="vk" label="ВКонтакте" /></a></li>
+        <li><a href={site.social.facebook} target="_blank" rel="noopener"><Icon name="facebook" label="Facebook" /></a></li>
+        <li><a href={site.social.ok} target="_blank" rel="noopener"><Icon name="ok" label="Одноклассники" /></a></li>
+        <li><a href={site.messengers.telegramChannel} target="_blank" rel="noopener"><Icon name="telegram" label="Telegram-канал" /></a></li>
+      </ul>
+    </div>
+
+    <nav class="footer__col" aria-label="Разделы">
+      <h3>Разделы</h3>
+      <ul>
+        {nav.map((n) => <li><a href={href(n.href)}>{n.label}</a></li>)}
+        <li><a href={href('#business')}>Для юрлиц</a></li>
+      </ul>
+    </nav>
+
+    <div class="footer__col">
+      <h3>Марки</h3>
+      <ul>
+        {makes.map((m) => <li><a href={href('#book')} data-pick-make={home ? m.id : undefined}>Ремонт {m.name}</a></li>)}
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h3>Контакты</h3>
+      <ul>
+        <li><a class="num" href={`tel:${site.service.tel}`}>{site.service.label}</a> <span class="muted">сервис</span></li>
+        <li><a class="num" href={`tel:${site.parts.tel}`}>{site.parts.label}</a> <span class="muted">запчасти</span></li>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li class="muted">{site.city}, {site.address}</li>
+        <li class="muted">{site.hours}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap footer__legal">
+    <p>© {year} {site.legalName}. УНП {site.requisites.unp}.</p>
+    <p>Независимый сервисный центр. Названия и товарные знаки марок принадлежат их владельцам.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    padding: clamp(64px, 8vw, 112px) 0 32px;
+  }
+
+  .footer__line {
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    opacity: 0.7;
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1.3fr;
+    gap: 48px;
+  }
+
+  .footer__brand img {
+    width: 140px;
+    height: auto;
+    margin-bottom: 24px;
+  }
+
+  .footer__brand p {
+    max-width: 30ch;
+    font-size: 0.9375rem;
+  }
+
+  .footer__social {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    margin: 28px 0 0;
+    padding: 0;
+  }
+
+  .footer__social a {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
+    color: var(--blue-200);
+    transition:
+      color 0.3s var(--ease-out),
+      box-shadow 0.3s var(--ease-out);
+  }
+
+  .footer__social a:hover {
+    color: var(--white);
+    box-shadow: inset 0 0 0 1px var(--light);
+  }
+
+  .footer h3 {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--blue-300);
+    margin-bottom: 20px;
+  }
+
+  .footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer__col li {
+    padding: 5px 0;
+    font-size: 0.9375rem;
+  }
+
+  .footer__col a {
+    text-decoration: none;
+    transition: color 0.3s var(--ease-out);
+  }
+
+  .footer__col a:hover {
+    color: var(--light);
+    text-decoration: underline;
+  }
+
+  .footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 32px;
+    margin-top: clamp(56px, 7vw, 96px);
+    padding-top: 24px;
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+    font-size: 0.8125rem;
+    color: var(--blue-300);
+  }
+
+  @media (max-width: 960px) {
+    .footer__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .footer__grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>

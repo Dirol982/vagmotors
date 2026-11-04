@@ -1,0 +1,726 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+import prices from '../data/prices.json';
+
+const brandMap: Record<string, { id: string; name: string; word: string }> = {
+  'Цены на ремонт Фольксваген': { id: 'vw', name: 'Volkswagen', word: 'Фольксваген' },
+  'Цены на ремонт Ауди': { id: 'audi', name: 'Audi', word: 'Ауди' },
+  'Цены на ремонт Шкода': { id: 'skoda', name: 'Škoda', word: 'Шкода' },
+};
+
+/* Catalog per make: brand words stripped so the same work keeps one key across makes */
+const catalog = Object.entries(brandMap).map(([key, meta]) => {
+  const src = prices.find((b) => b.brand.trim() === key);
+  const cats = new Map<string, Map<string, number>>();
+  for (const c of src?.cats ?? []) {
+    const m = cats.get(c.name) ?? new Map<string, number>();
+    for (const it of c.items) {
+      if (!it.price) continue;
+      const name = it.name.replace(new RegExp(`\\s*${meta.word}\\s*`, 'g'), ' ').replace(/\s+/g, ' ').trim();
+      if (!m.has(name)) m.set(name, it.price);
+    }
+    cats.set(c.name, m);
+  }
+  return {
+    id: meta.id,
+    name: meta.name,
+    cats: Array.from(cats, ([name, items]) => ({
+      name,
+      items: Array.from(items, ([n, p]) => ({ name: n, price: p })).sort((a, b) => a.price - b.price),
+    })),
+  };
+});
+---
+
+<section class="calc section on-blue" id="calc" aria-labelledby="calc-title" data-calc>
+  <script type="application/json" data-calc-data set:html={JSON.stringify(catalog)} />
+
+  <div class="wrap">
+    <div class="calc__head">
+      <h2 class="h-section" id="calc-title" data-reveal>Калькулятор заказа</h2>
+      <p class="lede muted" data-reveal style="--d:1">
+        Соберите работы — предчек посчитает минимальную стоимость. Отправьте его нам в мессенджер, и мастер назовёт точную
+        цену для вашей машины.
+      </p>
+    </div>
+
+    <div class="calc__grid">
+      <div class="calc__pick">
+        <div class="calc__tools">
+          <div class="cseg" role="radiogroup" aria-label="Марка">
+            {catalog.map((b, i) => (
+              <label class="cseg__item">
+                <input type="radio" name="calc-make" value={b.id} checked={i === 0} />
+                <span>{b.name}</span>
+              </label>
+            ))}
+          </div>
+          <label class="calc__search">
+            <Icon name="search" />
+            <span class="sr-only">Поиск работы</span>
+            <input type="search" placeholder="Найти работу: колодки, ГРМ, DSG…" autocomplete="off" data-calc-search />
+          </label>
+        </div>
+
+        <div class="calc__cats" role="tablist" aria-label="Раздел прайса" data-calc-cats></div>
+
+        <ul class="calc__list" role="list" data-calc-list aria-live="polite"></ul>
+        <p class="calc__note muted">
+          Porsche, SEAT и Bentley считаем индивидуально — выберите ближайшую марку или напишите нам, назовём цену.
+        </p>
+        <noscript><p>Калькулятор работает с включённым JavaScript. Полный прайс — <a href="price/">на странице цен</a>.</p></noscript>
+      </div>
+
+      <div class="calc__backdrop" data-check-backdrop hidden></div>
+
+      <aside class="check" id="precheck" aria-labelledby="check-title" data-check>
+        <div class="check__paper">
+          <div class="check__top">
+            <h3 id="check-title">Предчек</h3>
+            <button type="button" class="check__close" data-check-close aria-label="Свернуть предчек"><Icon name="close" /></button>
+          </div>
+          <p class="check__meta num"><span data-check-make>Volkswagen</span> · <span data-check-date></span></p>
+
+          <ol class="check__items" role="list" data-check-items></ol>
+          <p class="check__empty" data-check-empty>Добавьте работы из списка — сумма появится здесь.</p>
+
+          <div class="check__total">
+            <span>Итого работы</span>
+            <strong class="num" data-check-sum hidden><small>от</small> <span data-check-total>0</span>&nbsp;<small>руб.</small></strong>
+            <strong class="num" data-check-dash aria-label="пока пусто">—</strong>
+          </div>
+          <p class="check__fine">Минимальная стоимость работ без запчастей. Итоговую цену назовём по модели, двигателю и VIN.</p>
+
+          <form class="check__send" data-check-form novalidate>
+            <label class="sr-only" for="check-model">Модель, год, двигатель</label>
+            <input id="check-model" name="model" type="text" placeholder="Модель, год, двигатель" autocomplete="off" />
+            <div class="check__ch" role="radiogroup" aria-label="Куда отправить">
+              <label><input type="radio" name="ch" value="telegram" checked /><span><Icon name="telegram" size={18} /> Telegram</span></label>
+              <label><input type="radio" name="ch" value="viber" /><span><Icon name="viber" size={18} /> Viber</span></label>
+              <label><input type="radio" name="ch" value="whatsapp" /><span><Icon name="whatsapp" size={18} /> WhatsApp</span></label>
+            </div>
+            <button class="btn check__submit" type="submit">Отправить предчек <Icon name="arrow" /></button>
+            <div class="check__row">
+              <button type="button" class="check__clear" data-check-clear>Очистить</button>
+              <a class="num" href={`tel:${site.service.tel}`}>{site.service.label}</a>
+            </div>
+            <p class="check__status" data-check-status role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .calc {
+    overflow: clip;
+  }
+
+  .calc__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 32px 64px;
+    align-items: end;
+    margin-bottom: clamp(40px, 6vw, 80px);
+  }
+
+  .calc__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(340px, 1fr);
+    gap: clamp(32px, 4vw, 64px);
+    align-items: start;
+  }
+
+  .calc__tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cseg {
+    display: flex;
+    gap: 1px;
+    padding: 1px;
+    background: rgb(255 255 255 / 0.14);
+    border-radius: var(--radius);
+  }
+
+  .cseg__item {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .cseg__item input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .cseg__item span {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 20px;
+    background: var(--blue-950);
+    font-weight: 600;
+    transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out);
+  }
+
+  .cseg__item:hover span {
+    background: var(--blue-850);
+  }
+
+  .cseg__item input:checked + span {
+    background: var(--white);
+    color: var(--blue-900);
+  }
+
+  .cseg__item input:focus-visible + span {
+    outline: 2px solid var(--light);
+    outline-offset: -4px;
+  }
+
+  .calc__search {
+    position: relative;
+    flex: 1 1 260px;
+    max-width: 380px;
+    display: flex;
+    align-items: center;
+    color: var(--blue-200);
+  }
+
+  .calc__search :global(svg) {
+    position: absolute;
+    left: 14px;
+  }
+
+  .calc__search input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 16px 0 44px;
+    border: 0;
+    border-radius: var(--radius);
+    background: rgb(255 255 255 / 0.06);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.16);
+    color: var(--white);
+  }
+
+  .calc__search input::placeholder {
+    color: rgb(201 216 239 / 0.72);
+  }
+
+  .calc__search input:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 1px var(--light), 0 0 0 3px rgb(var(--light-glow) / 0.18);
+  }
+
+  .calc__cats {
+    display: flex;
+    gap: 8px;
+    margin: 24px 0 8px;
+    padding-bottom: 8px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--blue-500) transparent;
+    -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent);
+    mask-image: linear-gradient(90deg, #000 85%, transparent);
+    padding-right: 48px;
+  }
+
+  .calc__cats :global(button) {
+    flex: none;
+    min-height: 40px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 40px;
+    background: transparent;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
+    color: var(--blue-200);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+  }
+
+  .calc__cats :global(button:hover) {
+    color: var(--white);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.4);
+  }
+
+  .calc__cats :global(button[aria-selected='true']) {
+    background: var(--light);
+    color: var(--blue-900);
+    box-shadow: none;
+  }
+
+  .calc__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid rgb(255 255 255 / 0.14);
+  }
+
+  .calc__list :global(li) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 20px;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  }
+
+  .calc__list :global(.calc__group) {
+    display: block;
+    padding: 24px 0 8px;
+    border-bottom: 0;
+    font-size: 0.8125rem;
+    color: var(--blue-300);
+  }
+
+  .calc__list :global(.calc__name) {
+    font-size: 1rem;
+  }
+
+  .calc__list :global(.calc__price) {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .calc__list :global(.calc__price small) {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--blue-200);
+  }
+
+  .calc__list :global(.calc__add) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 128px;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: var(--radius);
+    background: transparent;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.28);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+  }
+
+  .calc__list :global(.calc__add:hover) {
+    background: rgb(255 255 255 / 0.08);
+  }
+
+  .calc__list :global(.calc__add[aria-pressed='true']) {
+    background: var(--white);
+    color: var(--blue-900);
+    box-shadow: inset 0 -2px 0 var(--blue-500);
+  }
+
+  .calc__list :global(.calc__none) {
+    display: block;
+    padding: 32px 0;
+    color: var(--blue-200);
+  }
+
+  .calc__note {
+    margin-top: 24px;
+    font-size: 0.9375rem;
+  }
+
+  /* ── The pre-check: a receipt from the service desk ── */
+  .check {
+    position: sticky;
+    top: 104px;
+  }
+
+  .check__paper {
+    position: relative;
+    padding: 28px 28px 24px;
+    background: var(--white);
+    color: var(--ink);
+    border-radius: var(--radius) var(--radius) 0 0;
+    box-shadow: 0 30px 60px -24px rgb(0 0 0 / 0.55);
+  }
+
+  /* torn edge */
+  .check__paper::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -10px;
+    height: 10px;
+    background:
+      linear-gradient(-45deg, transparent 6px, var(--white) 0) 0 0 / 14px 10px repeat-x,
+      linear-gradient(45deg, transparent 6px, var(--white) 0) 0 0 / 14px 10px repeat-x;
+  }
+
+  .check__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .check h3 {
+    font-size: 1.75rem;
+    letter-spacing: -0.03em;
+  }
+
+  .check__close {
+    display: none;
+    width: 44px;
+    height: 44px;
+    margin-right: -10px;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .check__meta {
+    margin-top: 6px;
+    font-size: 0.875rem;
+    color: var(--steel-600);
+  }
+
+  .check__items {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+    border-top: 1px dashed var(--steel-300);
+    max-height: 340px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  .check__items :global(li) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto 36px;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--steel-200);
+    font-size: 0.9375rem;
+    animation: check-in 0.5s var(--ease-out);
+  }
+
+  .check__items :global(li.is-out) {
+    animation: check-out 0.3s var(--ease-in-out) forwards;
+  }
+
+  @keyframes check-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+
+  @keyframes check-out {
+    to {
+      opacity: 0;
+      transform: translateX(16px);
+    }
+  }
+
+  .check__items :global(.check__p) {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .check__items :global(.check__rm) {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--steel-500);
+    cursor: pointer;
+    transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+  }
+
+  .check__items :global(.check__rm:hover) {
+    background: #fde9ea;
+    color: var(--red-700);
+  }
+
+  .check__empty {
+    padding: 20px 0;
+    color: var(--steel-600);
+    font-size: 0.9375rem;
+    border-bottom: 1px dashed var(--steel-200);
+  }
+
+  .check__empty[hidden] {
+    display: none;
+  }
+
+  .check__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 18px 0 6px;
+    border-top: 2px solid var(--ink);
+    margin-top: -1px;
+  }
+
+  .check__total strong[hidden] {
+    display: none;
+  }
+
+  .check__total strong {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--blue-900);
+  }
+
+  .check__total small {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--steel-600);
+  }
+
+  .check__fine {
+    font-size: 0.8125rem;
+    color: var(--steel-600);
+  }
+
+  .check__send {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .check__send input[type='text'] {
+    min-height: 48px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--floor);
+    box-shadow: inset 0 0 0 1px var(--steel-200);
+    color: var(--ink);
+  }
+
+  .check__send input[type='text']::placeholder {
+    color: var(--steel-500);
+  }
+
+  .check__send input[type='text']:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 1px var(--blue-500), 0 0 0 3px rgb(61 111 184 / 0.18);
+  }
+
+  .check__ch {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    padding: 1px;
+    background: var(--steel-200);
+    border-radius: var(--radius);
+  }
+
+  .check__ch label {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .check__ch input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .check__ch span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 44px;
+    background: var(--white);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out);
+  }
+
+  .check__ch input:checked + span {
+    background: var(--blue-900);
+    color: var(--white);
+  }
+
+  .check__ch input:focus-visible + span {
+    outline: 2px solid var(--blue-500);
+    outline-offset: -4px;
+  }
+
+  .check__submit {
+    width: 100%;
+  }
+
+  .check__submit:disabled {
+    background: var(--steel-300);
+    color: var(--steel-600);
+    cursor: not-allowed;
+  }
+
+  .check__submit:disabled::after {
+    display: none;
+  }
+
+  .check__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+  }
+
+  .check__row a {
+    font-weight: 600;
+    color: var(--blue-900);
+  }
+
+  .check__clear {
+    min-height: 40px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--steel-600);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    cursor: pointer;
+  }
+
+  .check__clear:hover {
+    color: var(--red-700);
+  }
+
+  .check__status {
+    font-size: 0.875rem;
+    min-height: 1.4em;
+  }
+
+  .check__status[data-kind='ok'] {
+    color: #1d7a45;
+  }
+
+  .check__status[data-kind='error'] {
+    color: var(--red-700);
+  }
+
+  .calc__backdrop {
+    display: none;
+  }
+
+  @media (max-width: 1000px) {
+    .calc__head,
+    .calc__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* On phones the pre-check is a bottom sheet called from the dock */
+    .check {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: auto;
+      z-index: 60;
+      max-height: 88vh;
+      overflow-y: auto;
+      transform: translateY(105%);
+      visibility: hidden;
+      transition: transform 0.5s var(--ease-out), visibility 0s linear 0.5s;
+    }
+
+    .check:global(.is-open) {
+      transform: none;
+      visibility: visible;
+      transition: transform 0.5s var(--ease-out), visibility 0s;
+    }
+
+    .check__paper {
+      padding: 20px 20px calc(24px + env(safe-area-inset-bottom));
+      border-radius: 12px 12px 0 0;
+    }
+
+    .check__paper::after {
+      display: none;
+    }
+
+    .check__close {
+      display: grid;
+    }
+
+    .check__items {
+      max-height: 34vh;
+    }
+
+    .calc__backdrop {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 59;
+      background: rgb(5 15 34 / 0.6);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+    }
+
+    .calc__backdrop[hidden] {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .cseg {
+      width: 100%;
+    }
+    .cseg__item {
+      flex: 1;
+    }
+    .cseg__item span {
+      justify-content: center;
+      padding: 0 8px;
+    }
+    .calc__search {
+      max-width: none;
+    }
+    .calc__list :global(li) {
+      grid-template-columns: minmax(0, 1fr) auto;
+      row-gap: 8px;
+    }
+    .calc__list :global(.calc__add) {
+      grid-column: 2;
+      min-width: 0;
+      padding: 0 12px;
+    }
+    .calc__list :global(.calc__price) {
+      grid-column: 1;
+      grid-row: 2;
+    }
+    .calc__list :global(.calc__add) {
+      grid-row: 1 / span 2;
+    }
+  }
+</style>

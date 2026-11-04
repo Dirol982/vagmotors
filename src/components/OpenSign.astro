@@ -1,0 +1,68 @@
+---
+import { site } from '../data/site';
+interface Props {
+  class?: string;
+}
+const { class: cls } = Astro.props;
+---
+
+<span class:list={['open-sign', cls]} data-open-sign data-open={site.open} data-close={site.close}>
+  <span class="open-sign__lamp" aria-hidden="true"></span>
+  <span class="open-sign__text" data-open-text>{site.hours}</span>
+</span>
+
+<style>
+  .open-sign {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .open-sign__lamp {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.45;
+    transition:
+      background-color 0.6s var(--ease-out),
+      box-shadow 0.6s var(--ease-out),
+      opacity 0.6s var(--ease-out);
+  }
+
+  :global(.open-sign.is-open) .open-sign__lamp {
+    opacity: 1;
+    background: #7cf0a8;
+    box-shadow:
+      0 0 0 3px rgb(124 240 168 / 0.18),
+      0 0 12px 2px rgb(124 240 168 / 0.55);
+    animation: lamp 3.2s ease-in-out infinite;
+  }
+
+  :global(.open-sign.is-closed) .open-sign__lamp {
+    background: var(--steel-300);
+  }
+
+  @keyframes lamp {
+    0%,
+    100% {
+      box-shadow:
+        0 0 0 3px rgb(124 240 168 / 0.18),
+        0 0 12px 2px rgb(124 240 168 / 0.55);
+    }
+    50% {
+      box-shadow:
+        0 0 0 5px rgb(124 240 168 / 0.08),
+        0 0 18px 3px rgb(124 240 168 / 0.35);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.open-sign.is-open) .open-sign__lamp {
+      animation: none;
+    }
+  }
+</style>
