@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Astro (static output), deployed to GitHub Pages from `dirol982/vagmotors` via GitHub Actions. Chosen by the owner.
+Static HTML/CSS/JS without a build step (`index.html`, `price.html`, `assets/`), published by GitHub Pages from the root of `main` — the owner's standard format for redesigns (same as jdmmotors, stozapad, tolex).
 
 ## Users
 
@@ -30,7 +30,7 @@ Single-group specialisation (VAG only) with dealer-grade tools and factory proce
 
 ## Capabilities and Constraints
 
-- Static hosting (GitHub Pages): no server; the booking form composes a message and opens Telegram/Viber/WhatsApp or a call.
+- Static hosting (GitHub Pages): no server; the booking form and the calculator's pre-check compose a message and open Telegram/Viber/WhatsApp or a call.
 - Services: diagnostics, electrics, maintenance, engine, DSG/S tronic/PDK, suspension, brakes, A/C, parts.
 - Warranty: maintenance 1 month / 2 000 km; repair with licensed parts 6 months / 10 000 km; with original parts 12 months / 20 000 km; client-supplied parts — labour only, 1 month / 2 000 km (whichever comes first).
 

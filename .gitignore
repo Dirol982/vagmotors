@@ -1,6 +1,3 @@
-node_modules/
-dist/
-.astro/
+.DS_Store
 .impeccable/review/
 .impeccable/config.local.json
-.DS_Store
