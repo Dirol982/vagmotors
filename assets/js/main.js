@@ -1,4 +1,10 @@
 // Language and currency come from the page: <html lang="en" data-currency="BYN">. Russian is the source text.
+// Model → year → engine lists for the "model" fields live in cars.js next to this file
+if (document.currentScript && document.querySelector('[data-booking] input[name="model"], [data-check] input[name="model"]')) {
+  const cars = document.createElement("script");
+  cars.src = new URL("cars.js", document.currentScript.src).href;
+  document.head.append(cars);
+}
 const LANG = (document.documentElement.lang || "ru").slice(0, 2) === "en" ? "en" : "ru";
 const CUR = document.documentElement.dataset.currency || "руб.";
 const EN = {
