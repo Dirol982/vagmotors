@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>КП: новый сайт VAG MOTORS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;700;800&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--tile:#151515;--line:#262626;--fg:#f2f1ee;--muted:#9b9993;--red:#d33b40;--light:#f4f3f0;--ink:#0d0d0d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#444;font-family:Onest,sans-serif;-webkit-font-smoothing:antialiased}
+.s{width:1080px;height:1350px;position:relative;overflow:hidden;display:flex;flex-direction:column;padding:80px 76px;margin:0 auto 40px}
+.dark{background:var(--bg);color:var(--fg)}.light{background:var(--light);color:var(--ink)}
+h1,h2{font-family:Unbounded,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:-.04em;line-height:.95}
+h2{font-size:84px}
+.lead{font-size:33px;line-height:1.35;margin-top:28px;max-width:900px}
+.dark .lead{color:#cfcdc7}.light .lead{color:#3b3a37}
+.label{font:500 22px/1.3 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.label b{color:var(--red);font-weight:500;margin:0 .35em}
+.foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;font:500 22px 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+.dark .foot{color:var(--muted)}.light .foot{color:#6a6863}
+.url{font-family:Unbounded;font-weight:700;font-size:44px;letter-spacing:-.03em;color:var(--fg)}
+.url span{color:var(--red)}
+.tag{display:inline-block;font:500 22px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;padding:10px 16px}
+.tag.old{background:#c8c6bf;color:#151515}.tag.new{background:var(--red);color:#fff}
+.shot{display:block;width:100%;object-fit:cover;object-position:top;border:1px solid var(--line)}
+.light .shot{border-color:#cfcdc6}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:52px;margin-bottom:24px;flex:1;grid-auto-rows:1fr}
+.cell{background:var(--tile);border:1px solid var(--line);padding:40px 38px;display:flex;flex-direction:column;justify-content:flex-end}
+.cell .o{font-size:32px;color:var(--muted);text-decoration:line-through;margin-bottom:8px}
+.cell .v{font-family:Unbounded;font-weight:800;font-size:76px;letter-spacing:-.05em;line-height:1;white-space:nowrap}
+.cell small{display:block;font:500 22px 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:16px}
+.cell.hot{background:var(--red);border-color:var(--red);color:#fff}.cell.hot .o,.cell.hot small{color:rgba(255,255,255,.8)}
+.phones{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:minmax(0,1fr);gap:30px;margin:44px 0 34px;flex:1;min-height:0}
+.ph{display:flex;flex-direction:column;gap:16px;min-height:0;height:100%}
+.ph img{width:100%;flex:1 1 0;min-height:0;height:0;object-fit:cover;object-position:top;border:8px solid #1d1d1d;border-radius:30px}
+.light .ph img{border-color:#111}
+ul.f{list-style:none;margin-top:52px;display:grid;gap:26px}
+ul.f li{font-size:32px;line-height:1.3;padding-left:42px;position:relative}
+ul.f li:before{content:"";position:absolute;left:0;top:.6em;width:22px;height:4px;background:var(--red)}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:auto 0 36px}
+.strip img{width:100%;height:240px;object-fit:cover;border:1px solid var(--line)}
+.mega{font-size:118px}
+.logo{width:420px;height:auto}
+</style>
+</head>
+<body>
+
+<!-- 1. Обложка -->
+<section class="s dark" id="s1" style="background:#0a0a0a url(../assets/img/audi-a3-hall.webp) center 70%/cover">
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.55),rgba(10,10,10,.82) 45%,#0a0a0a 78%)"></div>
+  <div style="position:relative;display:flex;flex-direction:column;height:100%">
+    <p class="label">Редизайн <b>/</b> vagmotors.by <b>/</b> Минск</p>
+    <img class="logo" src="../assets/img/logo-light.webp" alt="VAG MOTORS" style="margin-top:110px">
+    <h1 class="mega" style="margin-top:80px">Новый сайт<br>для VAG Motors</h1>
+    <p class="lead">Рабочий прототип: ваши услуги, цены, фото, видео и контакты в новом дизайне. Его уже можно открыть с телефона.</p>
+    <p class="url" style="margin-top:52px">dirol982.github.io<span>/</span>vagmotors<span>/</span>v3</p>
+    <div class="foot"><span>Редизайн vagmotors.by</span><span>01 / 08</span></div>
+  </div>
+</section>
+
+<!-- 2. Было и стало -->
+<section class="s light" id="s2">
+  <p class="label">02 <b>/</b> Первый экран</p>
+  <h2 style="margin-top:22px">Было и&nbsp;стало</h2>
+  <p class="lead" style="font-size:30px">Те же услуги, телефоны и фото. Сразу ясно, что это сервис VAG, сколько стоит и как записаться.</p>
+  <div style="margin-top:40px"><span class="tag old">Сейчас</span></div>
+  <img class="shot" src="src/old-desktop.png" style="margin-top:14px;height:340px" alt="">
+  <div style="margin-top:32px"><span class="tag new">Новый сайт</span></div>
+  <img class="shot" src="src/new-desktop.png" style="margin-top:14px;height:340px" alt="">
+  <div class="foot"><span>Редизайн vagmotors.by</span><span>02 / 08</span></div>
+</section>
+
+<!-- 3. Скорость -->
+<section class="s dark" id="s3">
+  <p class="label">03 <b>/</b> Скорость</p>
+  <h2 style="margin-top:22px">В 20 раз легче</h2>
+  <p class="lead">Сайт открывается за секунду, даже на мобильном интернете. Это важно для рекламы и&nbsp;поиска.</p>
+  <div class="row">
+    <div class="cell hot"><div class="o">12,6 МБ</div><div class="v">0,64 МБ</div><small>вес главной</small></div>
+    <div class="cell"><div class="o">11 с</div><div class="v">1 с</div><small>до полной загрузки</small></div>
+    <div class="cell"><div class="o">337</div><div class="v">19</div><small>запросов к серверу</small></div>
+    <div class="cell"><div class="o">9,5 МБ</div><div class="v">0,8 МБ</div><small>на телефоне</small></div>
+  </div>
+  <p style="font-size:22px;color:var(--muted);margin-bottom:30px;max-width:900px">Замер главной страницы в браузере Chrome, ноябрь 2026. Видео загружается, только когда его включают.</p>
+  <div class="foot"><span>Редизайн vagmotors.by</span><span>03 / 08</span></div>
+</section>
+
+<!-- 4. Телефон -->
+<section class="s light" id="s4">
+  <p class="label">04 <b>/</b> На телефоне</p>
+  <h2 style="margin-top:22px">С телефона</h2>
+  <p class="lead" style="font-size:30px">Тот же сайт на телефоне. Звонок, расчёт и запись всегда закреплены внизу экрана.</p>
+  <div class="phones">
+    <div class="ph"><span class="tag old" style="align-self:start">Сейчас</span><img src="src/old-mobile.png" alt=""></div>
+    <div class="ph"><span class="tag new" style="align-self:start">Новый сайт</span><img src="src/new-mobile.png" alt=""></div>
+  </div>
+  <div class="foot"><span>Редизайн vagmotors.by</span><span>04 / 08</span></div>
+</section>
+
+<!-- 5. Калькулятор -->
+<section class="s dark" id="s5">
+  <p class="label">05 <b>/</b> Калькулятор</p>
+  <h2 style="margin-top:22px">Цена до визита</h2>
+  <p class="lead" style="font-size:30px">89 работ из вашего прайса. Клиент нажимает «Рывки DSG» или «Пора на&nbsp;ТО» — работы и сумма подставляются сами. Заказ-наряд уходит вам в Telegram, Viber или WhatsApp.</p>
+  <div class="phones">
+    <div class="ph"><img src="src/new-mobile-calc.png" alt=""></div>
+    <div class="ph"><img src="src/new-mobile-check.png" alt=""></div>
+  </div>
+  <div class="foot"><span>Редизайн vagmotors.by</span><span>05 / 08</span></div>
+</section>
+
+<!-- 6. Прайс и галерея -->
+<section class="s light" id="s6">
+  <p class="label">06 <b>/</b> Прайс и цех</p>
+  <h2 style="margin-top:22px">Прайс с заказом</h2>
+  <p class="lead" style="font-size:30px">Напротив каждой цены — «В&nbsp;заказ», внизу подытог. Фото цеха листаются пальцем и открываются на весь экран.</p>
+  <div class="phones">
+    <div class="ph"><img src="src/new-mobile-price.png" alt=""></div>
+    <div class="ph"><img src="src/new-mobile-lightbox.png" alt=""></div>
+  </div>
+  <div class="foot"><span>Редизайн vagmotors.by</span><span>06 / 08</span></div>
+</section>
+
+<!-- 7. Что ещё -->
+<section class="s dark" id="s7">
+  <p class="label">07 <b>/</b> Внутри</p>
+  <h2 style="margin-top:22px">Что ещё</h2>
+  <ul class="f">
+    <li>Светлая и тёмная тема, русская и английская версия</li>
+    <li>Живой статус «Открыто до 21:00» по времени Минска</li>
+    <li>Сезонная плитка: зимой — подготовка к зиме, летом — кондиционер</li>
+    <li>Поиск понимает DSG, ДСГ и S tronic</li>
+    <li>Ваше видео с YouTube и отзывы клиентов</li>
+    <li>Карта, координаты для навигатора, реквизиты для юрлиц</li>
+  </ul>
+  <div class="strip">
+    <img src="../assets/img/vas-6150d-720.webp" alt="">
+    <img src="../assets/img/golf-gti-lift-720.webp" alt="">
+    <img src="../assets/img/camshafts-720.webp" alt="">
+  </div>
+  <div class="foot" style="margin-top:0"><span>Редизайн vagmotors.by</span><span>07 / 08</span></div>
+</section>
+
+<!-- 8. Что дальше -->
+<section class="s dark" id="s8">
+  <img class="logo" src="../assets/img/logo-light.webp" alt="VAG MOTORS" style="width:340px;margin-top:20px">
+  <h2 style="margin-top:70px">Что дальше</h2>
+  <ul class="f">
+    <li>Вносим ваши правки по тексту, фото и&nbsp;цветам</li>
+    <li>Переносим сайт на ваш домен vagmotors.by</li>
+    <li>Подключаем заявки с&nbsp;сайта в&nbsp;Telegram</li>
+    <li>Добавляем страницы марок и&nbsp;услуг для поиска</li>
+  </ul>
+  <p class="lead" style="margin-top:50px">Откройте прототип и ответьте на&nbsp;это сообщение: расскажем подробнее и&nbsp;назовём сроки.</p>
+  <p class="url" style="margin-top:26px">dirol982.github.io<span>/</span>vagmotors<span>/</span>v3</p>
+  <div class="foot"><span>Редизайн vagmotors.by</span><span>08 / 08</span></div>
+</section>
+
+</body>
+</html>
