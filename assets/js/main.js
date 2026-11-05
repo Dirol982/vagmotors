@@ -5,6 +5,22 @@ if (document.currentScript && document.querySelector('[data-booking] input[name=
   cars.src = new URL("cars.js", document.currentScript.src).href;
   document.head.append(cars);
 }
+// Messenger links. On phones open the app in the same tab, synchronously inside the tap:
+// a window.open after an await is blocked by mobile browsers, and Telegram's t.me web page drops the prefilled text.
+const TOUCH = matchMedia("(pointer: coarse)").matches;
+const openChat = (url) => {
+  if (TOUCH) { window.location.href = url; return; }
+  const w = window.open(url, "_blank");
+  if (w) w.opener = null; else window.location.href = url;
+};
+const openTelegram = (tel, text) => {
+  const phone = tel.replace(/\D/g, "");
+  const web = `https://t.me/+${phone}?text=${encodeURIComponent(text)}`;
+  if (!TOUCH) return openChat(web);
+  window.location.href = `tg://resolve?phone=${phone}&text=${encodeURIComponent(text)}`;
+  // no Telegram app: the page is still visible, go to the web link
+  setTimeout(() => { if (document.visibilityState === "visible") window.location.href = web; }, 1500);
+};
 const LANG = (document.documentElement.lang || "ru").slice(0, 2) === "en" ? "en" : "ru";
 const CUR = document.documentElement.dataset.currency || "руб.";
 const EN = {
@@ -392,20 +408,18 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
       const text = lines.join('\n');
       const enc = encodeURIComponent(text);
 
-      let copied = false;
-      try {
-        await navigator.clipboard.writeText(text);
-        copied = true;
-      } catch (_) {}
+      // start copying, but open the messenger right away, inside the tap
+      const copying = navigator.clipboard ? navigator.clipboard.writeText(text).then(() => true, () => false) : Promise.resolve(false);
 
       if (channel === 'whatsapp') {
-        window.open(`${wa}?text=${enc}`, '_blank', 'noopener');
+        openChat(`${wa}?text=${enc}`);
         say(T('Открываем WhatsApp с готовым текстом заявки. Остаётся нажать «Отправить».'), 'ok');
       } else if (channel === 'viber') {
         // Viber cuts a draft at 100 characters: send one compact line, or no draft and the copied full text
         const short = T('Запись на СТО: {v}', { v: `${make}${model ? ' ' + model : ''} — ${task}` });
         const fits = short.length <= 100;
         window.location.href = `viber://chat?number=${encodeURIComponent(tel)}` + (fits ? `&draft=${encodeURIComponent(short)}` : '');
+        const copied = await copying;
         say(
           fits
             ? T('Открываем Viber с готовой заявкой — остаётся нажать «Отправить».')
@@ -416,7 +430,7 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
         );
       } else {
         // t.me/+phone?text= puts the request into the input bar (Telegram deep-link "text" parameter)
-        window.open(`https://t.me/+${tel.replace(/\D/g, '')}?text=${enc}`, '_blank', 'noopener');
+        openTelegram(tel, text);
         say(T('Открываем Telegram с готовой заявкой — остаётся нажать «Отправить».'), 'ok'
         );
       }
@@ -835,10 +849,10 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
     }
     const text = receiptText();
     const ch = String(new FormData(check).get('ch') || 'telegram');
-    const copied = await copy(text);
+    const copying = copy(text);
     const enc = encodeURIComponent(text);
     if (ch === 'whatsapp') {
-      window.open(`${WA}?text=${enc}`, '_blank', 'noopener');
+      openChat(`${WA}?text=${enc}`);
       toast(T('Открываем WhatsApp с расчётом — остаётся нажать «Отправить»'));
     } else if (ch === 'viber') {
       // Viber keeps only the first 100 characters of a draft: send a compact order that fits, the full one is on the clipboard
@@ -853,6 +867,7 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
       const draft = (head + list + (list.endsWith('…') ? '' : '.') + tail).slice(0, 100);
       const whole = draft.endsWith(`${fmt.format(total())} ${CUR}`) && !list.endsWith('…');
       window.location.href = `viber://chat?number=${encodeURIComponent(SERVICE_TEL)}&draft=${encodeURIComponent(draft)}`;
+      const copied = await copying;
       toast(
         whole
           ? T('Открываем Viber с готовым расчётом — остаётся нажать «Отправить»')
@@ -862,7 +877,7 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
       );
     } else {
       // t.me/+phone?text= puts the whole estimate into the input bar
-      window.open(`https://t.me/+${SERVICE_TEL.replace(/\D/g, '')}?text=${enc}`, '_blank', 'noopener');
+      openTelegram(SERVICE_TEL, text);
       toast(T('Открываем Telegram с готовым расчётом — остаётся нажать «Отправить»'));
     }
   });
