@@ -744,3 +744,6 @@ html.gallery-open { overflow: hidden; }
 .strip img, .tile--photo img, .tile__bg { border-radius: inherit; }
 .check__lines li:first-child { border-top-left-radius: var(--r); border-top-right-radius: var(--r); }
 @media (max-width: 1000px) { .check { border-radius: var(--r) var(--r) 0 0; } }
+
+/* переключатель версий v3 / v4 */
+.tool--ver { width: auto; padding: 0 10px; text-transform: lowercase; }

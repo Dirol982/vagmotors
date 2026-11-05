@@ -72,6 +72,7 @@ def header(home=True):
     </nav>
     <span class="status" data-status><i></i><span data-status-text>Ежедневно 9:00–21:00</span></span>
     <div class="tools">
+      <a class="tool tool--ver" href="{'../v4/' if home else '../v4/price.html'}" aria-label="Версия с анимациями: v4">v4</a>
       <a class="tool tool--lang" href="{'en/' if home else 'en/price.html'}" hreflang="en" lang="en" aria-label="English version">EN</a>
       <button class="tool tool--theme" type="button" data-theme-toggle aria-label="Светлая тема"><svg class="i-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><svg class="i-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg></button>
     </div>
@@ -530,7 +531,7 @@ PAGE_EN = {
     'Счёт': 'Account', 'УНП': 'Tax ID', 'Связь': 'Contact',
     '© ООО «ВАГМОТОРС», УНП 193087869. Независимый сервис, марки принадлежат владельцам.': '© VAGMOTORS LLC, tax ID 193087869. Independent service; makes belong to their owners.',
     'Дизайн и разработка — Diroll25': 'Design and development — Diroll25', 'Ваш расчёт': 'Your estimate', 'пока пусто': 'empty', 'от': 'from',
-    'Предчек': 'Estimate', 'VAG MOTORS — на главную': 'VAG MOTORS — home', 'Разделы': 'Sections', 'Светлая тема': 'Light theme',
+    'Предчек': 'Estimate', 'Версия с анимациями: v4': 'Animated version: v4', 'Версия без анимаций: v3': 'Static version: v3', 'VAG MOTORS — на главную': 'VAG MOTORS — home', 'Разделы': 'Sections', 'Светлая тема': 'Light theme',
     'Автосервис концерна VAG: Volkswagen, Audi, Škoda, SEAT, Porsche, Bentley': 'Workshop for VAG group cars: Volkswagen, Audi, Škoda, SEAT, Porsche, Bentley',
     'Audi A3 и Golf на подъёмниках в цеху VAG MOTORS': 'Audi A3 and Golf on lifts in the VAG MOTORS workshop', 'Колодки, ГРМ, сцепление DSG…': 'Pads, timing, DSG clutch…',
     'Раздел прайса': 'Price section', 'Свернуть расчёт': 'Close estimate', 'Мастер VAG MOTORS заливает оригинальное масло Volkswagen': 'A VAG MOTORS technician adding genuine Volkswagen oil',
@@ -607,6 +608,7 @@ def to_en(doc, ru_url, en_url, other_href):
     doc = doc.replace('href="../favicon.png"', 'href="../../favicon.png"').replace('href="../apple-touch-icon.png"', 'href="../../apple-touch-icon.png"')
     doc = doc.replace('../assets/', '../../assets/').replace('"assets/css/style.css"', '"../assets/css/style.css"').replace('"assets/js/tw.js"', '"../assets/js/tw.js"')
     doc = doc.replace("url('../../assets/", "url('../../assets/")
+    doc = doc.replace('href="../v4/', 'href="../../v4/en/')
     doc = doc.replace(f'<link rel="canonical" href="{ru_url}">', f'<link rel="canonical" href="{en_url}">')
     doc = doc.replace(f'<link rel="alternate" hreflang="en" href="{en_url}">', f'<link rel="alternate" hreflang="ru" href="{ru_url}">')
     doc = re.sub(r'<a class="tool tool--lang" href="[^"]*" hreflang="en" lang="en" aria-label="English version">EN</a>',
