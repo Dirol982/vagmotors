@@ -28,8 +28,9 @@ PHONE = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="cur
 
 def head(title, desc, url):
     return f'''<!doctype html>
-<html lang="ru">
+<html lang="ru" data-currency="BYN">
 <head>
+<script>try{{var t=localStorage.getItem("vag-theme");if(t)document.documentElement.dataset.theme=t}}catch(e){{}}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
@@ -47,6 +48,7 @@ def head(title, desc, url):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;700;800&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="alternate" hreflang="ru" href="{url}">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -59,7 +61,7 @@ def header(home=True):
     h = (lambda x: x) if home else (lambda x: 'index.html' + x)
     return f'''<header class="top" data-header>
   <div class="top__in">
-    <a class="brand" href="./" aria-label="VAG MOTORS — на главную"><img src="{IMG}logo-light.webp" alt="VAG MOTORS" width="320" height="130"></a>
+    <a class="brand" href="./" aria-label="VAG MOTORS — на главную"><img class="logo-on-dark" src="{IMG}logo-light.webp" alt="VAG MOTORS" width="320" height="130"><img class="logo-on-light" src="{IMG}logo-dark.webp" alt="" width="320" height="130"></a>
     <nav class="nav" aria-label="Разделы">
       <a href="{h('#calc')}">Стоимость</a>
       <a href="{h('#services')}">Услуги</a>
@@ -69,6 +71,10 @@ def header(home=True):
       <a href="{h('#contacts')}">Контакты</a>
     </nav>
     <span class="status" data-status><i></i><span data-status-text>Ежедневно 9:00–21:00</span></span>
+    <div class="tools">
+      <a class="tool tool--lang" href="{'en/' if home else 'en/price.html'}" hreflang="en" lang="en" aria-label="English version">EN</a>
+      <button class="tool tool--theme" type="button" data-theme-toggle aria-label="Светлая тема"><svg class="i-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><svg class="i-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg></button>
+    </div>
     <a class="btn btn--sm" href="{h('#book')}">Записаться</a>
   </div>
 </header>
@@ -78,7 +84,7 @@ def header(home=True):
 def footer():
     return f'''<footer class="foot">
   <div class="wrap foot__in">
-    <img src="{IMG}logo-light.webp" alt="VAG MOTORS" width="110" height="45" loading="lazy">
+    <img class="logo-on-dark" src="{IMG}logo-light.webp" alt="VAG MOTORS" width="110" height="45" loading="lazy"><img class="logo-on-light" src="{IMG}logo-dark.webp" alt="VAG MOTORS" width="110" height="45" loading="lazy">
     <p class="partners"><span class="label">Марки</span> Volkswagen · Audi · Škoda · SEAT · Porsche · Bentley</p>
     <p class="tiny muted">© ООО «ВАГМОТОРС», УНП 193087869. Независимый сервис, марки принадлежат владельцам.<br>Дизайн и разработка — Diroll25</p>
   </div>
@@ -89,7 +95,7 @@ def footer():
 def dock(home=True):
     if home:
         return f'''<nav class="dock" aria-label="Быстрая связь">
-  <button type="button" class="dock__sum" data-check-open aria-controls="precheck"><small>Ваш расчёт</small><b class="num"><span data-dock-empty>пока пусто</span><span data-dock-full hidden>от <span data-dock-sum>0</span> руб.</span></b></button>
+  <button type="button" class="dock__sum" data-check-open aria-controls="precheck"><small>Ваш расчёт</small><b class="num"><span data-dock-empty>пока пусто</span><span data-dock-full hidden>от <span data-dock-sum>0</span> BYN</span></b></button>
   <a class="dock__call" href="tel:{TEL}" aria-label="Позвонить: {TEL_L}">{PHONE}</a>
   <button type="button" class="dock__book" data-check-open aria-controls="precheck">Предчек</button>
 </nav>
@@ -238,7 +244,7 @@ index = head('VAG MOTORS — автосервис Volkswagen, Audi, Škoda, SEAT
         </div>
         <p class="check__meta" data-check-meta>VAGMOTORS · Volkswagen · работ: 0</p>
         <ul class="check__lines" role="list" data-check-lines></ul>
-        <div class="check__total"><span>Итого</span><strong class="num"><span data-check-sum>0</span> <small>руб.</small></strong></div>
+        <div class="check__total"><span>Итого</span><strong class="num"><span data-check-sum>0</span> <small>BYN</small></strong></div>
         <p class="check__fine">От минимальной цены, без запчастей. Согласуем до начала работ.</p>
         <div class="check__book" data-check-book hidden>
           <label class="check__label" for="check-model">Модель, год, двигатель</label>
@@ -445,14 +451,14 @@ index = head('VAG MOTORS — автосервис Volkswagen, Audi, Škoda, SEAT
 '''
 open('v3/index.html', 'w', encoding='utf-8').write(index)
 
-pl = pricelist.replace('<svg', '<svg', 1)
+pl = pricelist.replace('руб.', 'BYN')
 price = head('Прайс VAG MOTORS — Volkswagen, Audi, Škoda в Минске',
              'Стоимость работ VAG MOTORS по маркам Volkswagen, Audi и Škoda. Цены от минимальных: отметьте работы и оформите заказ.',
              'https://dirol982.github.io/vagmotors/v3/price.html') + header(False) + f'''
 <main id="main">
 <section class="ph">
   <div class="wrap">
-    <p class="coord mono">Прайс <b>/</b> Volkswagen · Audi · Škoda <b>/</b> цены от, руб.</p>
+    <p class="coord mono">Прайс <b>/</b> Volkswagen · Audi · Škoda <b>/</b> цены от, BYN</p>
     <h1 class="mega"><span class="mega__l1">Стоимость</span><span class="mega__l2"><span>работ</span><span class="mega__dash" aria-hidden="true"></span></span></h1>
     <div class="ph__row">
       <p class="muted lede">Цена зависит от модели, двигателя и КПП. Отметьте работы — подытог внизу, — и оформите заказ.</p>
@@ -469,3 +475,156 @@ price = head('Прайс VAG MOTORS — Volkswagen, Audi, Škoda в Минске
 '''
 open('v3/price.html', 'w', encoding='utf-8').write(price)
 print('v3:', len(index), len(price), 'reviews', len(reviews))
+
+
+# ════════ English pages: v3/en/ ════════
+import json
+
+WORKS = json.load(open('tools/works-en.json', encoding='utf-8'))
+PAGE_EN = {
+    'VAG MOTORS — автосервис Volkswagen, Audi, Škoda, SEAT, Porsche в центре Минска': 'VAG MOTORS — Volkswagen, Audi, Škoda, SEAT, Porsche service in central Minsk',
+    'Специализированный сервис концерна VAG в центре Минска: DSG, двигатель, ТО, диагностика дилерским ПО. Цена до визита, гарантия до 12 месяцев. Ежедневно 9:00–21:00.': 'Specialist VAG group service in central Minsk: DSG, engines, scheduled maintenance, dealer-software diagnostics. Price before you visit, up to 12 months warranty. Daily 9:00–21:00.',
+    'Прайс VAG MOTORS — Volkswagen, Audi, Škoda в Минске': 'VAG MOTORS price list — Volkswagen, Audi, Škoda in Minsk',
+    'Стоимость работ VAG MOTORS по маркам Volkswagen, Audi и Škoda. Цены от минимальных: отметьте работы и оформите заказ.': 'VAG MOTORS labour prices for Volkswagen, Audi and Škoda. Prices from: tick the jobs and check out.',
+    'К содержанию': 'Skip to content', 'Стоимость': 'Price', 'Услуги': 'Services', 'Прайс': 'Price list', 'Цех': 'Workshop',
+    'Отзывы': 'Reviews', 'Контакты': 'Contacts', 'Ежедневно 9:00–21:00': 'Daily 9:00–21:00', 'Записаться': 'Book',
+    'Минск, 1-й Твёрдый пер., 11': 'Minsk, 1st Tvyordy Lane, 11', 'Автосервис': 'Workshop',
+    'Volkswagen · Audi · Škoda · SEAT · Porsche · Bentley. От лампочки до капремонта.': 'Volkswagen · Audi · Škoda · SEAT · Porsche · Bentley. From a bulb to an engine rebuild.',
+    'Сезон': 'Season', 'Подготовка к зиме': 'Winter prep', 'Антифриз, аккумулятор, свечи накала, компьютерная диагностика.': 'Coolant, battery, glow plugs, computer diagnostics.',
+    'Гарантия до': 'Warranty up to', 'или 20 000 км на ремонт с оригинальными запчастями': 'or 20,000 km on repairs with genuine parts',
+    'Сейчас': 'Now', 'Без выходных ·': 'Open every day ·', 'Заказ-наряд онлайн': 'Online work order', 'Цена до визита': 'Price before you visit',
+    '01 / Подход': '01 / Approach', 'Только VAG': 'VAG only', 'Марки': 'Makes', 'Один концерн': 'One group',
+    'Volkswagen, Audi, Škoda, SEAT, Porsche, Bentley. Знаем слабые места каждой модификации.': 'Volkswagen, Audi, Škoda, SEAT, Porsche, Bentley. We know the weak spots of every variant.',
+    'Диагностика': 'Diagnostics', 'Дилерское ПО': 'Dealer software', 'VAS 6150D и технология завода-производителя.': 'VAS 6150D and factory procedures.',
+    'Процесс': 'Process', 'Всё согласуем': 'Nothing without your OK', 'Держим в курсе ремонта. Можно наблюдать за работой.': 'We keep you posted. You can watch the work.',
+    '02 / Стоимость': '02 / Price',
+    'Отметьте работы или нажмите на то, что беспокоит. Цены «от», без запчастей. Точную назовём по VIN.': 'Tick the jobs or tap what is wrong. Prices are “from”, parts not included. We confirm the exact price by VIN.',
+    'Porsche, SEAT, Bentley — по запросу': 'Porsche, SEAT, Bentley — on request', 'Поиск работы': 'Search jobs', 'Что беспокоит?': "What's wrong?",
+    'Работ в прайсе:': 'Jobs in the list:', 'Заказ-наряд': 'Work order', 'Очистить': 'Clear', 'VAGMOTORS · Volkswagen · работ: 0': 'VAGMOTORS · Volkswagen · jobs: 0',
+    'Итого': 'Total', 'От минимальной цены, без запчастей. Согласуем до начала работ.': 'From the minimum price, parts not included. Agreed before any work starts.',
+    'Модель, год, двигатель': 'Model, year, engine', 'Когда удобно': 'Preferred time', 'Куда отправить': 'Send via',
+    'Записаться с этим расчётом': 'Book with this estimate', 'Скопировать': 'Copy',
+    '03 / Порядок': '03 / How it works', 'Визит': 'Visit', 'Запись': 'Booking', 'Расчёт на сайте или звонок. Ответим в мессенджере.': 'An estimate on the site or a call. We reply in your messenger.',
+    'Заезд': 'Drop-off', '1-й Твёрдый пер., 11. Ежедневно 9:00–21:00.': '1st Tvyordy Lane, 11. Daily 9:00–21:00.', 'Работа': 'Work',
+    'Согласуем каждое действие. Можно наблюдать.': 'Every step agreed with you. You can watch.', 'Выдача': 'Pick-up',
+    'Гарантия до 12 месяцев. Наличный и безналичный расчёт.': 'Up to 12 months warranty. Cash or bank transfer.',
+    '04 / Услуги': '04 / Services', 'Весь прайс и заказ ↗': 'Full price list and order ↗', 'Ремонт DSG и S tronic': 'DSG and S tronic repair',
+    'Мехатроник, сцепление, маховик. Дилерское ПО, LUK и Sachs.': 'Mechatronics, clutch, flywheel. Dealer software, LUK and Sachs.',
+    'Диагностика и ремонт DSG': 'DSG diagnostics and repair', 'Замена масла в DSG': 'DSG oil change', 'Замена сцепления DSG': 'DSG clutch replacement',
+    'Рассчитать DSG ↗': 'Estimate DSG ↗', 'По регламенту завода': 'To the factory schedule', 'ТО': 'Service', 'ТО по регламенту': 'Scheduled service',
+    'Замена воздушного и салонного фильтра': 'Air and cabin filter replacement', 'Турбина · ГРМ · масложор': 'Turbo · timing · oil burning',
+    'Двигатель': 'Engine', 'Включая пневмоподвеску': 'Air suspension included', 'Ходовая и тормоза': 'Suspension and brakes',
+    'VAS 6150D · кондиционер': 'VAS 6150D · A/C', 'Сервис изнутри': 'Inside the workshop', '05 / Цех': '05 / Workshop',
+    'Цех на Твёрдом': 'Workshop on Tvyordy', 'Распредвалы и ГРМ': 'Camshafts and timing', 'Оригинальное масло': 'Genuine oil',
+    'Диагностика Škoda': 'Škoda diagnostics', 'Моторный отсек': 'Engine bay', 'Склад запчастей': 'Parts store',
+    '06 / Отзывы': '06 / Reviews · in Russian', 'Яндекс Карты · Google · ВКонтакте': 'Yandex Maps · Google · VK', 'Все отзывы': 'All reviews',
+    'В мессенджер · готовый текст заявки': 'To your messenger · request text ready', 'Марка': 'Make', 'Что нужно сделать': 'What needs doing',
+    'Куда': 'Via', 'Отправить ↗': 'Send ↗', 'Заявка откроется в мессенджере с готовым текстом.': 'The request opens in your messenger, ready to send.',
+    'Или позвоните': 'Or call', '07 / Контакты': '07 / Contacts', '1-й Твёрдый пер., 11': '1st Tvyordy Lane, 11', 'Адрес': 'Address',
+    'Минск, 1-й Твёрдый переулок, 11, корпус 3': 'Minsk, 1st Tvyordy Lane, 11, building 3', 'центр города': 'city centre', 'Часы': 'Hours',
+    'Сервис': 'Service', 'Запчасти': 'Parts', 'Почта': 'Email', 'Навигатор': 'GPS', 'Юрлицам': 'Companies',
+    'Наличный и безналичный расчёт, НДС, автопарки': 'Cash or bank transfer, VAT invoices, fleets', 'Яндекс Карты': 'Yandex Maps',
+    'Реквизиты': 'Company details', 'Организация': 'Company', 'ООО «ВАГМОТОРС», директор Большаков Роман Родионович': 'VAGMOTORS LLC, director Roman Bolshakov',
+    '220037, г. Минск, пер. Твёрдый 1-й, д. 11, пом. 2, каб. 5': '220037 Minsk, 1st Tvyordy Lane 11, unit 2, office 5',
+    'BY56PJCB30120559261000000933, ЦБУ № 100 ОАО «Приорбанк», BIC PJCBBY2X': 'BY56PJCB30120559261000000933, Priorbank branch No. 100, BIC PJCBBY2X',
+    'Счёт': 'Account', 'УНП': 'Tax ID', 'Связь': 'Contact',
+    '© ООО «ВАГМОТОРС», УНП 193087869. Независимый сервис, марки принадлежат владельцам.': '© VAGMOTORS LLC, tax ID 193087869. Independent service; makes belong to their owners.',
+    'Дизайн и разработка — Diroll25': 'Design and development — Diroll25', 'Ваш расчёт': 'Your estimate', 'пока пусто': 'empty', 'от': 'from',
+    'Предчек': 'Estimate', 'VAG MOTORS — на главную': 'VAG MOTORS — home', 'Разделы': 'Sections', 'Светлая тема': 'Light theme',
+    'Автосервис концерна VAG: Volkswagen, Audi, Škoda, SEAT, Porsche, Bentley': 'Workshop for VAG group cars: Volkswagen, Audi, Škoda, SEAT, Porsche, Bentley',
+    'Audi A3 и Golf на подъёмниках в цеху VAG MOTORS': 'Audi A3 and Golf on lifts in the VAG MOTORS workshop', 'Колодки, ГРМ, сцепление DSG…': 'Pads, timing, DSG clutch…',
+    'Раздел прайса': 'Price section', 'Свернуть расчёт': 'Close estimate', 'Мастер VAG MOTORS заливает оригинальное масло Volkswagen': 'A VAG MOTORS technician adding genuine Volkswagen oil',
+    'Audi S6 в цеху VAG MOTORS': 'Audi S6 in the VAG MOTORS workshop', 'СТО VAG Motors — ремонт Volkswagen, Audi, Skoda, Porsche и Seat': 'VAG Motors — Volkswagen, Audi, Skoda, Porsche and Seat repair (in Russian)',
+    'Смотреть видео «СТО VAG Motors — ремонт Volkswagen, Audi, Skoda, Porsche и Seat»': 'Watch the VAG Motors workshop video (in Russian)',
+    'Предыдущие фото': 'Previous photos', 'Следующие фото': 'Next photos', 'Фото цеха: листайте пальцем, мышью или стрелками': 'Workshop photos: swipe, drag or use the arrows',
+    'Предыдущие отзывы': 'Previous reviews', 'Следующие отзывы': 'Next reviews', 'Отзывы клиентов': 'Customer reviews', 'Рывки DSG, ТО, стук…': 'Jerky DSG, service, a knock…',
+    'Плановое ТО': 'Scheduled service', 'Кондиционер и отопитель': 'A/C and heater', 'VAG MOTORS на карте: Минск, 1-й Твёрдый переулок, 11': 'VAG MOTORS on the map: Minsk, 1st Tvyordy Lane, 11',
+    'Быстрая связь': 'Quick contact', 'Позвонить: +375 29 620-04-21': 'Call: +375 29 620-04-21', 'Позвонить': 'Call',
+    'цены от, BYN': 'prices from, BYN', 'работ': 'labour', 'Цена зависит от модели, двигателя и КПП. Отметьте работы — подытог внизу, — и оформите заказ.': 'The price depends on the model, engine and gearbox. Tick jobs — the subtotal is below — and check out.',
+    'Точная цена в Viber ↗': 'Exact price in Viber ↗', 'Стоимость работ': 'Labour prices', 'Поиск по услугам': 'Search jobs', 'Услуга': 'Job',
+    'Цена от, BYN': 'Price from, BYN', 'Ничего не нашли. Напишите нам в': 'Nothing found. Message us on', 'или позвоните': 'or call',
+    '— подскажем стоимость.': '— we will quote a price.', 'Стоимость работ по этим маркам назовём индивидуально — напишите модель, год и двигатель.': 'We quote these makes individually — send us the model, year and engine.',
+    'Оставить заявку': 'Send a request', 'Найти услугу: сцепление, ГРМ, колодки…': 'Find a job: clutch, timing, pads…',
+    'Компьютерная диагностика': 'Computer diagnostics', 'Ремонт подвески': 'Suspension repair', 'Ремонт тормозов': 'Brake repair', 'Ремонт двигателя': 'Engine repair', 'Электрика': 'Electrics',
+}
+MAKE_RX = r'(Volkswagen|Audi|Škoda)'
+BRAND_WORD = re.compile(r'\s*(Ауди|Фольксваген|Шкода)\s*')
+
+
+def tr(text):
+    t = re.sub(r'\s+', ' ', text).strip()
+    if not t or not re.search('[А-Яа-яЁё]', t):
+        return None
+    if t in PAGE_EN:
+        return PAGE_EN[t]
+    if t in WORKS:
+        return WORKS[t]
+    m = re.fullmatch(r'от (\d[\d ]*)', t)
+    if m:
+        return 'from ' + m.group(1)
+    m = re.fullmatch(r'(.+), ' + MAKE_RX, t)
+    if m and (m.group(1) in WORKS):
+        return f'{WORKS[m.group(1)]}, {m.group(2)}'
+    m = re.fullmatch(r'Разделы прайса ' + MAKE_RX, t)
+    if m:
+        return f'{m.group(1)} price sections'
+    m = re.fullmatch(r'(.+) — VAG MOTORS', t)
+    if m and m.group(1) in PAGE_EN:
+        return PAGE_EN[m.group(1)] + ' — VAG MOTORS'
+    clean = BRAND_WORD.sub(' ', t).strip()
+    if clean in WORKS:
+        return WORKS[clean]
+    return None
+
+
+def to_en(doc, ru_url, en_url, other_href):
+    doc = doc.replace('<html lang="ru"', '<html lang="en"').replace('content="ru_RU"', 'content="en_GB"')
+    doc = doc.replace('<span>концерна <b>VAG</b></span>', '<span>for <b>VAG</b> cars</span>')
+    doc = doc.replace('&nbsp;мес</span>', '&nbsp;mo</span>')
+    doc = doc.replace('<span class="mega__l1">Стоимость</span><span class="mega__l2"><span>работ</span>', '<span class="mega__l1">Labour</span><span class="mega__l2"><span>prices</span>')
+    # calculator data: work and section names
+    def calc(m):
+        data = json.loads(m.group(1))
+        for mk in data:
+            for c in mk['cats']:
+                c['name'] = WORKS.get(c['name'], c['name'])
+                for it in c['items']:
+                    it['name'] = WORKS.get(it['name'], it['name'])
+        return ('<script type="application/json" data-calc-data>' + json.dumps(data, ensure_ascii=False) + '</script>'
+                '<script type="application/json" data-i18n-works>' + json.dumps(WORKS, ensure_ascii=False) + '</script>')
+    doc = re.sub(r'<script type="application/json" data-calc-data>(.*?)</script>', calc, doc, flags=re.S)
+    # text nodes outside scripts and review cards
+    parts = re.split(r'(<script\b.*?</script>|<blockquote class="rv.*?</blockquote>)', doc, flags=re.S)
+    for i, part in enumerate(parts):
+        if part.startswith('<script') or part.startswith('<blockquote'):
+            continue
+        part = re.sub(r'>([^<>]+)<', lambda m: '>' + (tr(m.group(1)) or m.group(1)) + '<', part)
+        part = re.sub(r'((?:aria-label|placeholder|alt|content|title|data-yt-title|value)=")([^"]*)(")',
+                      lambda m: m.group(1) + e(tr(html.unescape(m.group(2))) or html.unescape(m.group(2)), quote=True) + m.group(3), part)
+        parts[i] = part
+    doc = ''.join(parts)
+    # paths one level deeper, language links
+    doc = doc.replace('href="../favicon.png"', 'href="../../favicon.png"').replace('href="../apple-touch-icon.png"', 'href="../../apple-touch-icon.png"')
+    doc = doc.replace('../assets/', '../../assets/').replace('"assets/css/style.css"', '"../assets/css/style.css"').replace('"assets/js/tw.js"', '"../assets/js/tw.js"')
+    doc = doc.replace("url('../../assets/", "url('../../assets/")
+    doc = doc.replace(f'<link rel="canonical" href="{ru_url}">', f'<link rel="canonical" href="{en_url}">')
+    doc = doc.replace(f'<link rel="alternate" hreflang="en" href="{en_url}">', f'<link rel="alternate" hreflang="ru" href="{ru_url}">')
+    doc = re.sub(r'<a class="tool tool--lang" href="[^"]*" hreflang="en" lang="en" aria-label="English version">EN</a>',
+                 f'<a class="tool tool--lang" href="{other_href}" hreflang="ru" lang="ru" aria-label="Русская версия">RU</a>', doc)
+    left = sorted({m for m in re.findall(r'>([^<>]*[А-Яа-яЁё][^<>]*)<', re.sub(r'<script\b.*?</script>|<blockquote class="rv.*?</blockquote>', '', doc, flags=re.S))})
+    return doc, left
+
+
+import os
+os.makedirs('v3/en', exist_ok=True)
+for name, ru_url, en_url, other in [
+    ('index.html', 'https://dirol982.github.io/vagmotors/v3/', 'https://dirol982.github.io/vagmotors/v3/en/', '../'),
+    ('price.html', 'https://dirol982.github.io/vagmotors/v3/price.html', 'https://dirol982.github.io/vagmotors/v3/en/price.html', '../price.html'),
+]:
+    ru = open('v3/' + name, encoding='utf-8').read()
+    # the Russian page points to its English twin
+    ru = ru.replace(f'<link rel="alternate" hreflang="ru" href="{ru_url}">', f'<link rel="alternate" hreflang="en" href="{en_url}">')
+    open('v3/' + name, 'w', encoding='utf-8').write(ru)
+    en, left = to_en(ru, ru_url, en_url, other)
+    open('v3/en/' + name, 'w', encoding='utf-8').write(en)
+    print('en/' + name, 'untranslated:', left[:20])

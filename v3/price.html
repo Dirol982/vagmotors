@@ -1,6 +1,7 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-currency="BYN">
 <head>
+<script>try{var t=localStorage.getItem("vag-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
@@ -18,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;700;800&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="alternate" hreflang="en" href="https://dirol982.github.io/vagmotors/v3/en/price.html">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -25,7 +27,7 @@
 <a class="skip" href="#main">К содержанию</a>
 <header class="top" data-header>
   <div class="top__in">
-    <a class="brand" href="./" aria-label="VAG MOTORS — на главную"><img src="../assets/img/logo-light.webp" alt="VAG MOTORS" width="320" height="130"></a>
+    <a class="brand" href="./" aria-label="VAG MOTORS — на главную"><img class="logo-on-dark" src="../assets/img/logo-light.webp" alt="VAG MOTORS" width="320" height="130"><img class="logo-on-light" src="../assets/img/logo-dark.webp" alt="" width="320" height="130"></a>
     <nav class="nav" aria-label="Разделы">
       <a href="index.html#calc">Стоимость</a>
       <a href="index.html#services">Услуги</a>
@@ -35,6 +37,10 @@
       <a href="index.html#contacts">Контакты</a>
     </nav>
     <span class="status" data-status><i></i><span data-status-text>Ежедневно 9:00–21:00</span></span>
+    <div class="tools">
+      <a class="tool tool--lang" href="en/price.html" hreflang="en" lang="en" aria-label="English version">EN</a>
+      <button class="tool tool--theme" type="button" data-theme-toggle aria-label="Светлая тема"><svg class="i-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><svg class="i-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg></button>
+    </div>
     <a class="btn btn--sm" href="index.html#book">Записаться</a>
   </div>
 </header>
@@ -42,7 +48,7 @@
 <main id="main">
 <section class="ph">
   <div class="wrap">
-    <p class="coord mono">Прайс <b>/</b> Volkswagen · Audi · Škoda <b>/</b> цены от, руб.</p>
+    <p class="coord mono">Прайс <b>/</b> Volkswagen · Audi · Škoda <b>/</b> цены от, BYN</p>
     <h1 class="mega"><span class="mega__l1">Стоимость</span><span class="mega__l2"><span>работ</span><span class="mega__dash" aria-hidden="true"></span></span></h1>
     <div class="ph__row">
       <p class="muted lede">Цена зависит от модели, двигателя и КПП. Отметьте работы — подытог внизу, — и оформите заказ.</p>
@@ -138,49 +144,49 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика подвески</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика тормозов</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика двигателя</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт ДСГ</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт электрооборудования</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика системы охлаждения</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика Фольксваген</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Компьютерная диагностика</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика перед покупкой</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Обновление ПО блоков управления</th>
-                      <td class="num"><small>от</small> 165 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 165 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -194,53 +200,53 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт электрооборудования</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена свечей зажигания</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена свечей накала</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена лямбда-зонда</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт АБС</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт стеклоомывателя</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт стеклоочистителя (дворников)</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт стеклоподъемника</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт электропроводки</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт генератора</th>
-                      <td class="num"><small>от</small> 260 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 260 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт стартера</th>
-                      <td class="num"><small>от</small> 260 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 260 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -254,73 +260,73 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Замена масла в двигателе</th>
-                      <td class="num"><small>от</small> 30 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 30 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена воздушного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена салонного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена топливного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">ТО Фольксваген</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Компьютерная диагностика</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена свечей зажигания</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена свечей накала</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена тормозных колодок</th>
-                      <td class="num"><small>от</small> 70 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 70 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в гидроусилителе руля</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в ДСГ</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена тормозной жидкости</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена антифриза</th>
-                      <td class="num"><small>от</small> 140 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 140 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в АКПП</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена ремня ГРМ</th>
-                      <td class="num"><small>от</small> 680 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 680 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена цепи ГРМ</th>
-                      <td class="num"><small>от</small> 920 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 920 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -334,57 +340,57 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Замена стоек и втулок стабилизатора</th>
-                      <td class="num"><small>от</small> 15 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 15 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика подвески</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт подвески</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена амортизаторов</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена рычага</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена сайлентблоков</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена шаровой опоры</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена пружин</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена ступичного подшипника</th>
-                      <td class="num"><small>от</small> 105 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 105 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена ШРУСа или пыльника ШРУСа</th>
-                      <td class="num"><small>от</small> 130 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 130 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена сайлентблоков подрамника</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт пневмоподвески</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -398,29 +404,29 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт кондиционера</th>
-                      <td class="num"><small>от</small> 55 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 55 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Заправка кондиционера</th>
-                      <td class="num"><small>от</small> 55 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 55 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт печки</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена заслонок отопителя</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Промывка кондиционера</th>
-                      <td class="num"><small>от</small> 680 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 680 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -434,45 +440,45 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика тормозов</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена тормозных колодок</th>
-                      <td class="num"><small>от</small> 70 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 70 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт тормозов</th>
-                      <td class="num"><small>от</small> 70 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 70 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена тормозной жидкости</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт стояночного тормоза</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт суппорта</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена тормозных барабанов</th>
-                      <td class="num"><small>от</small> 140 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 140 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена главного тормозного цилиндра</th>
-                      <td class="num"><small>от</small> 165 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 165 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена тормозных дисков</th>
-                      <td class="num"><small>от</small> 190 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 190 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -486,49 +492,49 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт ДСГ</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт КПП Фольксваген</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в ДСГ</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла МКПП</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в АКПП</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла муфты Халдекс с промывкой насоса</th>
-                      <td class="num"><small>от</small> 320 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 320 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена маховика</th>
-                      <td class="num"><small>от</small> 680 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 680 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена сцепления</th>
-                      <td class="num"><small>от</small> 680 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 680 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт карданного вала</th>
-                      <td class="num"><small>от</small> 680 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 680 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена сцепления ДСГ</th>
-                      <td class="num"><small>от</small> 920 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 920 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -542,77 +548,77 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Замена масла в двигателе</th>
-                      <td class="num"><small>от</small> 30 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 30 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика двигателя</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт двигателя Фольксваген</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика, ремонт, замена дизельных форсунок</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Промывка, замена, адаптация дроссельной заслонки</th>
-                      <td class="num"><small>от</small> 90 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 90 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена топливного насоса</th>
-                      <td class="num"><small>от</small> 140 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 140 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт и прожиг сажевого фильтра</th>
-                      <td class="num"><small>от</small> 150 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 150 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт турбины</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена бензиновых форсунок Фольксваген</th>
-                      <td class="num"><small>от</small> 440 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 440 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена маслосъемных колпачков</th>
-                      <td class="num"><small>от</small> 680 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 680 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена ремня ГРМ</th>
-                      <td class="num"><small>от</small> 680 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 680 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена распредвала</th>
-                      <td class="num"><small>от</small> 800 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 800 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена прокладки ГБЦ</th>
-                      <td class="num"><small>от</small> 920 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 920 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена цепи ГРМ</th>
-                      <td class="num"><small>от</small> 920 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 920 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена двигателя</th>
-                      <td class="num"><small>от</small> 2 400 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 2 400 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Капитальный ремонт двигателя</th>
-                      <td class="num"><small>от</small> 5 000 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 5 000 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Устранение масложора</th>
-                      <td class="num"><small>от</small> 12 000 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 12 000 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -626,37 +632,37 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Поиск утечки антифриза</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена термостата</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена антифриза</th>
-                      <td class="num"><small>от</small> 140 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 140 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена помпы</th>
-                      <td class="num"><small>от</small> 320 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 320 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Мойка радиатора</th>
-                      <td class="num"><small>от</small> 320 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 320 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Промывка системы охлаждения</th>
-                      <td class="num"><small>от</small> 320 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 320 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена радиатора охлаждения двигателя</th>
-                      <td class="num"><small>от</small> 440 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 440 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -670,29 +676,29 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Замена рулевого наконечника</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена рулевой тяги</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в гидроусилителе руля</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена усилителя руля Фольксваген</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена рейки Фольксваген</th>
-                      <td class="num"><small>от</small> 320 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 320 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -706,45 +712,45 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Замена масла в двигателе</th>
-                      <td class="num"><small>от</small> 30 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 30 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена воздушного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена салонного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена топливного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в гидроусилителе руля</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в ДСГ</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла МКПП</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в АКПП</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла муфты Халдекс с промывкой насоса</th>
-                      <td class="num"><small>от</small> 320 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 320 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -780,49 +786,49 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика подвески</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика тормозов Ауди</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика Ауди</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика двигателя Ауди</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт ДСГ</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт электрооборудования</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика системы охлаждения</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Компьютерная диагностика Ауди</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика перед покупкой</th>
-                      <td class="num"><small>от</small> 100 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 100 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Обновление ПО блоков управления</th>
-                      <td class="num"><small>от</small> 160 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 160 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -836,53 +842,53 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Ремонт электропроводки</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт электрооборудования</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена свечей зажигания</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена свечей накала</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт АБС</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт стеклоомывателя</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт стеклоочистителя (дворников)</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт стеклоподъемника</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена лямбда-зонда</th>
-                      <td class="num"><small>от</small> 100 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 100 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт генератора</th>
-                      <td class="num"><small>от</small> 260 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 260 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт стартера</th>
-                      <td class="num"><small>от</small> 260 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 260 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -896,73 +902,73 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Замена воздушного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в двигателе</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена салонного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">ТО Ауди</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена топливного фильтра</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Компьютерная диагностика Ауди</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена свечей зажигания</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена свечей накала</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена антифриза</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в ДСГ</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла гидроусилителя руля</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена тормозной жидкости</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в АКПП</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в вариаторе</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена ремня ГРМ Ауди</th>
-                      <td class="num"><small>от</small> 560 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 560 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена цепи ГРМ Ауди</th>
-                      <td class="num"><small>от</small> 920 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 920 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -976,57 +982,57 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика подвески</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт подвески Ауди</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена стоек и втулок стабилизатора Ауди</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена рычага Ауди</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена сайлентблоков Ауди</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена амортизаторов Ауди</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена пружин Ауди</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена шаровой опоры Ауди</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена ступичного подшипника Ауди</th>
-                      <td class="num"><small>от</small> 130 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 130 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена ШРУСа или пыльника ШРУСа</th>
-                      <td class="num"><small>от</small> 140 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 140 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт пневмоподвески</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена сайлентблоков подрамника</th>
-                      <td class="num"><small>от</small> 320 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 320 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1040,41 +1046,41 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика тормозов Ауди</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт стояночного тормоза</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена тормозных колодок Ауди</th>
-                      <td class="num"><small>от</small> 70 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 70 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт тормозов Ауди</th>
-                      <td class="num"><small>от</small> 70 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 70 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена тормозной жидкости</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт суппорта Ауди</th>
-                      <td class="num"><small>от</small> 130 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 130 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена тормозных дисков Ауди</th>
-                      <td class="num"><small>от</small> 190 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 190 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена главного тормозного цилиндра</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1088,53 +1094,53 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт ДСГ</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в ДСГ</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в редукторе и мостах</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла МКПП</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт КПП Ауди</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в АКПП</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в вариаторе</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт карданного вала Ауди</th>
-                      <td class="num"><small>от</small> 440 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 440 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена маховика Ауди</th>
-                      <td class="num"><small>от</small> 800 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 800 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена сцепления Ауди</th>
-                      <td class="num"><small>от</small> 800 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 800 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена сцепления ДСГ Ауди</th>
-                      <td class="num"><small>от</small> 920 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 920 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1148,77 +1154,77 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Замена масла в двигателе</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика двигателя Ауди</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика, ремонт, замена дизельных форсунок</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт двигателя Ауди</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Промывка, замена, адаптация дроссельной заслонки</th>
-                      <td class="num"><small>от</small> 130 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 130 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена топливного насоса</th>
-                      <td class="num"><small>от</small> 140 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 140 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт и прожиг сажевого фильтра</th>
-                      <td class="num"><small>от</small> 155 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 155 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена бензиновых форсунок Ауди</th>
-                      <td class="num"><small>от</small> 440 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 440 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена ремня ГРМ Ауди</th>
-                      <td class="num"><small>от</small> 560 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 560 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена маслосъемных колпачков Ауди</th>
-                      <td class="num"><small>от</small> 680 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 680 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт турбины Ауди</th>
-                      <td class="num"><small>от</small> 700 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 700 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена распредвала</th>
-                      <td class="num"><small>от</small> 920 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 920 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена цепи ГРМ Ауди</th>
-                      <td class="num"><small>от</small> 920 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 920 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена прокладки ГБЦ</th>
-                      <td class="num"><small>от</small> 1 150 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 1 150 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Устранение масложора</th>
-                      <td class="num"><small>от</small> 1 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 1 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена двигателя</th>
-                      <td class="num"><small>от</small> 2 350 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 2 350 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Капитальный ремонт двигателя</th>
-                      <td class="num"><small>от</small> 7 000 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 7 000 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1232,41 +1238,41 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Поиск утечки антифриза Ауди</th>
-                      <td class="num"><small>от</small> 30 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 30 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика системы охлаждения</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена антифриза</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена термостата</th>
-                      <td class="num"><small>от</small> 140 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 140 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена помпы Ауди</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Промывка системы охлаждения</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена радиатора охлаждения двигателя</th>
-                      <td class="num"><small>от</small> 320 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 320 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Мойка радиатора</th>
-                      <td class="num"><small>от</small> 440 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 440 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1280,29 +1286,29 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Замена рулевой тяги Ауди</th>
-                      <td class="num"><small>от</small> 30 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 30 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена рулевого наконечника Ауди</th>
-                      <td class="num"><small>от</small> 35 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 35 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла гидроусилителя руля</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена усилителя руля Ауди</th>
-                      <td class="num"><small>от</small> 260 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 260 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена рейки Ауди</th>
-                      <td class="num"><small>от</small> 320 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 320 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1316,49 +1322,49 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Замена воздушного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в двигателе</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена салонного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена топливного фильтра</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в ДСГ</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в редукторе и мостах</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла гидроусилителя руля</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла МКПП</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в АКПП</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в вариаторе</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1395,49 +1401,49 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика подвески</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика тормозов</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика системы охлаждения</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика двигателя</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт ДСГ</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт электрооборудования</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика Шкода</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Компьютерная диагностика</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика перед покупкой</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Обновление ПО блоков управления</th>
-                      <td class="num"><small>от</small> 165 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 165 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1451,53 +1457,53 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Ремонт стеклоомывателя</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт электрооборудования</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена свечей зажигания</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена свечей накала</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт электропроводки</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена лямбда-зонда</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт АБС</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт стеклоочистителя (дворников)</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт стеклоподъемника</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт генератора</th>
-                      <td class="num"><small>от</small> 260 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 260 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт стартера</th>
-                      <td class="num"><small>от</small> 260 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 260 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1511,69 +1517,69 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Замена воздушного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в двигателе</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена салонного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена топливного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">ТО Шкода</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Компьютерная диагностика</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена свечей зажигания</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена свечей накала</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в ДСГ</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла МКПП</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена тормозной жидкости</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена антифриза</th>
-                      <td class="num"><small>от</small> 140 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 140 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в АКПП</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена ремня ГРМ</th>
-                      <td class="num"><small>от</small> 680 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 680 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена цепи ГРМ</th>
-                      <td class="num"><small>от</small> 920 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 920 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1587,53 +1593,53 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика подвески</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена стоек и втулок стабилизатора</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт подвески Шкода</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена амортизаторов</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена сайлентблоков</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена пружин</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена рычага</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена шаровой опоры</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена ступичного подшипника</th>
-                      <td class="num"><small>от</small> 140 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 140 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена ШРУСа или пыльника ШРУСа</th>
-                      <td class="num"><small>от</small> 140 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 140 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена сайлентблоков подрамника</th>
-                      <td class="num"><small>от</small> 150 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 150 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1647,45 +1653,45 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика тормозов</th>
-                      <td class="num"><small>от</small> 20 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 20 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт тормозов Шкода</th>
-                      <td class="num"><small>от</small> 70 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 70 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена тормозной жидкости</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена тормозных колодок</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт стояночного тормоза</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт суппорта</th>
-                      <td class="num"><small>от</small> 130 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 130 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена тормозных барабанов</th>
-                      <td class="num"><small>от</small> 140 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 140 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена главного тормозного цилиндра</th>
-                      <td class="num"><small>от</small> 150 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 150 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена тормозных дисков</th>
-                      <td class="num"><small>от</small> 190 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 190 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1699,49 +1705,49 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт ДСГ</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в ДСГ</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла МКПП</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт КПП Шкода</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в АКПП</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла муфты полного привода Халдекс с промывкой насоса</th>
-                      <td class="num"><small>от</small> 320 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 320 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт карданного вала</th>
-                      <td class="num"><small>от</small> 680 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 680 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена маховика</th>
-                      <td class="num"><small>от</small> 800 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 800 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена сцепления</th>
-                      <td class="num"><small>от</small> 800 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 800 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена сцепления ДСГ</th>
-                      <td class="num"><small>от</small> 920 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 920 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1755,77 +1761,77 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика, ремонт, замена дизельных форсунок</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в двигателе</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика двигателя</th>
-                      <td class="num"><small>от</small> 50 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 50 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена свечей зажигания</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена свечей накала</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена топливного насоса</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Промывка, замена, адаптация дроссельной заслонки</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт и прожиг сажевого фильтра</th>
-                      <td class="num"><small>от</small> 150 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 150 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт двигателя</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена бензиновых форсунок Шкода</th>
-                      <td class="num"><small>от</small> 440 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 440 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена ремня ГРМ</th>
-                      <td class="num"><small>от</small> 680 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 680 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена распредвала</th>
-                      <td class="num"><small>от</small> 685 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 685 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена цепи ГРМ</th>
-                      <td class="num"><small>от</small> 920 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 920 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Ремонт турбины</th>
-                      <td class="num"><small>от</small> 920 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 920 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена прокладки ГБЦ</th>
-                      <td class="num"><small>от</small> 1 175 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 1 175 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Капитальный ремонт двигателя</th>
-                      <td class="num"><small>от</small> 6 000 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 6 000 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Устранение масложора</th>
-                      <td class="num"><small>от</small> 12 000 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 12 000 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1839,37 +1845,37 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика системы охлаждения</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Поиск утечки антифриза</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена помпы</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена термостата</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена радиатора охлаждения двигателя</th>
-                      <td class="num"><small>от</small> 320 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 320 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Промывка системы охлаждения</th>
-                      <td class="num"><small>от</small> 320 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 320 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Мойка радиатора</th>
-                      <td class="num"><small>от</small> 680 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 680 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1883,25 +1889,25 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Замена рулевого наконечника</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена рулевой тяги</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена усилителя руля Шкода</th>
-                      <td class="num"><small>от</small> 265 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 265 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена рейки Шкода</th>
-                      <td class="num"><small>от</small> 320 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 320 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1915,41 +1921,41 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Замена воздушного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в двигателе</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена салонного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена топливного фильтра</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в ДСГ</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла МКПП</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла в АКПП</th>
-                      <td class="num"><small>от</small> 200 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 200 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена масла муфты полного привода Халдекс с промывкой насоса</th>
-                      <td class="num"><small>от</small> 320 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 320 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1963,29 +1969,29 @@
                   <thead class="sr-only">
                     <tr>
                       <th scope="col">Услуга</th>
-                      <th scope="col">Цена от, руб.</th>
+                      <th scope="col">Цена от, BYN</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт кондиционера</th>
-                      <td class="num"><small>от</small> 40 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 40 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Заправка кондиционера</th>
-                      <td class="num"><small>от</small> 60 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 60 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Диагностика и ремонт печки</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Замена заслонок отопителя</th>
-                      <td class="num"><small>от</small> 80 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 80 <small>BYN</small></td>
                     </tr>
                     <tr data-row>
                       <th scope="row">Промывка кондиционера</th>
-                      <td class="num"><small>от</small> 690 <small>руб.</small></td>
+                      <td class="num"><small>от</small> 690 <small>BYN</small></td>
                     </tr>
                   </tbody>
                 </table>
@@ -2022,7 +2028,7 @@
 </main>
 <footer class="foot">
   <div class="wrap foot__in">
-    <img src="../assets/img/logo-light.webp" alt="VAG MOTORS" width="110" height="45" loading="lazy">
+    <img class="logo-on-dark" src="../assets/img/logo-light.webp" alt="VAG MOTORS" width="110" height="45" loading="lazy"><img class="logo-on-light" src="../assets/img/logo-dark.webp" alt="VAG MOTORS" width="110" height="45" loading="lazy">
     <p class="partners"><span class="label">Марки</span> Volkswagen · Audi · Škoda · SEAT · Porsche · Bentley</p>
     <p class="tiny muted">© ООО «ВАГМОТОРС», УНП 193087869. Независимый сервис, марки принадлежат владельцам.<br>Дизайн и разработка — Diroll25</p>
   </div>

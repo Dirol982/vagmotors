@@ -1,3 +1,100 @@
+// Language and currency come from the page: <html lang="en" data-currency="BYN">. Russian is the source text.
+const LANG = (document.documentElement.lang || "ru").slice(0, 2) === "en" ? "en" : "ru";
+const CUR = document.documentElement.dataset.currency || "руб.";
+const EN = {
+  "Открыто до {h}:00": "Open until {h}:00",
+  "Закрыто · откроемся в {h}:00": "Closed · opens at {h}:00",
+  "{i} из {n}": "{i} of {n}",
+  "Выберите марку автомобиля — так мастер сразу поймёт, с чем работать.": "Choose your car make so the technician knows what to expect.",
+  "Напишите коротко, что нужно сделать: например, «ТО» или «рывки при переключении».": "Tell us briefly what is needed, e.g. “service” or “jerky gear changes”.",
+  "Здравствуйте! Хочу записаться на СТО.": "Hello! I'd like to book a service.",
+  "Марка: {v}": "Make: {v}",
+  "Модель: {v}": "Model: {v}",
+  "Задача: {v}": "Job: {v}",
+  "Открываем WhatsApp с готовым текстом заявки. Остаётся нажать «Отправить».": "Opening WhatsApp with your request filled in. Just press Send.",
+  "Запись на СТО: {v}": "Service booking: {v}",
+  "Открываем Viber с готовой заявкой — остаётся нажать «Отправить».": "Opening Viber with your request — just press Send.",
+  "Открываем Viber. Заявка длинная, поэтому мы её скопировали — вставьте в чат (Ctrl+V или долгое нажатие) и отправьте.": "Opening Viber. The request is long, so we copied it — paste it into the chat (Ctrl+V or long press) and send.",
+  "Открываем Viber. Напишите марку, модель и задачу — ответим в рабочее время.": "Opening Viber. Write your make, model and job — we reply during opening hours.",
+  "Текст заявки скопирован. Вставьте его в открывшийся чат Telegram и отправьте.": "Request copied. Paste it into the Telegram chat that opens and send.",
+  "Открываем Telegram. Напишите марку, модель и задачу — ответим в рабочее время.": "Opening Telegram. Write your make, model and job — we reply during opening hours.",
+  "Найдено: {n}": "Found: {n}",
+  "результатов": "results",
+  "работ в разделе": "jobs in this section",
+  "от": "from",
+  "По запросу «{q}» ничего не нашли. Попробуйте другое слово — «колодки», «ГРМ», «сцепление» — или выберите раздел выше.": "Nothing found for “{q}”. Try another word — “pads”, “timing”, “clutch” — or pick a section above.",
+  "Ещё": "Show",
+  "Свернуть": "Show less",
+  "Не видите нужную работу?": "Can't see the job you need?",
+  "Найдите поиском": "Search for it",
+  "или спросите мастера": "or ask the technician",
+  "Меньше": "Fewer",
+  "Больше": "More",
+  "Удалить": "Remove",
+  "Отметьте работы слева или нажмите на то, что беспокоит.": "Tick jobs on the left or tap what's wrong.",
+  "работ": "jobs",
+  "Добавили в расчёт: {v}": "Added to the estimate: {v}",
+  "Убрали: {v}": "Removed: {v}",
+  "Записаться с этим расчётом": "Book with this estimate",
+  "Расчёт очищен": "Estimate cleared",
+  "Цены пересчитаны для {m}. Нет в прайсе марки: {v}": "Prices updated for {m}. Not in this make's list: {v}",
+  "Цены пересчитаны для {m}": "Prices updated for {m}",
+  "Прайс {m}": "{m} price list",
+  "Сегодня": "Today",
+  "Завтра": "Tomorrow",
+  "Утро 9–12": "Morning 9–12",
+  "День 12–16": "Day 12–16",
+  "Вечер 16–21": "Evening 16–21",
+  "Здравствуйте! Расчёт с сайта VAGMOTORS.": "Hello! An estimate from the VAGMOTORS website.",
+  "Итого работы: от {v}": "Labour total: from {v}",
+  "Удобно: {v}": "Preferred time: {v}",
+  "Подскажите точную стоимость и подтвердите время записи.": "Please confirm the exact price and the booking time.",
+  "Сначала добавьте работы в расчёт": "Add some jobs to the estimate first",
+  "Расчёт скопирован — вставьте его в мессенджер": "Estimate copied — paste it into your messenger",
+  "Не получилось скопировать автоматически": "Couldn't copy automatically",
+  "Отправить расчёт мастеру": "Send the estimate",
+  "Открываем WhatsApp с расчётом — остаётся нажать «Отправить»": "Opening WhatsApp with the estimate — just press Send",
+  "Расчёт с сайта: {m}, работ {n}, от {v}. Список ниже:": "Website estimate: {m}, {n} jobs, from {v}. List below:",
+  "Открываем Viber. Полный расчёт скопирован — вставьте его в чат (Ctrl+V или долгое нажатие) и отправьте": "Opening Viber. The full estimate is copied — paste it into the chat (Ctrl+V or long press) and send",
+  "Открываем Viber. Скопируйте расчёт кнопкой «Скопировать расчёт» и вставьте в чат": "Opening Viber. Copy the estimate with the Copy button and paste it into the chat",
+  "Расчёт скопирован — вставьте его в открывшийся чат Telegram": "Estimate copied — paste it into the Telegram chat that opens",
+  "Открываем Telegram": "Opening Telegram",
+  "Видео": "Video",
+  "В заказ": "Add",
+  "В заказе": "Added",
+  "Заказ": "Order",
+  "Подытог заказа": "Order subtotal",
+  "Ваш заказ": "Your order",
+  "Добавьте работы из прайса": "Add jobs from the price list",
+  "Оформить": "Check out",
+  "заказ": "",
+  "Очистить": "Clear",
+  "Галерея цеха": "Workshop gallery",
+  "Предыдущее фото": "Previous photo",
+  "Следующее фото": "Next photo",
+  "Закрыть галерею": "Close gallery",
+  "Открыть фото на весь экран": "Open photo full screen",
+  "фото": "photo",
+  "Пора на ТО": "Service due",
+  "Рывки DSG": "Jerky DSG",
+  "Горит Check Engine": "Check Engine light",
+  "Стучит подвеска": "Suspension knocks",
+  "Скрипят тормоза": "Squeaky brakes",
+  "Уходит антифриз": "Losing coolant",
+  "Не холодит кондиционер": "A/C not cooling",
+  "Покупаю машину": "Buying a car",
+};
+const T = (s, v = {}) => (LANG === "en" && EN[s] !== undefined ? EN[s] : s).replace(/\{(\w+)\}/g, (_, k) => (v[k] ?? ""));
+// Work and section names on an English page come from the page's own dictionary: <script type="application/json" data-i18n-works>
+const WORKS = (() => {
+  try {
+    return JSON.parse(document.querySelector("[data-i18n-works]")?.textContent || "{}");
+  } catch (_) {
+    return {};
+  }
+})();
+const W = (s) => (LANG === "en" && WORKS[s]) || s;
+
 // Search finds the same work however it is written: DSG / ДСГ / S tronic, ТО / техобслуживание and so on.
 const SEARCH_ALIASES = [
   ["дсг", "dsg s tronic stronic s-tronic коробка робот"],
@@ -65,7 +162,7 @@ const paintSigns = () => {
     el.classList.toggle("is-open", isOpen);
     el.classList.toggle("is-closed", !isOpen);
     const text = el.querySelector("[data-open-text]");
-    if (text) text.textContent = isOpen ? `\u041E\u0442\u043A\u0440\u044B\u0442\u043E \u0434\u043E ${close}:00` : `\u0417\u0430\u043A\u0440\u044B\u0442\u043E \xB7 \u043E\u0442\u043A\u0440\u043E\u0435\u043C\u0441\u044F \u0432 ${open}:00`;
+    if (text) text.textContent = isOpen ? T("Открыто до {h}:00", { h: close }) : T("Закрыто · откроемся в {h}:00", { h: open });
   });
 };
 paintSigns();
@@ -231,7 +328,7 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
       q.classList.toggle("is-on", k === i);
       q.setAttribute("aria-hidden", String(k !== i));
     });
-    if (counter) counter.textContent = `${i + 1} из ${items.length}`;
+    if (counter) counter.textContent = T("{i} из {n}", { i: i + 1, n: items.length });
   };
   root.querySelector("[data-quote-prev]")?.addEventListener("click", () => show(i - 1));
   root.querySelector("[data-quote-next]")?.addEventListener("click", () => show(i + 1));
@@ -265,21 +362,21 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
       const channel = data.get('channel') || 'telegram';
 
       if (!make) {
-        say('Выберите марку автомобиля — так мастер сразу поймёт, с чем работать.', 'error');
+        say(T('Выберите марку автомобиля — так мастер сразу поймёт, с чем работать.'), 'error');
         form.querySelector('input[name="make"]').focus();
         return;
       }
       if (!task) {
-        say('Напишите коротко, что нужно сделать: например, «ТО» или «рывки при переключении».', 'error');
+        say(T('Напишите коротко, что нужно сделать: например, «ТО» или «рывки при переключении».'), 'error');
         form.querySelector('#b-task').focus();
         return;
       }
 
       const lines = [
-        'Здравствуйте! Хочу записаться на СТО.',
-        `Марка: ${make}`,
-        model && `Модель: ${model}`,
-        `Задача: ${task}`,
+        T('Здравствуйте! Хочу записаться на СТО.'),
+        T('Марка: {v}', { v: make }),
+        model && T('Модель: {v}', { v: model }),
+        T('Задача: {v}', { v: task }),
       ].filter(Boolean);
       const text = lines.join('\n');
       const enc = encodeURIComponent(text);
@@ -292,26 +389,26 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
 
       if (channel === 'whatsapp') {
         window.open(`${wa}?text=${enc}`, '_blank', 'noopener');
-        say('Открываем WhatsApp с готовым текстом заявки. Остаётся нажать «Отправить».', 'ok');
+        say(T('Открываем WhatsApp с готовым текстом заявки. Остаётся нажать «Отправить».'), 'ok');
       } else if (channel === 'viber') {
         // Viber cuts a draft at 100 characters: send one compact line, or no draft and the copied full text
-        const short = `Запись на СТО: ${make}${model ? ' ' + model : ''} — ${task}`;
+        const short = T('Запись на СТО: {v}', { v: `${make}${model ? ' ' + model : ''} — ${task}` });
         const fits = short.length <= 100;
         window.location.href = `viber://chat?number=${encodeURIComponent(tel)}` + (fits ? `&draft=${encodeURIComponent(short)}` : '');
         say(
           fits
-            ? 'Открываем Viber с готовой заявкой — остаётся нажать «Отправить».'
+            ? T('Открываем Viber с готовой заявкой — остаётся нажать «Отправить».')
             : copied
-              ? 'Открываем Viber. Заявка длинная, поэтому мы её скопировали — вставьте в чат (Ctrl+V или долгое нажатие) и отправьте.'
-              : 'Открываем Viber. Напишите марку, модель и задачу — ответим в рабочее время.',
+              ? T('Открываем Viber. Заявка длинная, поэтому мы её скопировали — вставьте в чат (Ctrl+V или долгое нажатие) и отправьте.')
+              : T('Открываем Viber. Напишите марку, модель и задачу — ответим в рабочее время.'),
           'ok'
         );
       } else {
         window.open(tg, '_blank', 'noopener');
         say(
           copied
-            ? 'Текст заявки скопирован. Вставьте его в открывшийся чат Telegram и отправьте.'
-            : 'Открываем Telegram. Напишите марку, модель и задачу — ответим в рабочее время.',
+            ? T('Текст заявки скопирован. Вставьте его в открывшийся чат Telegram и отправьте.')
+            : T('Открываем Telegram. Напишите марку, модель и задачу — ответим в рабочее время.'),
           'ok'
         );
       }
@@ -350,7 +447,7 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
   const SERVICE_TEL = '+375296200421';
   const TG = 'https://t.me/%2B375296200421';
   const WA = 'https://wa.me/375296200421';
-  const STORE = 'vagmotors-precheck-v2';
+  const STORE = 'vagmotors-precheck-v2' + (LANG === 'en' ? '-en' : '');
   const MAKE_NAMES = { vw: 'Volkswagen', audi: 'Audi', skoda: 'Škoda' };
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const LIMIT = matchMedia('(max-width: 720px)').matches ? 4 : 8;
@@ -368,6 +465,7 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
     ['Покупаю машину', [['Диагностика перед покупкой', 1]], 'Диагностика'],
   ];
 
+  SYM.forEach((s) => { s[0] = T(s[0]); s[1] = s[1].map(([n, q]) => [W(n), q]); s[2] = W(s[2]); });
   const data = JSON.parse(root.querySelector('[data-calc-data]').textContent || '[]');
   const $ = (s, el = root) => el.querySelector(s);
   const itemsEl = $('[data-calc-items]');
@@ -464,12 +562,12 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
       list = book()
         .cats.flatMap((c) => c.items)
         .filter((it) => !seen.has(it.name) && seen.add(it.name) && stems.every((w) => searchText(it.name).includes(w)));
-      foundEl.textContent = list.length ? `Найдено: ${list.length}` : '';
-      label = 'результатов';
+      foundEl.textContent = list.length ? T('Найдено: {n}', { n: list.length }) : '';
+      label = T('результатов');
     } else {
       list = (book().cats.find((c) => c.name === cat) || book().cats[0]).items;
       foundEl.textContent = '';
-      label = 'работ в разделе';
+      label = T('работ в разделе');
     }
     const show = expanded ? list : list.slice(0, LIMIT);
     itemsEl.innerHTML = show.length
@@ -478,17 +576,17 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
             (it) =>
               `<button type="button" class="calc__item" data-n="${esc(it.name)}" aria-pressed="${picked.has(it.name)}"><span class="calc__box" aria-hidden="true"></span><span class="calc__nm">${esc(
                 it.name
-              )}</span><span class="calc__pr num"><small>от</small>${fmt.format(it.price)} руб.</span></button>`
+              )}</span><span class="calc__pr num"><small>${T('от')}</small>${fmt.format(it.price)}\u00a0${CUR}</span></button>`
           )
           .join('')
-      : `<p class="calc__none">По запросу «${esc(query.trim())}» ничего не нашли. Попробуйте другое слово — «колодки», «ГРМ», «сцепление» — или выберите раздел выше.</p>`;
+      : `<p class="calc__none">${T('По запросу «{q}» ничего не нашли. Попробуйте другое слово — «колодки», «ГРМ», «сцепление» — или выберите раздел выше.', { q: esc(query.trim()) })}</p>`;
     const rest = list.length - show.length;
     footEl.innerHTML =
       (rest > 0
-        ? `<button type="button" data-more>Ещё ${rest} ${label} ↓</button>`
+        ? `<button type="button" data-more>${T('Ещё')} ${rest} ${label} ↓</button>`
         : expanded && list.length > LIMIT
-          ? '<button type="button" data-more>Свернуть ↑</button>'
-          : '<span></span>') + `<span>Не видите нужную работу? <a data-to-search>Найдите поиском</a> или спросите мастера</span>`;
+          ? `<button type="button" data-more>${T('Свернуть')} ↑</button>`
+          : '<span></span>') + `<span>${T('Не видите нужную работу?')} <a data-to-search>${T('Найдите поиском')}</a> ${T('или спросите мастера')}</span>`;
   };
 
   /* ── receipt ── */
@@ -514,21 +612,21 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
       ? lines
           .map(
             ([n, q]) =>
-              `<li data-n="${esc(n)}"><span>${esc(n)}</span><span class="check__qty"><button type="button" data-q="-1" aria-label="Меньше: ${esc(
+              `<li data-n="${esc(n)}"><span>${esc(n)}</span><span class="check__qty"><button type="button" data-q="-1" aria-label="${T('Меньше')}: ${esc(
                 n
-              )}">−</button><b>${q}</b><button type="button" data-q="1" aria-label="Больше: ${esc(n)}">+</button></span><span class="check__p">${fmt.format(
+              )}">−</button><b>${q}</b><button type="button" data-q="1" aria-label="${T('Больше')}: ${esc(n)}">+</button></span><span class="check__p">${fmt.format(
                 pm.get(n) * q
-              )}</span><button type="button" class="check__rm" aria-label="Удалить: ${esc(
+              )}</span><button type="button" class="check__rm" aria-label="${T('Удалить')}: ${esc(
                 n
               )}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></li>`
           )
           .join('')
-      : '<li class="check__empty">Отметьте работы слева или нажмите на то, что беспокоит.</li>';
+      : `<li class="check__empty">${T('Отметьте работы слева или нажмите на то, что беспокоит.')}</li>`;
     const sum = total();
     animateSum(shown, sum);
     shown = sum;
     clearBtn.hidden = !lines.length;
-    metaEl.textContent = `VAGMOTORS · ${MAKE_NAMES[make]} · работ: ${lines.length}`;
+    metaEl.textContent = `VAGMOTORS · ${MAKE_NAMES[make]} · ${T('работ')}: ${lines.length}`;
     if (dockEmpty && dockFull) {
       dockEmpty.hidden = lines.length > 0;
       dockFull.hidden = lines.length === 0;
@@ -595,7 +693,7 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
     expanded = true;
     refresh();
     added.forEach(([n]) => itemsEl.querySelector(`[data-n="${CSS.escape(n)}"]`)?.classList.add('is-flash'));
-    toast(`Добавили в расчёт: ${added.map(([n]) => n.toLowerCase()).join(', ')}`);
+    toast(T('Добавили в расчёт: {v}', { v: added.map(([n]) => n).join(', ') }));
   });
 
   linesEl.addEventListener('click', (e) => {
@@ -607,7 +705,7 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
       setTimeout(() => {
         picked.delete(n);
         refresh();
-        toast(`Убрали: ${n.toLowerCase()}`);
+        toast(T('Убрали: {v}', { v: n }));
       }, reduce ? 0 : 220);
       return;
     }
@@ -623,9 +721,9 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
   clearBtn.addEventListener('click', () => {
     picked.clear();
     bookEl.hidden = true;
-    submitBtn.textContent = 'Записаться с этим расчётом';
+    submitBtn.textContent = T('Записаться с этим расчётом');
     refresh();
-    toast('Расчёт очищен');
+    toast(T('Расчёт очищен'));
   });
 
   root.querySelectorAll('input[name="calc-make"]').forEach((r) => {
@@ -639,10 +737,10 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
       refresh();
       toast(
         dropped.length
-          ? `Цены пересчитаны для ${MAKE_NAMES[make]}. Нет в прайсе марки: ${dropped.join(', ').toLowerCase()}`
+          ? T('Цены пересчитаны для {m}. Нет в прайсе марки: {v}', { m: MAKE_NAMES[make], v: dropped.join(', ') })
           : picked.size
-            ? `Цены пересчитаны для ${MAKE_NAMES[make]}`
-            : `Прайс ${MAKE_NAMES[make]}`
+            ? T('Цены пересчитаны для {m}', { m: MAKE_NAMES[make] })
+            : T('Прайс {m}', { m: MAKE_NAMES[make] })
       );
     });
   });
@@ -650,18 +748,18 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
   /* ── visit day and time (open daily 9–21, Minsk time) ── */
   const daysEl = $('[data-check-days]');
   const slotsEl = $('[data-check-slots]');
-  const WD = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
+  const WD = LANG === 'en' ? ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] : ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
   const minsk = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Minsk' }));
   const startToday = minsk.getHours() < 19;
   const days = [];
   for (let i = startToday ? 0 : 1; days.length < 7; i++) {
     const d = new Date(minsk);
     d.setDate(minsk.getDate() + i);
-    const title = i === 0 ? 'Сегодня' : i === 1 ? 'Завтра' : WD[d.getDay()];
-    days.push({ title, sub: d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' }).replace('.', '') });
+    const title = i === 0 ? T('Сегодня') : i === 1 ? T('Завтра') : WD[d.getDay()];
+    days.push({ title, sub: d.toLocaleDateString(LANG === 'en' ? 'en-GB' : 'ru-RU', { day: 'numeric', month: 'short' }).replace('.', '') });
   }
   daysEl.innerHTML = days.map((d, i) => `<button type="button" aria-pressed="${i === 0}">${d.title}<small>${d.sub}</small></button>`).join('');
-  slotsEl.innerHTML = ['Утро 9–12', 'День 12–16', 'Вечер 16–21']
+  slotsEl.innerHTML = [T('Утро 9–12'), T('День 12–16'), T('Вечер 16–21')]
     .map((s, i) => `<button type="button" aria-pressed="${i === 0}">${s}</button>`)
     .join('');
   [daysEl, slotsEl].forEach((g) =>
@@ -679,12 +777,12 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
     const day = daysEl.querySelector('[aria-pressed="true"]');
     const slot = slotsEl.querySelector('[aria-pressed="true"]');
     return [
-      'Здравствуйте! Расчёт с сайта VAGMOTORS.',
-      `Марка: ${MAKE_NAMES[make]}${model ? `, ${model}` : ''}`,
-      ...lines.map(([n, q], i) => `${i + 1}. ${n}${q > 1 ? ` × ${q}` : ''} — от ${fmt.format(pm.get(n) * q)} руб.`),
-      `Итого работы: от ${fmt.format(total())} руб.`,
-      !bookEl.hidden && day && slot ? `Удобно: ${day.firstChild.textContent} ${day.querySelector('small').textContent}, ${slot.textContent}` : '',
-      'Подскажите точную стоимость и подтвердите время записи.',
+      T('Здравствуйте! Расчёт с сайта VAGMOTORS.'),
+      T('Марка: {v}', { v: `${MAKE_NAMES[make]}${model ? `, ${model}` : ''}` }),
+      ...lines.map(([n, q], i) => `${i + 1}. ${n}${q > 1 ? ` × ${q}` : ''} — ${T('от')} ${fmt.format(pm.get(n) * q)} ${CUR}`),
+      T('Итого работы: от {v}', { v: `${fmt.format(total())} ${CUR}` }),
+      !bookEl.hidden && day && slot ? T('Удобно: {v}', { v: `${day.firstChild.textContent} ${day.querySelector('small').textContent}, ${slot.textContent}` }) : '',
+      T('Подскажите точную стоимость и подтвердите время записи.'),
     ]
       .filter(Boolean)
       .join('\n');
@@ -711,19 +809,19 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
   };
 
   $('[data-check-copy]').addEventListener('click', async () => {
-    if (!picked.size) return toast('Сначала добавьте работы в расчёт');
-    toast((await copy(receiptText())) ? 'Расчёт скопирован — вставьте его в мессенджер' : 'Не получилось скопировать автоматически');
+    if (!picked.size) return toast(T('Сначала добавьте работы в расчёт'));
+    toast((await copy(receiptText())) ? T('Расчёт скопирован — вставьте его в мессенджер') : T('Не получилось скопировать автоматически'));
   });
 
   check.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!picked.size) {
-      toast('Сначала добавьте работы в расчёт');
+      toast(T('Сначала добавьте работы в расчёт'));
       return;
     }
     if (bookEl.hidden) {
       bookEl.hidden = false;
-      submitBtn.textContent = 'Отправить расчёт мастеру';
+      submitBtn.textContent = T('Отправить расчёт мастеру');
       check.querySelector('#check-model').focus();
       return;
     }
@@ -733,21 +831,21 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
     const enc = encodeURIComponent(text);
     if (ch === 'whatsapp') {
       window.open(`${WA}?text=${enc}`, '_blank', 'noopener');
-      toast('Открываем WhatsApp с расчётом — остаётся нажать «Отправить»');
+      toast(T('Открываем WhatsApp с расчётом — остаётся нажать «Отправить»'));
     } else if (ch === 'viber') {
       // Viber cuts a draft at 100 characters, so the estimate goes through the clipboard
       const pm = priceMap();
       const n = [...picked].filter(([k]) => pm.has(k)).length;
-      const short = `Расчёт с сайта: ${MAKE_NAMES[make]}, работ ${n}, от ${fmt.format(total())} руб. Список ниже:`;
+      const short = T('Расчёт с сайта: {m}, работ {n}, от {v}. Список ниже:', { m: MAKE_NAMES[make], n, v: `${fmt.format(total())} ${CUR}` });
       window.location.href = `viber://chat?number=${encodeURIComponent(SERVICE_TEL)}&draft=${encodeURIComponent(short.slice(0, 100))}`;
       toast(
         copied
-          ? 'Открываем Viber. Полный расчёт скопирован — вставьте его в чат (Ctrl+V или долгое нажатие) и отправьте'
-          : 'Открываем Viber. Скопируйте расчёт кнопкой «Скопировать расчёт» и вставьте в чат'
+          ? T('Открываем Viber. Полный расчёт скопирован — вставьте его в чат (Ctrl+V или долгое нажатие) и отправьте')
+          : T('Открываем Viber. Скопируйте расчёт кнопкой «Скопировать расчёт» и вставьте в чат')
       );
     } else {
       window.open(TG, '_blank', 'noopener');
-      toast(copied ? 'Расчёт скопирован — вставьте его в открывшийся чат Telegram' : 'Открываем Telegram');
+      toast(copied ? T('Расчёт скопирован — вставьте его в открывшийся чат Telegram') : T('Открываем Telegram'));
     }
   });
 
@@ -849,7 +947,7 @@ document.querySelectorAll("[data-yt]").forEach((link) => {
     if (link.classList.contains("is-playing")) return;
     const f = document.createElement("iframe");
     f.src = `https://www.youtube-nocookie.com/embed/${link.dataset.yt}?autoplay=1&rel=0`;
-    f.title = link.dataset.ytTitle || "Видео";
+    f.title = link.dataset.ytTitle || T("Видео");
     f.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
     f.allowFullscreen = true;
     link.classList.add("is-playing");
@@ -917,7 +1015,7 @@ document.querySelectorAll("[data-swipe]").forEach((root) => {
 (() => {
   const root = document.querySelector("[data-pricelist]");
   if (!root) return;
-  const STORE = "vagmotors-precheck-v2";
+  const STORE = "vagmotors-precheck-v2" + (LANG === "en" ? "-en" : "");
   const WORD = { vw: "Фольксваген", audi: "Ауди", skoda: "Шкода" };
   const NAMES = { vw: "Volkswagen", audi: "Audi", skoda: "Škoda" };
   const fmt = new Intl.NumberFormat("ru-RU");
@@ -936,14 +1034,14 @@ document.querySelectorAll("[data-swipe]").forEach((root) => {
       tr.dataset.key = name;
       const td = document.createElement("td");
       td.className = "pl__add";
-      td.innerHTML = `<button type="button" aria-pressed="false"><span>В заказ</span></button>`;
-      td.querySelector("button").setAttribute("aria-label", `В заказ: ${name}`);
+      td.innerHTML = `<button type="button" aria-pressed="false"><span>${T("В заказ")}</span></button>`;
+      td.querySelector("button").setAttribute("aria-label", `${T("В заказ")}: ${name}`);
       tr.append(td);
     });
     p.querySelectorAll("thead tr").forEach((tr) => {
       const th = document.createElement("th");
       th.scope = "col";
-      th.textContent = "Заказ";
+      th.textContent = T("Заказ");
       tr.append(th);
     });
   });
@@ -962,16 +1060,16 @@ document.querySelectorAll("[data-swipe]").forEach((root) => {
   const bar = document.createElement("div");
   bar.className = "order-bar";
   bar.setAttribute("role", "region");
-  bar.setAttribute("aria-label", "Подытог заказа");
+  bar.setAttribute("aria-label", T("Подытог заказа"));
   bar.innerHTML = `<div class="order-bar__in">
-    <p class="order-bar__sum" aria-live="polite"><small data-ob-meta>Ваш заказ</small><b class="num" data-ob-total>Добавьте работы из прайса</b></p>
-    <button type="button" class="order-bar__clear" data-ob-clear hidden>Очистить</button>
-    <a class="order-bar__go" href="index.html#calc" data-ob-go>Оформить<span class="ob-w"> заказ</span> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a>
+    <p class="order-bar__sum" aria-live="polite"><small data-ob-meta>${T("Ваш заказ")}</small><b class="num" data-ob-total>${T("Добавьте работы из прайса")}</b></p>
+    <button type="button" class="order-bar__clear" data-ob-clear hidden>${T("Очистить")}</button>
+    <a class="order-bar__go" href="index.html#calc" data-ob-go>${T("Оформить")}<span class="ob-w"> ${T("заказ")}</span> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a>
   </div>`;
   document.body.append(bar);
   document.body.classList.add("has-order-bar");
 
-  const words = (n) => (n % 10 === 1 && n % 100 !== 11 ? "работа" : [2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100) ? "работы" : "работ");
+  const words = (n) => LANG === "en" ? (n === 1 ? "job" : "jobs") : (n % 10 === 1 && n % 100 !== 11 ? "работа" : [2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100) ? "работы" : "работ");
   const render = () => {
     const pm = prices[make];
     let sum = 0;
@@ -981,12 +1079,12 @@ document.querySelectorAll("[data-swipe]").forEach((root) => {
       if (!b) return;
       const on = tr.closest("[data-panel]").dataset.panel === make && picked.has(tr.dataset.key);
       b.setAttribute("aria-pressed", String(on));
-      b.firstElementChild.textContent = on ? "В заказе" : "В заказ";
+      b.firstElementChild.textContent = on ? T("В заказе") : T("В заказ");
       tr.classList.toggle("is-picked", on);
     });
     const n = picked.size;
-    bar.querySelector("[data-ob-meta]").textContent = n ? `Ваш заказ · ${NAMES[make]} · ${n} ${words(n)}` : "Ваш заказ";
-    bar.querySelector("[data-ob-total]").textContent = n ? `от ${fmt.format(sum)} руб.` : "Добавьте работы из прайса";
+    bar.querySelector("[data-ob-meta]").textContent = n ? `${T("Ваш заказ")} · ${NAMES[make]} · ${n} ${words(n)}` : T("Ваш заказ");
+    bar.querySelector("[data-ob-total]").textContent = n ? `${T("от")} ${fmt.format(sum)} ${CUR}` : T("Добавьте работы из прайса");
     bar.querySelector("[data-ob-clear]").hidden = !n;
     bar.classList.toggle("is-empty", !n);
     try {
@@ -1051,12 +1149,12 @@ document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = Strin
 
   const dlg = document.createElement("dialog");
   dlg.className = "gallery";
-  dlg.setAttribute("aria-label", "Галерея цеха");
+  dlg.setAttribute("aria-label", T("Галерея цеха"));
   dlg.innerHTML = `<div class="gallery__stage" data-g-stage><img class="gallery__img" alt="" data-g-img></div>
     <p class="gallery__cap"><span class="gallery__n" data-g-n></span><span data-g-cap></span></p>
-    <button type="button" class="gallery__btn gallery__prev" data-g-prev aria-label="Предыдущее фото">${ARROW_L}</button>
-    <button type="button" class="gallery__btn gallery__next" data-g-next aria-label="Следующее фото">${ARROW_R}</button>
-    <button type="button" class="gallery__btn gallery__close" data-g-close aria-label="Закрыть галерею">${CLOSE}</button>`;
+    <button type="button" class="gallery__btn gallery__prev" data-g-prev aria-label="${T("Предыдущее фото")}">${ARROW_L}</button>
+    <button type="button" class="gallery__btn gallery__next" data-g-next aria-label="${T("Следующее фото")}">${ARROW_R}</button>
+    <button type="button" class="gallery__btn gallery__close" data-g-close aria-label="${T("Закрыть галерею")}">${CLOSE}</button>`;
   document.body.append(dlg);
   const img = dlg.querySelector("[data-g-img]");
   const stage = dlg.querySelector("[data-g-stage]");
@@ -1099,7 +1197,7 @@ document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = Strin
       hit.classList.add("is-zoomable");
       hit.setAttribute("role", "button");
       hit.setAttribute("tabindex", "0");
-      hit.setAttribute("aria-label", `Открыть фото на весь экран: ${(im.alt || "фото").replace(/ — VAG MOTORS$/, "")}`);
+      hit.setAttribute("aria-label", `${T("Открыть фото на весь экран")}: ${(im.alt || T("фото")).replace(/ — VAG MOTORS$/, "")}`);
       // a drag on the strip is not a tap: the strip's own handler swallows that click
       hit.addEventListener("click", () => open(track, n));
       hit.addEventListener("keydown", (e) => {
