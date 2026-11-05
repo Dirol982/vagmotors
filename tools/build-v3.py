@@ -89,7 +89,7 @@ def footer():
 def dock(home=True):
     if home:
         return f'''<nav class="dock" aria-label="Быстрая связь">
-  <button type="button" class="dock__sum" data-check-open aria-controls="precheck"><small>Ваш расчёт</small><b class="num"><span data-dock-empty>пока пусто</span><span data-dock-full hidden>от <span data-dock-sum>0</span> BYN</span></b></button>
+  <button type="button" class="dock__sum" data-check-open aria-controls="precheck"><small>Ваш расчёт</small><b class="num"><span data-dock-empty>пока пусто</span><span data-dock-full hidden>от <span data-dock-sum>0</span> руб.</span></b></button>
   <a class="dock__call" href="tel:{TEL}" aria-label="Позвонить: {TEL_L}">{PHONE}</a>
   <button type="button" class="dock__book" data-check-open aria-controls="precheck">Предчек</button>
 </nav>
@@ -238,7 +238,7 @@ index = head('VAG MOTORS — автосервис Volkswagen, Audi, Škoda, SEAT
         </div>
         <p class="check__meta" data-check-meta>VAGMOTORS · Volkswagen · работ: 0</p>
         <ul class="check__lines" role="list" data-check-lines></ul>
-        <div class="check__total"><span>Итого</span><strong class="num"><span data-check-sum>0</span> <small>BYN</small></strong></div>
+        <div class="check__total"><span>Итого</span><strong class="num"><span data-check-sum>0</span> <small>руб.</small></strong></div>
         <p class="check__fine">От минимальной цены, без запчастей. Согласуем до начала работ.</p>
         <div class="check__book" data-check-book hidden>
           <label class="check__label" for="check-model">Модель, год, двигатель</label>
@@ -452,7 +452,7 @@ price = head('Прайс VAG MOTORS — Volkswagen, Audi, Škoda в Минске
 <main id="main">
 <section class="ph">
   <div class="wrap">
-    <p class="coord mono">Прайс <b>/</b> Volkswagen · Audi · Škoda <b>/</b> цены от, BYN</p>
+    <p class="coord mono">Прайс <b>/</b> Volkswagen · Audi · Škoda <b>/</b> цены от, руб.</p>
     <h1 class="mega"><span class="mega__l1">Стоимость</span><span class="mega__l2"><span>работ</span><span class="mega__dash" aria-hidden="true"></span></span></h1>
     <div class="ph__row">
       <p class="muted lede">Цена зависит от модели, двигателя и КПП. Отметьте работы — подытог внизу, — и оформите заказ.</p>
