@@ -1,3 +1,23 @@
+// Search finds the same work however it is written: DSG / ДСГ / S tronic, ТО / техобслуживание and so on.
+const SEARCH_ALIASES = [
+  ["дсг", "dsg s tronic stronic s-tronic коробка робот"],
+  ["акпп", "автомат коробка"],
+  ["мкпп", "механика коробка"],
+  ["кпп", "коробка"],
+  ["грм", "ремень цепь"],
+  ["то ", "техобслуживание обслуживание"],
+  ["кондиционер", "климат ac"],
+  ["абс", "abs"],
+  ["шрус", "граната"],
+  ["турбин", "турбо turbo"],
+];
+const searchText = (name) => {
+  let t = (" " + name.toLowerCase().replace(/ё/g, "е") + " ");
+  for (const [k, v] of SEARCH_ALIASES) if (t.includes(k)) t += " " + v;
+  return t;
+};
+const searchQuery = (q) => q.toLowerCase().replace(/ё/g, "е").trim();
+
 // Motion, header, mobile menu, open sign, reveals, springs, gallery
 (() => {
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -443,7 +463,7 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
       const seen = new Set();
       list = book()
         .cats.flatMap((c) => c.items)
-        .filter((it) => !seen.has(it.name) && seen.add(it.name) && stems.every((w) => norm(it.name).includes(w)));
+        .filter((it) => !seen.has(it.name) && seen.add(it.name) && stems.every((w) => searchText(it.name).includes(w)));
       foundEl.textContent = list.length ? `Найдено: ${list.length}` : '';
       label = 'результатов';
     } else {
@@ -798,14 +818,14 @@ if (root) {
     });
   });
   const filter = () => {
-    const q = (search?.value || "").trim().toLowerCase();
+    const q = searchQuery(search?.value || "");
     const panel = panels.find((p) => !p.hidden);
     if (!panel) return;
     let any = false;
     panel.querySelectorAll("[data-group]").forEach((g) => {
       let shown = 0;
       g.querySelectorAll("[data-row]").forEach((r) => {
-        const hit = !q || r.textContent.toLowerCase().includes(q);
+        const hit = !q || q.split(/\s+/).map((w) => (w.length > 5 ? w.slice(0, -2) : w)).every((w) => searchText(r.textContent).includes(w));
         r.hidden = !hit;
         if (hit) shown++;
       });
