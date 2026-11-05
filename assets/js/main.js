@@ -1039,3 +1039,98 @@ document.querySelectorAll("[data-minsk-clock]").forEach((el) => {
   setInterval(tick, 30_000);
 });
 document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = String(new Date().getFullYear())));
+
+// Full-screen gallery: tap any photo in a swipe strip to view it whole, then swipe, use the arrows or the keyboard.
+(() => {
+  const strips = [...document.querySelectorAll("[data-swipe-track]")].filter((t) => t.querySelector("img"));
+  if (!strips.length || typeof HTMLDialogElement === "undefined") return;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ARROW_L = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12H4m6-6-6 6 6 6"/></svg>';
+  const ARROW_R = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg>';
+  const CLOSE = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>';
+
+  const dlg = document.createElement("dialog");
+  dlg.className = "gallery";
+  dlg.setAttribute("aria-label", "Галерея цеха");
+  dlg.innerHTML = `<div class="gallery__stage" data-g-stage><img class="gallery__img" alt="" data-g-img></div>
+    <p class="gallery__cap"><span class="gallery__n" data-g-n></span><span data-g-cap></span></p>
+    <button type="button" class="gallery__btn gallery__prev" data-g-prev aria-label="Предыдущее фото">${ARROW_L}</button>
+    <button type="button" class="gallery__btn gallery__next" data-g-next aria-label="Следующее фото">${ARROW_R}</button>
+    <button type="button" class="gallery__btn gallery__close" data-g-close aria-label="Закрыть галерею">${CLOSE}</button>`;
+  document.body.append(dlg);
+  const img = dlg.querySelector("[data-g-img]");
+  const stage = dlg.querySelector("[data-g-stage]");
+
+  let items = [];
+  let i = 0;
+  const big = (im) => {
+    const set = (im.getAttribute("srcset") || "").split(",").map((s) => s.trim().split(/\s+/));
+    const best = set.sort((a, b) => parseInt(b[1]) - parseInt(a[1]))[0];
+    return best && best[0] ? best[0] : im.currentSrc || im.src;
+  };
+  const show = (n, dir = 0) => {
+    i = (n + items.length) % items.length;
+    const it = items[i];
+    if (!reduce && dir) {
+      img.animate([{ opacity: 0, transform: `translateX(${dir * 40}px)` }, { opacity: 1, transform: "none" }], { duration: 320, easing: "cubic-bezier(.2,.8,.2,1)" });
+    }
+    img.src = it.src;
+    img.alt = it.alt;
+    dlg.querySelector("[data-g-n]").textContent = `${i + 1} / ${items.length}`;
+    dlg.querySelector("[data-g-cap]").textContent = it.cap;
+    [items[(i + 1) % items.length], items[(i - 1 + items.length) % items.length]].forEach((x) => (new Image().src = x.src));
+  };
+  const open = (track, start) => {
+    items = [...track.querySelectorAll("img")].map((im) => ({
+      src: big(im),
+      alt: im.alt,
+      cap: (im.closest("figure")?.querySelector("figcaption")?.textContent || im.alt || "").trim(),
+    }));
+    show(start);
+    dlg.showModal();
+    document.documentElement.classList.add("gallery-open");
+  };
+  dlg.addEventListener("close", () => document.documentElement.classList.remove("gallery-open"));
+
+  strips.forEach((track) => {
+    const imgs = [...track.querySelectorAll("img")];
+    imgs.forEach((im, n) => {
+      const hit = im.closest("figure") || im.parentElement;
+      hit.classList.add("is-zoomable");
+      hit.setAttribute("role", "button");
+      hit.setAttribute("tabindex", "0");
+      hit.setAttribute("aria-label", `Открыть фото на весь экран: ${(im.alt || "фото").replace(/ — VAG MOTORS$/, "")}`);
+      // a drag on the strip is not a tap: the strip's own handler swallows that click
+      hit.addEventListener("click", () => open(track, n));
+      hit.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          open(track, n);
+        }
+      });
+    });
+  });
+
+  dlg.querySelector("[data-g-prev]").addEventListener("click", () => show(i - 1, -1));
+  dlg.querySelector("[data-g-next]").addEventListener("click", () => show(i + 1, 1));
+  dlg.querySelector("[data-g-close]").addEventListener("click", () => dlg.close());
+  dlg.addEventListener("click", (e) => {
+    if (e.target === dlg || e.target === stage) dlg.close();
+  });
+  dlg.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") show(i + 1, 1);
+    if (e.key === "ArrowLeft") show(i - 1, -1);
+  });
+  // swipe between photos
+  let x0 = null, y0 = 0;
+  stage.addEventListener("pointerdown", (e) => { x0 = e.clientX; y0 = e.clientY; });
+  stage.addEventListener("pointerup", (e) => {
+    if (x0 === null) return;
+    const dx = e.clientX - x0, dy = e.clientY - y0;
+    x0 = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      dx < 0 ? show(i + 1, 1) : show(i - 1, -1);
+    }
+  });
+  stage.addEventListener("pointercancel", () => (x0 = null));
+})();
