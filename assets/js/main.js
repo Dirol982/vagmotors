@@ -59,6 +59,11 @@ const EN = {
   "Открываем Viber. Скопируйте расчёт кнопкой «Скопировать расчёт» и вставьте в чат": "Opening Viber. Copy the estimate with the Copy button and paste it into the chat",
   "Расчёт скопирован — вставьте его в открывшийся чат Telegram": "Estimate copied — paste it into the Telegram chat that opens",
   "Открываем Telegram": "Opening Telegram",
+  "Открываем Telegram с готовой заявкой — остаётся нажать «Отправить».": "Opening Telegram with your request filled in — just press Send.",
+  "Открываем Telegram с готовым расчётом — остаётся нажать «Отправить»": "Opening Telegram with the estimate filled in — just press Send",
+  "Открываем Viber с готовым расчётом — остаётся нажать «Отправить»": "Opening Viber with the estimate filled in — just press Send",
+  "Открываем Viber с кратким расчётом. Полный тоже скопирован — можно вставить следом": "Opening Viber with a short estimate. The full one is copied too — paste it after if you like",
+  "Открываем Viber с кратким расчётом — остаётся нажать «Отправить»": "Opening Viber with a short estimate — just press Send",
   "Видео": "Video",
   "В заказ": "Add",
   "В заказе": "Added",
@@ -404,12 +409,9 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
           'ok'
         );
       } else {
-        window.open(tg, '_blank', 'noopener');
-        say(
-          copied
-            ? T('Текст заявки скопирован. Вставьте его в открывшийся чат Telegram и отправьте.')
-            : T('Открываем Telegram. Напишите марку, модель и задачу — ответим в рабочее время.'),
-          'ok'
+        // t.me/+phone?text= puts the request into the input bar (Telegram deep-link "text" parameter)
+        window.open(`https://t.me/+${tel.replace(/\D/g, '')}?text=${enc}`, '_blank', 'noopener');
+        say(T('Открываем Telegram с готовой заявкой — остаётся нажать «Отправить».'), 'ok'
         );
       }
     });
@@ -833,19 +835,29 @@ document.querySelectorAll("[data-quotes]").forEach((root) => {
       window.open(`${WA}?text=${enc}`, '_blank', 'noopener');
       toast(T('Открываем WhatsApp с расчётом — остаётся нажать «Отправить»'));
     } else if (ch === 'viber') {
-      // Viber cuts a draft at 100 characters, so the estimate goes through the clipboard
+      // Viber keeps only the first 100 characters of a draft: send a compact order that fits, the full one is on the clipboard
       const pm = priceMap();
-      const n = [...picked].filter(([k]) => pm.has(k)).length;
-      const short = T('Расчёт с сайта: {m}, работ {n}, от {v}. Список ниже:', { m: MAKE_NAMES[make], n, v: `${fmt.format(total())} ${CUR}` });
-      window.location.href = `viber://chat?number=${encodeURIComponent(SERVICE_TEL)}&draft=${encodeURIComponent(short.slice(0, 100))}`;
+      const lines = [...picked].filter(([k]) => pm.has(k));
+      const model = String(new FormData(check).get('model') || '').trim();
+      const tail = ` ${T('от')} ${fmt.format(total())} ${CUR}`;
+      const head = `${MAKE_NAMES[make]}${model ? ' ' + model : ''}: `;
+      let list = lines.map(([k, q]) => (q > 1 ? `${k} ×${q}` : k)).join(', ');
+      const room = 100 - head.length - tail.length - 1;
+      if (list.length > room) list = list.slice(0, Math.max(0, room - 1)).replace(/[,\s]+[^,]*$/, '') + '…';
+      const draft = (head + list + (list.endsWith('…') ? '' : '.') + tail).slice(0, 100);
+      const whole = draft.endsWith(`${fmt.format(total())} ${CUR}`) && !list.endsWith('…');
+      window.location.href = `viber://chat?number=${encodeURIComponent(SERVICE_TEL)}&draft=${encodeURIComponent(draft)}`;
       toast(
-        copied
-          ? T('Открываем Viber. Полный расчёт скопирован — вставьте его в чат (Ctrl+V или долгое нажатие) и отправьте')
-          : T('Открываем Viber. Скопируйте расчёт кнопкой «Скопировать расчёт» и вставьте в чат')
+        whole
+          ? T('Открываем Viber с готовым расчётом — остаётся нажать «Отправить»')
+          : copied
+            ? T('Открываем Viber с кратким расчётом. Полный тоже скопирован — можно вставить следом')
+            : T('Открываем Viber с кратким расчётом — остаётся нажать «Отправить»')
       );
     } else {
-      window.open(TG, '_blank', 'noopener');
-      toast(copied ? T('Расчёт скопирован — вставьте его в открывшийся чат Telegram') : T('Открываем Telegram'));
+      // t.me/+phone?text= puts the whole estimate into the input bar
+      window.open(`https://t.me/+${SERVICE_TEL.replace(/\D/g, '')}?text=${enc}`, '_blank', 'noopener');
+      toast(T('Открываем Telegram с готовым расчётом — остаётся нажать «Отправить»'));
     }
   });
 
